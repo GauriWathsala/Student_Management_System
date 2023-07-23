@@ -17,7 +17,7 @@ export const DbHeader = () => {
                 <h1>GIFTED EDUCATION</h1>
                 <span>INSTITUTE of IELTS & CAE</span>
                 </div>
-        </div> 
+            </div> 
             <div className='head-right'>
             <div className='ditem'>
             <FullscreenIcon className='icond' />

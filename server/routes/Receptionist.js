@@ -13,7 +13,7 @@ function generateRandomNumbers(length) {
     return result;
   }
 
- // Add new Receptionist
+ //*********************************Add new Receptionist*************************************************
 
 router.post('/', async (req, res) =>{
     try {
@@ -22,7 +22,7 @@ router.post('/', async (req, res) =>{
         // Create receptionist
         const receptionistId = 'R' + generateRandomNumbers(4);
         const receptionist = {
-          receptionistId,name,address, nic, dob,email, salary,gender,qualification, userId: receptionistId,
+          receptionistId,name,address, nic, dob,email, salary,gender,qualification
         };
         const createdReceptionist = await Receptionist.create(receptionist);
 
@@ -41,8 +41,10 @@ router.post('/', async (req, res) =>{
         contactNumber: contact,
       }));
       await ReceptionistContact.bulkCreate(contactNumbers);
-  
-      res.json(createdReceptionist);
+
+    
+    res.json(createdReceptionist);
+
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Server error' });
@@ -50,7 +52,7 @@ router.post('/', async (req, res) =>{
     
 }); 
 
-// Edit receptionist details and contacts
+// *****************************Edit receptionist details and contacts**************************************
 router.put('/:id', async (req, res) => {
     try {
       const { id } = req.params;
@@ -95,7 +97,7 @@ router.put('/:id', async (req, res) => {
   });
   
 
-//Delete Receptionist
+//***************************************Delete Receptionist*********************************************
 router.delete('/:id', async (req, res) => {
     try {
       const { id } = req.params;
@@ -113,18 +115,13 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
       const listOfReceptionists = await Receptionist.findAll({
-        include: [
+        include: 
           {
             model: ReceptionistContact,
             as: 'contacts',
             attributes: ['contactNumber'],
           },
-          {
-            model: User, 
-            as: 'user', 
-            attributes: ['password', 'username', 'userType'], 
-          },
-        ]
+        
         
       });
       res.json(listOfReceptionists);

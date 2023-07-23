@@ -20,10 +20,7 @@ Module.associate = (models) => {
       otherKey: "courseId",
       as: "courses",
     });
-  };
-
-  Module.associate = (models) => {
-    Module.belongsTo(models.Teacher, {
+ Module.belongsTo(models.Teacher, {
       foreignKey: 'teacherId',
       as: 'teacher',
     });

@@ -26,47 +26,14 @@ const Receptionist = () => {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const teacherResponse = await axios.get('http://localhost:3001/teacher', {
-          include: { model: 'User', as: 'user' },
-        });
-  
-        const receptionistResponse = await axios.get('http://localhost:3001/receptionist', {
-          include: { model: 'User', as: 'user' },
-        });
-  
-        const adminResponse = await axios.get('http://localhost:3001/admin', {
-          include: { model: 'User', as: 'user' },
-        });
-
-        const usersData = [
-          ...teacherResponse.data.map((teacher) => ({
-            id: teacher.user.userId,
-            name: teacher.name,
-            contact: teacher.contacts[0]?.contactNumber || '',
-            email: teacher.email,
-            role: teacher.user.userType,
-          })),
-          ...receptionistResponse.data.map((receptionist) => ({
-            id: receptionist.user.userId,
-            name: receptionist.name,
-            contact: receptionist.contacts[0]?.contactNumber || '',
-            email: receptionist.email,
-            role: receptionist.user.userType,
-          })),
-          ...adminResponse.data.map((admin) => ({
-            id: admin.user.userId,
-            name: admin.name,
-            contact: admin.contacts[0]?.contactNumber || '',
-            email: admin.email,
-            role: admin.user.userType,
-          })),
-        ];
-        setRows(usersData);
-       
-      }catch (error){
-        console.error('Error fetching receptionists:', error);
+        const response = await axios.get('http://localhost:3001/user'); 
+        const users = response.data.users; 
+        setRows(users); 
+      } catch (error) {
+        console.error('Error fetching data', error);
       }
-    }
+    };
+    
     fetchData();
    }, []);
 
@@ -127,8 +94,14 @@ const Receptionist = () => {
           <div className='shead'>
             <SearchAdd currentPage='receptionist' />
           </div>
-          <div className='sbottom'>
-            <div className='fbutton'><Button className='filter'> Filter by user type</Button></div>
+          <div className='sbottom'> 
+          <div className='ssbottom'>
+          <div className='fbutton'>
+              <h2> Staff Members</h2>
+              <Button className='filter'> Filter by user type</Button>
+              </div>
+          </div>
+            
             <div className='datatable'>
             <div className='List'>
               <DataGrid className='datagrid'

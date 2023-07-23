@@ -57,6 +57,8 @@ module.exports = (Sequelize,DataTypes) => {
         Receptionist.hasMany(models.ReceptionistContact, {
           foreignKey: 'receptionistId',
           as: 'contacts',
+          onDelete: 'CASCADE',
+      onUpdate : 'CASCADE',
           });
         Receptionist.belongsTo(models.User, {
           foreignKey: 'userId',

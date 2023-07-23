@@ -14,6 +14,8 @@ const db = require ('./models');
 // app.use("/payment",paymentRouter);   
 const courseRouter = require('./routes/Course');
 app.use("/course",courseRouter);
+// const staffRouter = require('./routes/Staff');
+// app.use("/staff",staffRouter);
 const moduleRouter = require('./routes/Module');
 app.use("/module",moduleRouter);
 // const discountRouter = require('./routes/Discount');
@@ -47,7 +49,7 @@ app.use("/admin",adminRouter);
 
 
 
-db.sequelize.sync().then(()=> {
+db.sequelize.sync({force:true}).then(()=> {
 app.listen(3001, () => {
     console.log("Server is running on port 3001");
 });

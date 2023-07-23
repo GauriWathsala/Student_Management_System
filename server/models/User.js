@@ -20,6 +20,27 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
+
+    User.associate = (models) => {
+      User.hasOne(models.Receptionist, {
+        foreignKey: 'userId',
+        as: 'receptionist',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
+      // User.hasOne(models.Teacher, {
+      //   foreignKey: 'userId',
+      //   as: 'teacher',
+      //   onDelete: 'CASCADE',
+      //   onUpdate: 'CASCADE',
+      // });
+      User.hasOne(models.Admin, {
+        foreignKey: 'userId',
+        as: 'admin',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
+    };
   
     return User;
   };

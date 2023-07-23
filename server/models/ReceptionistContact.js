@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
     contactNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      
     },
   });
 
@@ -17,6 +18,7 @@ module.exports = (sequelize) => {
     ReceptionistContact.belongsTo(models.Receptionist, {
       foreignKey: "receptionistId",
       as: "receptionist",
+     
     });
   };
 

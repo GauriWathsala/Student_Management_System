@@ -43,21 +43,25 @@ module.exports = (Sequelize,DataTypes) => {
         qualification :{
             type : DataTypes.TEXT,
             allowNull :true,
-        }
+        },
+        
     });
 
     Admin.associate = (models) => {
         Admin.hasMany(models.AdminContact, {
           foreignKey: 'adminId',
           as: 'contacts',
+          onDelete: 'CASCADE',
+            onUpdate : 'CASCADE',
           
         });
         Admin.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user',
             onDelete: 'CASCADE',
-            onUpdate : 'CASCADE',
-        });
+            onUpdate: 'CASCADE',
+          });
+        
       };
 
       

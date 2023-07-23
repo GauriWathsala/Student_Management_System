@@ -12,7 +12,7 @@ function generateRandomNumbers(length) {
     }
     return result;
   }
-// Add new teacher
+// ************************************Add new teacher************************************
 router.post('/', async (req, res) =>{
     try {
         const { name, address, nic, dob, email, salary, qualifications, contacts , gender} = req.body;
@@ -23,6 +23,8 @@ router.post('/', async (req, res) =>{
           teacherId,name,address, nic, dob,email, salary, qualifications,gender
         };
         const createdTeacher = await Teacher.create(teacher);
+
+        
         // Create teacher contacts
     const contactNumbers = contacts.map((contact) => ({
         teacherId: createdTeacher.teacherId,
@@ -34,6 +36,7 @@ router.post('/', async (req, res) =>{
     const user = {
       userId: createdTeacher.teacherId,
       password: createdTeacher.teacherId,
+      username: createdTeacher.teacherId,
       userType: 'Teacher',
     };
     await User.create(user);
@@ -48,7 +51,7 @@ router.post('/', async (req, res) =>{
 });
 
 
-//Retrieve Teacher
+//***************************Retrieve Teacher**********************************
 router.get("/", async(req,res) => {
     try {
         const listOfTeachers = await Teacher.findAll({
@@ -62,7 +65,7 @@ router.get("/", async(req,res) => {
             model: Module,
             as: 'modules',
             attributes: ['moduleId'],
-            through: { attributes: [] },
+            // through: { attributes: [] },
           },
         ],
           
@@ -74,7 +77,7 @@ router.get("/", async(req,res) => {
       }
  });
 
- // Assign modules to a teacher
+ // ***************************Assign modules to a teacher*****************************
 router.post('/:id/modules', async (req, res) => {
     try {
       const { id } = req.params;
@@ -95,7 +98,7 @@ router.post('/:id/modules', async (req, res) => {
     }
   });
 
-// Remove modules from a teacher
+// **********************Remove modules from a teacher*************************
 router.delete('/:id/modules/:moduleId', async (req, res) => {
     try {
       const { id, moduleId } = req.params;
@@ -115,7 +118,7 @@ router.delete('/:id/modules/:moduleId', async (req, res) => {
     }
   });
 
-// Edit teacher details and contacts
+// *******************************Edit teacher details and contacts*************************
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;

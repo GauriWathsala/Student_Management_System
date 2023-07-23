@@ -53,12 +53,12 @@ module.exports = (sequelize,DataTypes) => {
     });
 
     Student.associate = (models) => {
-        Student.belongsTo(models.User, {
-            foreignKey: 'userId',
-            as: 'user',
-            onDelete: 'CASCADE',
-            onUpdate : 'CASCADE',
-        });
+        // Student.belongsTo(models.User, {
+        //     foreignKey: 'userId',
+        //     as: 'user',
+        //     onDelete: 'CASCADE',
+        //     onUpdate : 'CASCADE',
+        // });
         Student.belongsTo(models.Course, {
             foreignKey: "courseId",
             as: "course",
