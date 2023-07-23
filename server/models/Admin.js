@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (Sequelize,DataTypes) => {
     const Admin = Sequelize.define ("Admin", {
         adminId:  {
-            type :DataTypes.STRING(5),
+            type :DataTypes.INTEGER,
             allowNull :false,
             primaryKey : true,
         },

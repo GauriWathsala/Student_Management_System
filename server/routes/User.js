@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { User, Receptionist, Teacher, Admin,ReceptionistContact, TeacherContact, AdminContact  } = require('../models');
 
-// Update user's username and password
+// **************************Update user's username and password******************************
 router.put('/:id/credentials', async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,7 +42,7 @@ router.put('/:id/credentials', async (req, res) => {
 
 
 
-//delete user
+//*****************************delete user*******************************
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -55,49 +55,32 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-// Get all users with their associated details
+//***************************Get all users with their associated details***************************
 router.get('/', async (req, res) => {
   try {
-    const users = await User.findAll({
-      include :{
-        model :Admin,
-        as : 'admin',
-        include :{
-          model : AdminContact,
-          as : 'contacts',
-          attributes : ['contactNumber'],
-        }
-      }
-    })
-    // const receptionists = await Receptionist.findAll({ 
-    //   include: [{ model: User, as: 'user' }, { model: ReceptionistContact, as: 'contacts',attributes: ['contactNumber'] }],
-    // });
-    // const teachers = await Teacher.findAll({ 
-    //   include: [{ model: User, as: 'user' }, { model: TeacherContact, as: 'contacts',attributes: ['contactNumber'] }], 
-    // });
-    // const admins = await Admin.findAll({ 
-    //   include: [{ model: User, as: 'user' }, { model: AdminContact, as: 'contacts', attributes: ['contactNumber']}], 
-    // });
+    const admins = await Admin.findAll({
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['userId', 'username', 'password', 'userType'],
+        },
+        {
+          model: AdminContact,
+          as: 'contacts',
+          attributes: ['contactNumber'],
+        },
+      ],
+    });
 
-    // const users = [
-    //   // ...receptionists.map((receptionist) => ({
-    //   //   ...receptionist.User.dataValues,
-    //   //   ...receptionist.dataValues,
-    //   // })),
-    //   // ...teachers.map((teacher) => ({
-    //   //   ...teacher.User.dataValues,
-    //   //   ...teacher.dataValues,
-    //   // })),
-    //   ...admins.map((admin) => ({
-    //     ...admin.User.dataValues,
-    //     ...admin.dataValues,
-    //   })),
-    // ];
-    res.json({ users });
-  } catch (error) {
+    res.json({ admins });
+  }catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+
+
 
 module.exports = router;

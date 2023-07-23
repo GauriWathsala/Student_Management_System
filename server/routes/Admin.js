@@ -13,14 +13,14 @@ function generateRandomNumbers(length) {
     return result;
   }
 
-  // Add new Admin
+  // *********************Add new Admin**************************
 
 router.post('/', async (req, res) =>{
     try {
         const { name, email, contacts, nic,dob,salary,gender,qualification } = req.body;
     
         // Create admin
-        const adminId = 'A' + generateRandomNumbers(4);
+        const adminId = generateRandomNumbers(6);
         const admin = {
           adminId,name,email,nic,dob,salary,gender,qualification 
         };
@@ -34,8 +34,10 @@ router.post('/', async (req, res) =>{
       await AdminContact.bulkCreate(contactNumbers);
 
        // Create associated user entry
+const userId = 'A' + generateRandomNumbers(4);
+
     const user = {
-      userId: createdAdmin.adminId,
+      userId,
       username :createdAdmin.adminId,
       password: createdAdmin.adminId,
       userType: 'Admin',
@@ -50,7 +52,7 @@ router.post('/', async (req, res) =>{
     
 }); 
 
-// Retrieve Admin
+// *****************Retrieve Admin*******************
 router.get('/', async (req, res) => {
     try {
       const listOfAdmin = await Admin.findAll({
