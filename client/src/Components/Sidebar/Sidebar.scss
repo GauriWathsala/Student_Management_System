@@ -1,0 +1,99 @@
+.sidebar{
+    // background-color:aqua;
+    flex :1;
+    border-right:0.5px solid #1eb2a6;
+    min-height: 90vh;
+    background-color: white;
+    width: 200px;
+
+    .top{
+        // background-color: aquamarine;
+        height :58px;
+        display : flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .ge{
+        width: 50px;
+        height: 60px;
+    }
+
+    hr{
+        height: 0;
+        border: 0.5px solid #1eb2a6;
+    }
+    .center{
+        padding-left: 5px;
+        padding-right: 50px;
+
+        ul{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            .stitle{
+              font-size: 12px;
+              font-weight: bold;  
+              color: gray;
+              margin-top: 15px;
+              margin-bottom:5px;
+            }
+
+            li{
+                display: flex;
+                align-items: center;
+                padding: 5px;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: #89dfd8;
+                }
+
+                .dicon{
+                    font-size: 18px;
+                    color: #0d978c;
+                }
+                span{
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: gray;
+                    margin-left: 15px;
+
+                    Link.Dash-to-page{
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: gray;
+                        margin-left: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+    .bottom{
+        display: flex;
+        align-items: center;
+        margin: 10px;
+
+        .coloroption{
+           cursor: pointer; 
+        //    margin: 5px;
+
+           .modeicon{
+            font-size: 20px;
+            margin: 10px;
+            color: gray;
+
+            // &:first-child {
+            //     color: gray; 
+            //   }
+            // &:last-child {
+            //     color: yellow; 
+            //   } 
+            
+           }
+        }
+    }
+}

@@ -1,0 +1,65 @@
+.e-d-icons{
+    align-items: center;
+    display: flex;
+    .edicon{
+      font-size: 17px;
+      color: #1eb2a6;
+      margin: 15px;
+      
+    }
+  }
+  .header-cell {
+    background-color:#1eb2a6 ;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    font-size: medium;
+  }
+  
+.teacher .one{
+    width: 100%;
+    height: 10vh;
+    //background-color: aqua;
+}
+.teacher .two{
+    display: flex;
+
+    .two-one {
+        background-color: white;
+        align-items: center;
+        //padding: 20px;
+        //width: 20%;
+        //height: 100%
+    }
+    .two-two{
+       align-content: center;
+       //background-color: black;
+       width: 100%;
+       .sbottom{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: 60%;
+        
+
+        .List{
+            height: 400;
+            width: 80%;
+            align-items: center;
+            border: 0.5px solid #1eb2a6;
+
+            .datagrid-row {
+              &.even-row {
+                background-color: green;
+                color: white;
+              }
+    
+              &.odd-row {
+                background-color: white;
+                color: black;
+              }
+            }
+         }
+       }
+    }
+}
