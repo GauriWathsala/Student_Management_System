@@ -12,12 +12,41 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel'; 
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+
 
 
 const AddstaffForm = () => {
+
+  const [role, setRole] = React.useState('');
+
+  const handleChange = (event) => {
+    setRole(event.target.value);
+  };
+
+  
   return (
     <form className='addStaff'>
       <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <InputLabel>Role</InputLabel>
+        <FormControl required label="Required" variant="filled" sx={{ m: 1, minWidth: 120 }} size="small">
+        <Select
+          labelId="demo-simple-select-filled-label"
+          id="demo-simple-select-filled"
+          value={role}
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>Admin</MenuItem>
+          <MenuItem value={20}>Teacher</MenuItem>
+          <MenuItem value={30}>Receptionist</MenuItem>
+        </Select>
+      </FormControl>
+        </Grid>
         <Grid item xs={6}>
         <InputLabel>First Name</InputLabel>
           <TextField required id="filled-required" label="Required" variant="filled" size="small"   />

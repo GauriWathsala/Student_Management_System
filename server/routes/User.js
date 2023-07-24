@@ -56,30 +56,10 @@ router.delete('/:id', async (req, res) => {
 
 
 //***************************Get all users with their associated details***************************
-router.get('/', async (req, res) => {
-  try {
-    const admins = await Admin.findAll({
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['userId', 'username', 'password', 'userType'],
-        },
-        {
-          model: AdminContact,
-          as: 'contacts',
-          attributes: ['contactNumber'],
-        },
-      ],
-    });
-
-    res.json({ admins });
-  }catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
-  }
+router.get("/", async(req,res) => {
+  const userCredentials = await User.findAll();
+  res.json(userCredentials);
 });
-
 
 
 

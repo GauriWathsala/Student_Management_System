@@ -129,6 +129,8 @@ router.delete('/:id', async (req, res) => {
       await Receptionist.destroy({ where: { receptionistId: id } });
       await User.destroy({ where: { userId: id } });
       await ReceptionistContact.destroy({ where: { receptionistId: id } });
+      await Staff.destroy({ where: { userId: id } });
+      await StaffContact.destroy({ where: { userId: id } });
       res.json({ message: 'Receptionist deleted successfully' });
     } catch (error) {
       console.error(error);

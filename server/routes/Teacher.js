@@ -149,7 +149,7 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { firstname,lastname,fullname, address, nic, dob, email, salary, qualifications, contacts,gender } = req.body;
 
-    // Update receptionist details
+    // Update teacher details
     await Teacher.update(
       { firstname,lastname,fullname, address, nic, dob, email, salary,qualifications,gender },
       { where: { teacherId: id } }
@@ -195,6 +195,8 @@ router.delete('/:id', async (req, res) => {
       await Teacher.destroy({ where: { teacherId: id } });
       await User.destroy({ where: { userId: id}});
       await TeacherContact.destroy({ where: { teacherId: id } });
+      await Staff.destroy({ where: { userId: id } });
+      await StaffContact.destroy({ where: { userId: id } });
       res.json({ message: 'Teacher deleted successfully' });
     } catch (error) {
       console.error(error);

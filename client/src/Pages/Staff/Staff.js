@@ -14,7 +14,7 @@ import { Button } from '@mui/material';
 // import DialogContent from '@mui/material/DialogContent';
 // import DialogActions from '@mui/material/DialogActions';
 
-const Receptionist = () => {
+const Staff = () => {
 
   //**************Dialogbox************************** */
   // // State to manage the dialog visibility
@@ -48,16 +48,15 @@ const Receptionist = () => {
         const staff = response.data;
         const formattedRows = staff.map((staff) => ({
           id: staff.userId,
-          name : staff.firstname,
+          name : `${staff.firstname} ${staff.lastname}`,
           contact: staff.contacts[0]?.contactNumber || '',
           email: staff.email,
-          //gender :staff.gender,
           nic :staff.nic,
           role : staff.userType
         }));
         setRows(formattedRows);
       }catch (error){
- console.error('Error fetching teacher:', error);
+ console.error('Error fetching staff:', error);
       }
     }
     fetchData();
@@ -113,7 +112,7 @@ const Receptionist = () => {
         </div>
         <div className='two-two'>
           <div className='shead'>
-            <SearchAdd currentPage='receptionist' />
+            <SearchAdd currentPage='staff' />
           </div>
           <div className='sbottom'>
             <div className='ssbottom'>
@@ -122,7 +121,7 @@ const Receptionist = () => {
                   <Button className='filter' > Filter by user type</Button>
               </div>
             </div>
-   <div className='datatable'>
+          <div className='datatable'>
             <div className='List'>
               <DataGrid className='datagrid'
                 rows={rows}
@@ -146,4 +145,4 @@ const Receptionist = () => {
   );
 };
 
-export default Receptionist;
+export default Staff;

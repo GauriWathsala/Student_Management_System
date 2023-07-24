@@ -9,13 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button'; 
 import { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Staff from '../../Pages/Staff/Staff';
 import AddstaffForm from '../Forms/AddstaffForm';
-import { red } from '@mui/material/colors';
-//import { AddstaffForm } from '../Forms/AddstaffForm';
-import { makeStyles } from '@mui/material/styles';
-
 
 
 const SearchAdd = ({currentPage}) => {
@@ -48,16 +42,7 @@ const SearchAdd = ({currentPage}) => {
     setDialogOpen(false);
   };
 
-  const handleAddItem = () => {
-    if (currentPage === 'receptionist') {
-      
-    } else if (currentPage === 'teacher') {
-      alert ('moko')
-    }
-   
-   
-  };
-return (
+  return (
     <div className='searchadd'>
         <div className='swrapper'>
             <div className='searchbar'>

@@ -102,6 +102,8 @@ router.delete('/:id', async (req, res) => {
       await Admin.destroy({ where: { adminId: id } });
       await User.destroy({ where: { userId: id}});
       await AdminContact.destroy({ where: { adminId: id } });
+      await Staff.destroy({ where: { userId: id } });
+      await StaffContact.destroy({ where: { userId: id } });
       res.json({ message: 'Admin deleted successfully' });
     } catch (error) {
       console.error(error);
