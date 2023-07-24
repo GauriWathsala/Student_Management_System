@@ -15,12 +15,10 @@ import { Login } from './Components/Login/Login';
 import Dashboard from './HomeDashboard/MainDashboard/Dashboard'
 import Student from './Pages/Student/Student';
 import Teacher from './Pages/Teacher/Teacher';
-import Receptionist from './Pages/Receptionist/Receptionist';
-import AddTeacher from './Pages/Teacher/AddTeacher';
-import AddRecep from './Pages/Receptionist/AddRecep';
-import EditRecept from './Pages/Receptionist/EditRecept';
+import Staff from './Pages/Staff/Staff';
+import EditRecept from './Pages/Staff/EditRecept';
 import EditTeacher from './Pages/Teacher/EditTeacher';
-import AddstaffForm from './Components/Forms/AddstaffForm';
+
 
 function App() {
   return(
@@ -38,12 +36,10 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/student' element={<Student />}></Route>
         <Route path='/teacher' element={<Teacher />}></Route>
-        <Route path='/receptionist' element={<Receptionist />}></Route>
-        <Route path='/addteacher' element={<AddTeacher />}></Route>
-        <Route path = '/addreceptionist' element={<AddRecep />} ></Route>
+        <Route path='/staff' element={<Staff />}></Route>
         <Route path = '/editrecept/:id' element={<EditRecept />} ></Route>
         <Route path = '/editTeacher/:id' element={<EditTeacher />} ></Route>
-        <Route path = '/addform' element={<AddstaffForm />} ></Route>
+       
 
       </Routes>
       </BrowserRouter>

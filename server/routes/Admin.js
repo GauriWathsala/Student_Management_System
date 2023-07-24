@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Admin, AdminContact,User} = require("../models");
+const {Admin, AdminContact,User,Staff,StaffContact} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -17,32 +17,56 @@ function generateRandomNumbers(length) {
 
 router.post('/', async (req, res) =>{
     try {
-        const { name, email, contacts, nic,dob,salary,gender,qualification } = req.body;
+        const {  firstname, lastname,fullname, address, email, contacts, nic,dob,salary,gender,qualifications } = req.body;
     
         // Create admin
-        const adminId = generateRandomNumbers(6);
+        const adminId = 'A'+ generateRandomNumbers(4);
         const admin = {
-          adminId,name,email,nic,dob,salary,gender,qualification 
+          adminId,firstname, lastname,fullname,email,nic,dob,salary,gender,qualifications,address 
         };
         const createdAdmin = await Admin.create(admin);
 
         // Create admin contacts
-    const contactNumbers = contacts.map((contact) => ({
+      const contactNumbers = contacts.map((contact) => ({
         adminId: createdAdmin.adminId,
         contactNumber: contact,
       }));
       await AdminContact.bulkCreate(contactNumbers);
 
-       // Create associated user entry
-const userId = 'A' + generateRandomNumbers(4);
-
+           // Create associated user entry
     const user = {
-      userId,
-      username :createdAdmin.adminId,
+      userId: createdAdmin.adminId,
       password: createdAdmin.adminId,
+      username: createdAdmin.adminId,
       userType: 'Admin',
     };
     await User.create(user);
+
+      //Create associated Staff entry
+      const staff = {
+        userId: createdAdmin. adminId,
+        firstname : createdAdmin.firstname,
+        lastname: createdAdmin.lastname,
+        fullname: createdAdmin.fullname,
+        address: createdAdmin.address,
+        nic:  createdAdmin.nic,
+        dob: createdAdmin.dob,
+        email: createdAdmin.email,
+        qualifications:createdAdmin.qualifications,
+        gender :createdAdmin.gender,
+        password: user.password,
+        username: user.username,
+        userType: user.userType,
+      };
+      await Staff.create(staff);
+
+       // Create associated StaffContact entries
+    const staffContacts = contacts.map((contact) => ({
+      userId: createdAdmin.adminId,
+      contactNumber: contact,
+    }));
+    await StaffContact.bulkCreate(staffContacts);
+  
   
       res.json(createdAdmin);
     } catch (error) {
@@ -51,6 +75,8 @@ const userId = 'A' + generateRandomNumbers(4);
     }
     
 }); 
+
+
 
 // *****************Retrieve Admin*******************
 router.get('/', async (req, res) => {

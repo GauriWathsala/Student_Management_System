@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Teacher, TeacherContact,Module,User} = require("../models");
+const {Teacher, TeacherContact,Module,User,Staff,StaffContact} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -15,12 +15,12 @@ function generateRandomNumbers(length) {
 // ************************************Add new teacher************************************
 router.post('/', async (req, res) =>{
     try {
-        const { name, address, nic, dob, email, salary, qualifications, contacts , gender} = req.body;
+        const { firstname, lastname,fullname, address, nic, dob, email, salary, qualifications, contacts , gender} = req.body;
     
         // Create teacher
         const teacherId = 'T' + generateRandomNumbers(4);
         const teacher = {
-          teacherId,name,address, nic, dob,email, salary, qualifications,gender
+          teacherId,firstname,lastname,fullname,address, nic, dob,email, salary, qualifications,gender
         };
         const createdTeacher = await Teacher.create(teacher);
 
@@ -40,6 +40,31 @@ router.post('/', async (req, res) =>{
       userType: 'Teacher',
     };
     await User.create(user);
+
+    //Create associated Staff entry
+    const staff = {
+      userId: createdTeacher.teacherId,
+      firstname : createdTeacher.firstname,
+      lastname: createdTeacher.lastname,
+      fullname: createdTeacher.fullname,
+      address: createdTeacher.address,
+      nic:  createdTeacher.nic,
+      dob: createdTeacher.dob,
+      email: createdTeacher.email,
+      qualifications:createdTeacher. qualifications,
+      gender :createdTeacher.gender,
+      password: user.password,
+      username: user.username,
+      userType: user.userType,
+    };
+    await Staff.create(staff);
+
+    // Create associated StaffContact entries
+    const staffContacts = contacts.map((contact) => ({
+      userId: createdTeacher.teacherId,
+      contactNumber: contact,
+    }));
+    await StaffContact.bulkCreate(staffContacts);
 
     res.json(createdTeacher);
     } 
@@ -122,11 +147,11 @@ router.delete('/:id/modules/:moduleId', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, address, nic, dob, email, salary, qualifications, contacts,gender } = req.body;
+    const { firstname,lastname,fullname, address, nic, dob, email, salary, qualifications, contacts,gender } = req.body;
 
     // Update receptionist details
     await Teacher.update(
-      { name, address, nic, dob, email, salary,qualifications,gender },
+      { firstname,lastname,fullname, address, nic, dob, email, salary,qualifications,gender },
       { where: { teacherId: id } }
     );
 

@@ -28,7 +28,7 @@ const Sidebar = () => {
 
                 <p className='stitle'> User Management</p> 
                 <li> <Link to = '/student' className='dash-to-page'> <SchoolIcon className='dicon'/> <span>  Student</span> </Link> </li>
-                <li> <Link to = '/receptionist' className='dash-to-page'><Face4Icon className='dicon'  /> <span>Staff </span></Link> </li>
+                <li> <Link to = '/staff' className='dash-to-page'><Face4Icon className='dicon'  /> <span>Staff </span></Link> </li>
                
 
                 <p className='stitle'>Institute Management</p> 

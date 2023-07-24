@@ -10,7 +10,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button'; 
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Receptionist from '../../Pages/Receptionist/Receptionist';
+import Staff from '../../Pages/Staff/Staff';
 import AddstaffForm from '../Forms/AddstaffForm';
 import { red } from '@mui/material/colors';
 //import { AddstaffForm } from '../Forms/AddstaffForm';
@@ -72,10 +72,10 @@ return (
             </div>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog} className='dialogBox'>
         <DialogTitle>
-          {currentPage === 'receptionist' ? <h2 style={{color:'#1eb2a6'}}>Add New Staff Member</h2>:"Tama Hadala Naa"}
+          {currentPage === 'staff' ? <h2 style={{color:'#1eb2a6'}}>Add New Staff Member</h2>:"Tama Hadala Naa"}
         </DialogTitle>
         <DialogContent>
-          {currentPage === 'receptionist' ? <AddstaffForm /> : 'hellow' }
+          {currentPage === 'staff' ? <AddstaffForm /> : 'hellow' }
         </DialogContent>
         <DialogActions>
           <Button style={cancelButtonStyles} onClick={handleCloseDialog} color='primary'>

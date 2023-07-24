@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Receptionist, ReceptionistContact,User} = require("../models");
+const {Receptionist, ReceptionistContact,User,Staff,StaffContact} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -17,12 +17,12 @@ function generateRandomNumbers(length) {
 
 router.post('/', async (req, res) =>{
     try {
-        const { name, address, nic, dob, email, salary,contacts ,gender,qualification} = req.body;
+        const { firstname, lastname,fullname, address, nic, dob, email, salary,contacts ,gender,qualifications} = req.body;
     
         // Create receptionist
         const receptionistId = 'R' + generateRandomNumbers(4);
         const receptionist = {
-          receptionistId,name,address, nic, dob,email, salary,gender,qualification
+          receptionistId,firstname, lastname,fullname,address, nic, dob,email, salary,gender,qualifications
         };
         const createdReceptionist = await Receptionist.create(receptionist);
 
@@ -41,6 +41,31 @@ router.post('/', async (req, res) =>{
         contactNumber: contact,
       }));
       await ReceptionistContact.bulkCreate(contactNumbers);
+
+       //Create associated Staff entry
+    const staff = {
+      userId: createdReceptionist.receptionistId,
+      firstname : createdReceptionist.firstname,
+      lastname: createdReceptionist.lastname,
+      fullname: createdReceptionist.fullname,
+      address: createdReceptionist.address,
+      nic:  createdReceptionist.nic,
+      dob: createdReceptionist.dob,
+      email: createdReceptionist.email,
+      qualifications:createdReceptionist. qualifications,
+      gender :createdReceptionist.gender,
+      password: user.password,
+      username: user.username,
+      userType: user.userType,
+    };
+    await Staff.create(staff);
+
+    // Create associated StaffContact entries
+    const staffContacts = contacts.map((contact) => ({
+      userId: createdReceptionist.receptionistId,
+      contactNumber: contact,
+    }));
+    await StaffContact.bulkCreate(staffContacts);
 
     
     res.json(createdReceptionist);

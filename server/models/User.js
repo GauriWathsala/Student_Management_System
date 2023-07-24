@@ -40,6 +40,12 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       });
+      User.hasOne(models.Staff, {
+        foreignKey: 'userId',
+        as: 'staff',
+        onDelete: 'CASCADE',
+        onUpdate : 'CASCADE',
+        });
     };
     
 

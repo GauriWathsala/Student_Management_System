@@ -44,15 +44,16 @@ const Receptionist = () => {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/teacher');
-        const teachers = response.data;
-        const formattedRows = teachers.map((teacher) => ({
-          id: teacher.teacherId,
-          name: teacher.name,
-          contact: teacher.contacts[0]?.contactNumber || '',
-          email: teacher.email,
-          gender :teacher.gender,
-          nic :teacher.nic,
+        const response = await axios.get('http://localhost:3001/staff');
+        const staff = response.data;
+        const formattedRows = staff.map((staff) => ({
+          id: staff.userId,
+          name : staff.firstname,
+          contact: staff.contacts[0]?.contactNumber || '',
+          email: staff.email,
+          //gender :staff.gender,
+          nic :staff.nic,
+          role : staff.userType
         }));
         setRows(formattedRows);
       }catch (error){
@@ -71,10 +72,10 @@ const Receptionist = () => {
 
       const handleDelete = async () => {
         try{
-          await axios.delete(`http://localhost:3001/teacher/${params.row.id}`);
+          await axios.delete(`http://localhost:3001/staff/${params.row.id}`);
           setRows((prevRows) => prevRows.filter((row) => row.id !== params.row.id));
         }catch(error){
-          console.error('Error deleting receptionist:', error);
+          console.error('Error deleting staff:', error);
         }
       }
     const handleEdit = () => {
@@ -92,13 +93,13 @@ const Receptionist = () => {
     }
   }
   const columns = [
-    { field: 'id', headerName: 'User Name', width: 120, headerClassName: 'header-cell' },
+    { field: 'id', headerName: 'Staff ID', width: 120, headerClassName: 'header-cell' },
     { field: 'name', headerName: 'Name', width: 200, headerClassName: 'header-cell' },
     { field: 'contact', headerName: 'Contact NO', width: 150, headerClassName: 'header-cell' },
     { field: 'nic', headerName: 'NIC', width: 150, headerClassName: 'header-cell' },
     { field: 'email', headerName: 'Email', width: 200, headerClassName: 'header-cell' },
-    //{ field: 'role', headerName: 'User Type', width: 150, headerClassName: 'header-cell' },
-    { field: 'gender', headerName: 'Gender', width: 100, headerClassName: 'header-cell' },
+    { field: 'role', headerName: 'User Type', width: 100, headerClassName: 'header-cell' },
+   // { field: 'gender', headerName: 'Gender', width: 100, headerClassName: 'header-cell' },
     iconColumn,
    ];
     return (

@@ -7,10 +7,18 @@ module.exports = (Sequelize,DataTypes) => {
             allowNull :false,
             primaryKey : true,
         },
-        name:  {
-            type :DataTypes.STRING,
-            allowNull :false,
-        },
+        firstname:  {
+          type :DataTypes.STRING,
+          allowNull :false,
+      },
+      lastname:  {
+          type :DataTypes.STRING,
+          allowNull :false,
+      },
+      fullname:  {
+          type :DataTypes.STRING,
+          allowNull :false,
+      },
        address:  {
             type :DataTypes.STRING,
             allowNull :false,
@@ -49,7 +57,8 @@ module.exports = (Sequelize,DataTypes) => {
           gender :{
             type :DataTypes.ENUM('Male','Female','Other'),
             allowNull : false,
-          }
+          },
+          
     });
 
     Teacher.associate = (models) => {
@@ -69,6 +78,12 @@ module.exports = (Sequelize,DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate : 'CASCADE',
         });
+        Teacher.belongsTo(models.Staff, {
+          foreignKey: 'userId',
+          as: 'staff',
+          onDelete: 'CASCADE',
+          onUpdate : 'CASCADE',
+          });
     }; 
 
    

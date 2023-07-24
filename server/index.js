@@ -18,6 +18,8 @@ app.use("/course",courseRouter);
 // app.use("/staff",staffRouter);
 const moduleRouter = require('./routes/Module');
 app.use("/module",moduleRouter);
+const staffRouter = require('./routes/Staff');
+app.use("/staff",staffRouter);
 // const discountRouter = require('./routes/Discount');
 // app.use("/discount",discountRouter);
 // const paneltyRouter = require('./routes/Panelty');
@@ -40,6 +42,7 @@ const userRouter = require('./routes/User');
 app.use("/user",userRouter);
 const adminRouter = require('./routes/Admin');
 app.use("/admin",adminRouter);
+
 // const studentNotificationRouter = require('./routes/StudentNotification');
 // app.use("/studentNotification",studentNotificationRouter);
 

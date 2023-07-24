@@ -3,15 +3,27 @@ const { DataTypes } = require("sequelize");
 module.exports = (Sequelize,DataTypes) => {
     const Admin = Sequelize.define ("Admin", {
         adminId:  {
-            type :DataTypes.INTEGER,
+            type :DataTypes.STRING(5),
             allowNull :false,
             primaryKey : true,
         },
-        name:  {
+        firstname:  {
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
+        lastname:  {
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
+        fullname:  {
             type :DataTypes.STRING,
             allowNull :false,
         },
         email:  {
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
+        address:  {
             type :DataTypes.STRING,
             allowNull :false,
         },
@@ -61,6 +73,12 @@ module.exports = (Sequelize,DataTypes) => {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           });
+          Admin.belongsTo(models.Staff, {
+            foreignKey: 'userId',
+            as: 'staff',
+            onDelete: 'CASCADE',
+            onUpdate : 'CASCADE',
+            });
         
       };
 
