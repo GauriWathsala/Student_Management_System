@@ -20,6 +20,7 @@ import AddTeacher from './Pages/Teacher/AddTeacher';
 import AddRecep from './Pages/Receptionist/AddRecep';
 import EditRecept from './Pages/Receptionist/EditRecept';
 import EditTeacher from './Pages/Teacher/EditTeacher';
+import AddstaffForm from './Components/Forms/AddstaffForm';
 
 function App() {
   return(
@@ -42,6 +43,7 @@ function App() {
         <Route path = '/addreceptionist' element={<AddRecep />} ></Route>
         <Route path = '/editrecept/:id' element={<EditRecept />} ></Route>
         <Route path = '/editTeacher/:id' element={<EditTeacher />} ></Route>
+        <Route path = '/addform' element={<AddstaffForm />} ></Route>
 
       </Routes>
       </BrowserRouter>

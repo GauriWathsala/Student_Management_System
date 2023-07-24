@@ -16,6 +16,20 @@
         justify-content:space-between ;
         //background-color: antiquewhite;
 
+            .dialogBox {
+                .MuiDialog-paper {
+                  width: 600px; 
+                  min-height: 300px; 
+                  max-height: 80vh; 
+
+                  &.MuiDialogTitle-root {
+                    background-color: #1eb2a6; /* Set the background color for the dialog title */
+                    color: #fff; 
+                }
+               
+                 }
+                }
+
         .searchbar{
             display: flex;
             align-items: center;
@@ -62,3 +76,8 @@
         }
     }
 }
+.swrapper .dialogBox .MuiDialogActions-root #cancel {
+    background-color: #fff;
+    border: 0.5px solid #1eb2a6;
+    color: #1eb2a6;
+  }
