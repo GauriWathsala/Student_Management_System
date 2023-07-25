@@ -18,7 +18,9 @@ import Teacher from './Pages/Teacher/Teacher';
 import Staff from './Pages/Staff/Staff';
 import EditRecept from './Pages/Staff/EditRecept';
 import EditTeacher from './Pages/Teacher/EditTeacher';
-
+import Course from './Pages/CourseModules/Course';
+import Module from './Pages/CourseModules/Module';
+import CourseGrid from './Components/Grid/CourseGrid';
 
 function App() {
   return(
@@ -39,8 +41,9 @@ function App() {
         <Route path='/staff' element={<Staff />}></Route>
         <Route path = '/editrecept/:id' element={<EditRecept />} ></Route>
         <Route path = '/editTeacher/:id' element={<EditTeacher />} ></Route>
-       
-
+        <Route path = '/course' element={<Course />} ></Route>
+        <Route path = '/module' element={<Module />} ></Route>
+        <Route path = '/coursegrid' element={<CourseGrid />} ></Route>
       </Routes>
       </BrowserRouter>
     </div>

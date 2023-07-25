@@ -10,11 +10,12 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button'; 
 import { useState } from 'react';
 import AddstaffForm from '../Forms/AddstaffForm';
+import EastIcon from '@mui/icons-material/East';
 
 
 const SearchAdd = ({currentPage}) => {
   const navigate = useNavigate ();
-
+  let showEastIcon = currentPage === 'course';
   // Styles for the Cancel and Add button
   const cancelButtonStyles = {
     backgroundColor: '#fff',
@@ -26,6 +27,18 @@ const SearchAdd = ({currentPage}) => {
       border: '0.5px solid #1eb2a6',
       color: '#fff',
       };
+
+  //********************ADD Button Control in btext class div************** */   
+  let buttonText = '';
+  let showIcon = false;
+
+  if (currentPage === 'staff' || currentPage === 'student') {
+    buttonText = 'Add';
+    showIcon = true;
+  } else if (currentPage === 'course') {
+    buttonText = 'Modules';
+    showIcon = false;
+  }
     
   
   //**************Dialogbox************************** */
@@ -34,7 +47,12 @@ const SearchAdd = ({currentPage}) => {
 
   // Function to handle opening the filter dialog
   const handleOpenDialog = () => {
-    setDialogOpen(true);
+    if (currentPage === 'course'){
+      navigate('/module');
+    }else {
+      setDialogOpen(true);
+    }
+    
   };
 
   // Function to handle closing the filter dialog
@@ -51,8 +69,9 @@ const SearchAdd = ({currentPage}) => {
             </div>
             <div className='addbutton'>
                 <button className='add' onClick={handleOpenDialog} >
-                    <div className='sicon'><AddCircleIcon /></div>
-                    <div className='btext'><span>Add</span></div>
+                    <div className='sicon'> {showIcon && <AddCircleIcon />}</div>
+                    <div className='btext'><span>{buttonText}</span>
+                    {showEastIcon && <EastIcon />}</div>
                     </button>
             </div>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog} className='dialogBox'>

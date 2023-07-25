@@ -32,7 +32,7 @@ const Sidebar = () => {
                
 
                 <p className='stitle'>Institute Management</p> 
-                <li> <LibraryBooksIcon className='dicon' /> <span>Courses & Modules</span> </li>
+                <li><Link to = '/course' className='dash-to-page'> <LibraryBooksIcon className='dicon' /> <span>Courses & Modules</span></Link> </li>
                 <li> <MenuBookIcon className='dicon' /> <span>Books</span> </li>
                 <li> <EditNoteIcon className='dicon'/> <span>Exams</span> </li>
                 <li> <NotificationsIcon className='dicon' /> <span>Notifications</span> </li>

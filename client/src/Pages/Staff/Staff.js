@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Receptionist.scss';
+import './Staff.scss';
 import { DbHeader } from '../../Components/DbHeader/DbHeader';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import SearchAdd from '../../Components/DSearchAdd/SearchAdd';
@@ -93,7 +93,7 @@ const Staff = () => {
   }
   const columns = [
     { field: 'id', headerName: 'Staff ID', width: 120, headerClassName: 'header-cell' },
-    { field: 'name', headerName: 'Name', width: 200, headerClassName: 'header-cell' },
+    { field: 'name', headerName: 'Name', width: 150, headerClassName: 'header-cell' },
     { field: 'contact', headerName: 'Contact NO', width: 150, headerClassName: 'header-cell' },
     { field: 'nic', headerName: 'NIC', width: 150, headerClassName: 'header-cell' },
     { field: 'email', headerName: 'Email', width: 200, headerClassName: 'header-cell' },
@@ -102,7 +102,7 @@ const Staff = () => {
     iconColumn,
    ];
     return (
-    <div className='receptionist'>
+    <div className='staff'>
       <div className='one'>
         <DbHeader />
       </div>
@@ -117,7 +117,7 @@ const Staff = () => {
           <div className='sbottom'>
             <div className='ssbottom'>
               <div className='fbutton'>
-                  <h2> Staff Members</h2>
+                  <h1> Staff Members</h1>
                   <Button className='filter' > Filter by user type</Button>
               </div>
             </div>

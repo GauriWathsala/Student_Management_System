@@ -1,0 +1,91 @@
+.course{
+    width: 100%;
+}
+.course .one{
+    width: 100%;
+    height: 10vh;
+}
+.course .two{
+    display: flex;
+
+    .two-one {
+        background-color: white;
+        align-items: center;
+        //padding: 20px;
+        width: 13%;
+        //height: 100%
+    }
+    .two-two{
+        align-items: center;
+        width: 87%;
+
+        .sbottom{
+            position: relative;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            height: 90%;
+
+            .ssbottom{
+                //background-color: red;
+                width: 100%;
+                align-items: center;
+                //background-color: palevioletred;
+                //padding: 10px;
+                margin-top: 20px;
+
+                .fbutton{
+                    width: 70%;
+                    padding: 10px;
+                  display: flex;
+                  justify-content:space-between ;
+                  margin-left: 150px;
+                
+
+                  h1{
+                    font-size: 45px;
+                    font-weight: 900;
+                  }
+
+                  .filter{
+                    
+                    color: #1eb2a6;
+                    background-color: white;
+                    margin-left: 50px;
+                    height: 40px;
+                    border: 0.5px solid #1eb2a6;
+        
+                    &:hover{
+                      background-color: #1eb2a6;
+                      color: white;
+                      border: 0.5px solid #1eb2a6;
+                    }
+                  }
+                }
+            }
+            .coursedetails{
+               width: 100%;
+                padding: 10px;
+                margin-left: 20px;
+                grid-template-columns: repeat(4, 1fr); /* 4 grids in each row */
+                grid-gap: 20px; 
+                display: grid;
+                //background-color: pink;
+               
+            }
+      
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .coursedetails {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .coursedetails {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }

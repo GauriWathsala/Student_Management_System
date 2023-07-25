@@ -1,0 +1,57 @@
+.course-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);; /* 4 grids in each row */
+    grid-gap: 20px; /* Adjust the gap between grids */
+    background-color: #aaf1eac7;
+    align-items: center;
+    border: 0.5px solid #1eb2a6;
+  }
+  
+  .course-grid {
+    //color: #c25252; /* Adjust the background color of the grid */
+    padding: 30px; /* Adjust the padding of the grid */
+    //background-color: rgba(213, 102, 219, 0.393);
+    width: 207%;
+
+    .content{
+        margin-left: 2px;
+        .course-grid h3 {
+            margin: 0px;
+          }
+        .vedbitton{
+            //color: white;
+
+            #view{
+                border: 0.5px solid blue;
+                //background-color: rgb(100, 127, 234);
+                &:hover {
+                    background-color: transparent;
+                    color: blue; /* Change the text color back to black */
+                  }
+            }
+            #delete{
+                border: 0.5px solid red;
+                margin-left: 5px;
+                &:hover {
+                    background-color: transparent;
+                    color: red; /* Change the text color back to black */
+                  }
+            }
+        }
+
+    }
+  }
+  
+  
+  
+  .course-grid p {
+    margin: 8px 0;
+  }
+  
+  /* Media query for responsive layout (1 grid in each row on smaller screens) */
+  @media screen and (max-width: 768px) {
+    .course-grid-container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  
