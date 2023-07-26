@@ -20,7 +20,8 @@ import EditRecept from './Pages/Staff/EditRecept';
 import EditTeacher from './Pages/Teacher/EditTeacher';
 import Course from './Pages/CourseModules/Course';
 import Module from './Pages/CourseModules/Module';
-import CourseGrid from './Components/Grid/CourseGrid';
+import EditCourse from './Components/Forms/EditCourse';
+
 
 function App() {
   return(
@@ -43,7 +44,7 @@ function App() {
         <Route path = '/editTeacher/:id' element={<EditTeacher />} ></Route>
         <Route path = '/course' element={<Course />} ></Route>
         <Route path = '/module' element={<Module />} ></Route>
-        <Route path = '/coursegrid' element={<CourseGrid />} ></Route>
+        <Route path = '/editcourse' element={<EditCourse />} ></Route>
       </Routes>
       </BrowserRouter>
     </div>

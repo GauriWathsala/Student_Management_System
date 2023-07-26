@@ -78,6 +78,36 @@
     }
     }
   }
+
+
+  .course-add-fields {
+   // display: flex;
+    flex-direction: column;
+
+    .text-fields {
+      margin-bottom: 15px;
+      width: 100%; /* Adjust the width to your preference */
+      max-width: 400px;
+
+      input,
+      select {
+        height: 40px; /* Adjust the height of the input fields and select */
+        padding: 8px 12px; /* Adjust the padding inside the input fields and select */
+        font-size: 16px; /* Adjust the font size to your preference */
+      }
+      select {
+        
+        -webkit-appearance: none; /* Remove default arrow in Safari */
+        -moz-appearance: none; /* Remove default arrow in Firefox */
+        appearance: none; /* Remove default arrow in other browsers */
+        background-color: transparent; /* Set background-color to transparent to show custom dropdown style */
+        //background-image: url("path/to/your/custom-arrow.svg"); /* Add custom arrow image */
+        background-repeat: no-repeat;
+        background-position: right center;
+        padding-right: 20px; /* Add padding to create space for custom arrow */
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {

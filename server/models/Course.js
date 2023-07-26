@@ -19,7 +19,12 @@ module.exports = (Sequelize,DataTypes) => {
             type :DataTypes.INTEGER,
             allowNull :false,
         },
+        durationType: {
+            type : DataTypes.ENUM('Days','Months','years', 'Hours'),
+            allowNull :false,
+        },
         
+
     });
 
     Course.associate = (models) => {
