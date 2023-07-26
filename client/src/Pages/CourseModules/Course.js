@@ -35,34 +35,38 @@ useEffect(() => {
           console.error('Error deleting course:', error);
         }
       }
-
+    
   return (
     <div className='course'>
         <div className='one'>
         <DbHeader />
         </div>
-        <div className='two'>
-        <div className='two-one'>
+        <div className='bottom-page'>
+        <div className='side-bar'>
         <Sidebar />
         </div>
-        <div className='two-two'>
-        <div className='shead'>
-            <SearchAdd currentPage='course' />
-          </div>
-          <div className='sbottom'>
-          <div className='ssbottom'>
-              <div className='fbutton'>
-                  <h1> Courses</h1>
-                  <Button className='filter' > ADD COURSE</Button>
-              </div>
+        <div className='search-bar'>
+        <div className='seach-button-component'>
+        <div className='search-add'> 
+        <SearchAdd currentPage='course' />
+        </div>
+           </div>
+          <div className='title-button'>
+          <div className='title-button-div'>
+            <h1 id='course-title'> Courses</h1>
+            <Button id='add-course-button' > ADD COURSE</Button>
             </div>
-            <div className='coursedetails'>
+            </div>
+            <div className='coursedetails'> 
+            <div className='grids'>
             {courses.map((course) => (
                 <CourseGrid key={course.courseId} course={course} onDelete={handleDelete} />
               ))}
-
             </div>
-          </div>
+           
+           
+            </div>
+          
         </div>
         </div>
     </div>

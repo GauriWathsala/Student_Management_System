@@ -193,7 +193,7 @@ const handleAddModule = async () => {
 
   return (
     <div className='module'>
-      <div className='main-header'headerrr>
+      <div className='main-header'>
          <DbHeader /> 
       </div>
     <div className='bottom-header'>

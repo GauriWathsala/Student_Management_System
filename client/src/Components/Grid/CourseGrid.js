@@ -33,13 +33,7 @@ const CourseGrid = ({ course, onDelete }) => {
         onDelete(course.courseId);
       };
 
-    //   const confirmDelete = () => {
-    //     onDelete(course.courseId);
-    //     setDeleteDialogOpen(false);
-    //   };
-    
-
-  return (
+    return (
     <div className="course-grid-container">
         {course ? ( 
         <div className='course-grid'>

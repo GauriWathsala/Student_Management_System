@@ -3,92 +3,91 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-}
-// .course .one{
-//   width: 100%;
-//   height: 10vh;
-// }
-.course .two{
-  display: flex;
 
-  .two-one {
-      background-color: white;
-      align-items: center;
-      //padding: 20px;
-      width: 13%;
-      //height: 100%
+  .main-top-header{
+    height: auto;
   }
-  .two-two{
-      align-items: center;
+
+  .bottom-page{
+    display: flex;
+    height: 100%;
+
+    .side-bar{
+      display: flex;
+      width:15%;
+      background-color: black;
+      height: auto;
+  }
+  .search-bar{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+    .seach-button-component{
+      //background-color: blueviolet;
       width: 100%;
+      height: 10%;
+      align-items: center;
 
-      .sbottom{
-          position: relative;
-          flex-direction: column;
-          display: flex;
-          justify-content: center;
-          height: 90%;
+      .search-add{
+        background-color: aliceblue;
+        width: 75%;
+        align-items: center;
+        margin-left: 15%;
+        margin-top: 15px;
+     }
+    }
+    .title-button{
+      height: 15%;
 
-          .ssbottom{
-              //background-color: red;
-              width: 100%;
-              align-items: center;
-              //background-color: palevioletred;
-              //padding: 10px;
-              margin-top: 20px;
+      .title-button-div{
+        display: flex;
+        justify-content:space-between;
+        width: 80%;
+        margin-left: 5%;
+        margin-top: 20px;
+        font-size: 30px;
 
-              .fbutton{
-                  width: 70%;
-                  padding: 10px;
-                display: flex;
-                justify-content:space-between ;
-                margin-left: 150px;
-
-
-                h1{
-                  font-size: 45px;
-                  font-weight: 900;
-                }
-
-                .filter{
-
-                  color: #1eb2a6;
-                  background-color: white;
-                  margin-left: 50px;
-                  height: 40px;
-                  border: 0.5px solid #1eb2a6;
-
-                  &:hover{
-                    background-color: #1eb2a6;
-                    color: white;
-                    border: 0.5px solid #1eb2a6;
-                  }
-                }
-              }
-          }
-          .coursedetails{
-             width: 100%;
-              padding: 10px;
-              margin-left: 20px;
-              grid-template-columns: repeat(4, 1fr); /* 4 grids in each row */
-              grid-gap: 20px; 
-              display: grid;
-              //background-color: pink;
-
-          }
-
+        #course-title{
+          font-size: 50px;
+          color: rgb(112, 109, 109);
+        }
+        #add-course-button{
+          color: white;
+          background-color: #1eb2a6;
+          height: 50px;
+          border: 0.5px solid #1eb2a6;
+          font-weight: bold;
+                    
+          &:hover{
+            background-color: white;
+            color: #1eb2a6;
+            border: 0.5px solid #1eb2a6;
+            }
+        }
       }
+    }
+    .coursedetails{
+        .grids{
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 20px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+    }
+    }
   }
 }
 
 @media screen and (max-width: 768px) {
-  .coursedetails {
+  .grids {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media screen and (max-width: 480px) {
-  .coursedetails {
+  .grids {
     grid-template-columns: repeat(2, 1fr);
   }
 }
