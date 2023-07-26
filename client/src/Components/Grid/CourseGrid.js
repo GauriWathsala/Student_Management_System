@@ -72,7 +72,7 @@ const CourseGrid = ({ course, onDelete }) => {
         </DialogActions>
       </Dialog>
       <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
-            <DialogTitle>Are you sure?</DialogTitle>
+            {/* <DialogTitle>Are you sure?</DialogTitle> */}
             <DialogContent>
               <p>Do you want to delete this course?</p>
             </DialogContent>

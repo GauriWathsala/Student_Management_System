@@ -74,7 +74,7 @@ const SearchAdd = ({currentPage ,showIcon}) => {
                 <input type='text' placeholder='Search' />
             </div>
             <div className='addbutton'>
-                <button className='add' onClick={handleOpenDialog} >
+            <button className={`add ${currentPage === 'module' ? 'back1' : ''} ${currentPage === 'course' ? 'module1' : ''}`} onClick={handleOpenDialog}>
                     <div className='sicon'> {showIcon && (currentPage === 'module' ? <ArrowBackIcon /> : <AddCircleIcon />)}</div>
                     <div className='btext'>
                     {buttonText}

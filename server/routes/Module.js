@@ -16,9 +16,9 @@ function generateRandomNumbers(length) {
 // Add a module
 router.post("/",async (req,res)=>{
     try {
-        const { moduleName } = req.body;
+        const { moduleName} = req.body;
         const moduleId = moduleName.substr(0, 2).toUpperCase() + generateRandomNumbers(4);
-        const module = { moduleId, moduleName };
+        const module = { moduleId, moduleName};
         await Module.create(module);
         res.json(module);
       } catch (error) {
@@ -41,7 +41,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-//delete a course
+//delete a module
 router.delete('/:id', async (req, res) => {
     try {
       const { id } = req.params;
@@ -102,6 +102,30 @@ router.put("/:moduleId/teacher/:teacherId", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// Unassign a teacher from a module
+router.put('/:moduleId/unassign', async (req, res) => {
+  try {
+    const { moduleId } = req.params;
+
+    // Find the module with the given ID
+    const module = await Module.findOne({ where: { moduleId } });
+
+    if (!module) {
+      return res.status(404).json({ error: 'Module not found' });
+    }
+
+    // Unassign the teacher from the module (set teacherId to null)
+    module.teacherId = null;
+    await module.save();
+
+    res.json({ message: 'Teacher unassigned from module successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 
 
 module.exports = router
