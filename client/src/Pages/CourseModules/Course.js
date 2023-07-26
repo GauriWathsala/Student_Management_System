@@ -35,7 +35,7 @@ useEffect(() => {
           console.error('Error deleting course:', error);
         }
       }
-    
+
   return (
     <div className='course'>
         <div className='one'>
@@ -60,7 +60,7 @@ useEffect(() => {
             {courses.map((course) => (
                 <CourseGrid key={course.courseId} course={course} onDelete={handleDelete} />
               ))}
-           
+
             </div>
           </div>
         </div>

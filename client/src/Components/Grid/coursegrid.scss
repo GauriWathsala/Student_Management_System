@@ -29,15 +29,24 @@
                     color: blue; /* Change the text color back to black */
                   }
             }
-            #delete{
-                border: 0.5px solid red;
-                margin-left: 5px;
-                &:hover {
-                    background-color: transparent;
-                    color: red; /* Change the text color back to black */
-                  }
-            }
+            #edit{
+              border: 0.5px solid rgb(239, 158, 7);
+              color: orange;
+              //background-color: rgb(100, 127, 234);
+              &:hover {
+                  background-color: transparent;
+                  color: orange; /* Change the text color back to black */
+                }
+          }
         }
+        #delete{
+          border: 0.5px solid red;
+          margin-left: 5px;
+          &:hover {
+              background-color: transparent;
+              color: red; /* Change the text color back to black */
+            }
+      }
 
     }
   }

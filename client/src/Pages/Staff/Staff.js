@@ -9,27 +9,11 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom'; 
 import { Button } from '@mui/material';
-// import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogActions from '@mui/material/DialogActions';
+
 
 const Staff = () => {
 
-  //**************Dialogbox************************** */
-  // // State to manage the dialog visibility
-  // const [isFilterDialogOpen, setFilterDialogOpen] = useState(false);
-
-  // // Function to handle opening the filter dialog
-  // const handleOpenFilterDialog = () => {
-  //   setFilterDialogOpen(true);
-  // };
-
-  // // Function to handle closing the filter dialog
-  // const handleCloseFilterDialog = () => {
-  //   setFilterDialogOpen(false);
-  // };
-  
+   
   const [rows, setRows] = useState([]);
 
    const navigate = useNavigate();

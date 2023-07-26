@@ -11,9 +11,10 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import AddstaffForm from '../Forms/AddstaffForm';
 import EastIcon from '@mui/icons-material/East';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
-const SearchAdd = ({currentPage}) => {
+const SearchAdd = ({currentPage ,showIcon}) => {
   const navigate = useNavigate ();
   let showEastIcon = currentPage === 'course';
   // Styles for the Cancel and Add button
@@ -30,14 +31,17 @@ const SearchAdd = ({currentPage}) => {
 
   //********************ADD Button Control in btext class div************** */   
   let buttonText = '';
-  let showIcon = false;
+ 
 
   if (currentPage === 'staff' || currentPage === 'student') {
-    buttonText = 'Add';
+    buttonText = 'ADD';
     showIcon = true;
   } else if (currentPage === 'course') {
     buttonText = 'Modules';
     showIcon = false;
+  } else if (currentPage === 'module') {
+    buttonText = 'BACK';
+    showIcon = true;
   }
     
   
@@ -49,6 +53,8 @@ const SearchAdd = ({currentPage}) => {
   const handleOpenDialog = () => {
     if (currentPage === 'course'){
       navigate('/module');
+    }else if (currentPage === 'module') {
+      navigate('/course');
     }else {
       setDialogOpen(true);
     }
@@ -69,9 +75,12 @@ const SearchAdd = ({currentPage}) => {
             </div>
             <div className='addbutton'>
                 <button className='add' onClick={handleOpenDialog} >
-                    <div className='sicon'> {showIcon && <AddCircleIcon />}</div>
-                    <div className='btext'><span>{buttonText}</span>
-                    {showEastIcon && <EastIcon />}</div>
+                    <div className='sicon'> {showIcon && (currentPage === 'module' ? <ArrowBackIcon /> : <AddCircleIcon />)}</div>
+                    <div className='btext'>
+                    {buttonText}
+                    {showEastIcon && currentPage !== 'module' && <EastIcon />}
+                    {showEastIcon && currentPage === 'module' && <ArrowBackIcon />}
+                    </div>
                     </button>
             </div>
             <Dialog open={isDialogOpen} onClose={handleCloseDialog} className='dialogBox'>

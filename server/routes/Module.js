@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Module} = require("../models");
+const {Module,Teacher} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -17,7 +17,7 @@ function generateRandomNumbers(length) {
 router.post("/",async (req,res)=>{
     try {
         const { moduleName } = req.body;
-        const moduleId = moduleName.substr(0, 2) + generateRandomNumbers(4);
+        const moduleId = moduleName.substr(0, 2).toUpperCase() + generateRandomNumbers(4);
         const module = { moduleId, moduleName };
         await Module.create(module);
         res.json(module);
@@ -55,9 +55,53 @@ router.delete('/:id', async (req, res) => {
 
 //Retrieve Modules
 
-router.get("/", async(req,res) => {
-    const listofModules = await Module.findAll();
+router.get("/", async (req, res) => {
+  try {
+    const listofModules = await Module.findAll({
+      attributes: ['moduleId', 'moduleName', 'teacherId'], 
+      include: [
+        {
+          model: Teacher,
+          as: 'teacher',
+          attributes: ['teacherId'], 
+        },
+      ],
+    });
     res.json(listofModules);
- });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Update teacher for a module
+router.put("/:moduleId/teacher/:teacherId", async (req, res) => {
+  try {
+    const { moduleId, teacherId } = req.params;
+
+    // Check if the module exists
+    const module = await Module.findOne({ where: { moduleId } });
+    if (!module) {
+      return res.status(404).json({ error: "Module not found" });
+    }
+
+    // Check if the teacher exists
+    const teacher = await Teacher.findOne({ where: { teacherId } });
+    if (!teacher) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    // Update the teacherId for the module
+    await Module.update({ teacherId }, { where: { moduleId } });
+
+    // Return the updated module
+    const updatedModule = await Module.findByPk(moduleId);
+    res.json(updatedModule);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router

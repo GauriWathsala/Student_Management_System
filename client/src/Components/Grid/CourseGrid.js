@@ -49,10 +49,11 @@ const CourseGrid = ({ course, onDelete }) => {
                 <p>Fee: {course.courseFee}</p> 
                 <div className='vedbitton'>
                 <Button  id ="view" onClick={handleOpenViewDialog}>View Course</Button>
+                <Button  id ="edit">Edit Course</Button>
+                </div>
                 <Button id="delete" onClick={handleOpenDeleteDialog} startIcon={<DeleteIcon />} color="error">
                     Delete Course
                 </Button>
-                </div>
                  </div>
        
      
