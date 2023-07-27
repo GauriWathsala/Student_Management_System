@@ -11,13 +11,17 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import axios from 'axios';
 import TextField from '@mui/material/TextField'
+import EditCourse from '../Forms/EditCourse';
 
 const CourseGrid = ({ course, onDelete }) => {
     const [isViewDialogOpen, setViewDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setEditDialogOpen] = useState(false);
     const [editedCourse, setEditedCourse] = useState({
+      courseId :course.courseId,
+      courseName : course.courseName,
       courseDuration: course.courseDuration,
+      durationType: course.durationType,
       courseFee: course.courseFee,
     });
     const [modules, setModules] = useState([]);
@@ -57,14 +61,21 @@ const CourseGrid = ({ course, onDelete }) => {
         onDelete(course.courseId);
       };
       const handleOpenEditDialog = () => {
+        setEditedCourse({
+          courseId: course.courseId,
+          courseName: course.courseName,
+          courseDuration: course.courseDuration,
+          durationType: course.durationType,
+          courseFee: course.courseFee,
+        });
         setEditDialogOpen(true);
       };
       const handleCloseEditDialog = () => {
         setEditDialogOpen(false);
-        setEditedCourse({
-          courseDuration: course.courseDuration,
-          courseFee: course.courseFee,
-        });
+        // setEditedCourse({
+        //   courseDuration: course.courseDuration,
+        //   courseFee: course.courseFee,
+        // });
       };
 
       const handleEditCourse = async () => {
@@ -80,10 +91,6 @@ const CourseGrid = ({ course, onDelete }) => {
         }
       };
 
-      const handleAddModule = (moduleId) => {
-        setSelectedModules((prevModules) => [...prevModules, moduleId]);
-      };
-    
       const handleRemoveModule = (moduleId) => {
         setSelectedModules((prevModules) => prevModules.filter((mod) => mod.moduleId !== moduleId));
       };
@@ -114,14 +121,8 @@ const CourseGrid = ({ course, onDelete }) => {
                   </li>
                 ))}
               </ul>
-              <Button
-                id="add-module"
-                startIcon={<AddCircleIcon />}
-                onClick={() => handleAddModule(modules[0].moduleId)}
-              >
-                Add Module
-              </Button>
-                  </div>
+             
+               </div>
                 <div className='vedbitton'>
                 <Button  id ="view" onClick={handleOpenViewDialog}>View Course</Button>
                 <Button  id ="edit" onClick={handleOpenEditDialog}>Edit Course</Button>
@@ -165,23 +166,13 @@ const CourseGrid = ({ course, onDelete }) => {
           <Dialog open={isEditDialogOpen} onClose={handleCloseEditDialog}>
             <DialogTitle>Edit Course</DialogTitle>
             <DialogContent>
-              <TextField
-                className="text-fields"
-                label="Course Duration"
-                name="courseDuration"
-                value={editedCourse.courseDuration}
-                onChange={handleInputChange}
-                required
-              />  
-               <TextField
-                className="text-fields"
-                label="Course Fee"
-                name="courseFee"
-                value={editedCourse.courseFee}
-                onChange={handleInputChange}
-                 required
+            <EditCourse
+                course={editedCourse}
+                onInputChange={handleInputChange}
+                disableCourseId={true}
+                disableCourseName={true}
               />
-               </DialogContent>
+              </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseEditDialog}>Cancel</Button>
               <Button onClick={handleEditCourse} color="primary">

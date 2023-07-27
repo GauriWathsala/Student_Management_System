@@ -1,16 +1,25 @@
 .edit-course{
-    align-items: center;
-    margin-left: 10%;
-    margin-top: 10%;
+    // align-items: center;
+    // margin-left: 10%;
+    // margin-top: 10%;
 
     .edit-field{
-        margin-top: 10px;
-        
-        // #fee{
-        //     margin-top: 20px;
-        // }
-        // #duration{
-        //     margin-right: 10px;
-        // }
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        margin-top: 15px;
     }
+    #add-module{
+        &:hover{
+            color: blue;
+           }
+    }
+     
+    #remove{
+        color: red;
+    }
+    .list-item{
+        width: 100%;
+    }
+    
 }

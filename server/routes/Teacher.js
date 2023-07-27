@@ -203,5 +203,36 @@ router.delete('/:id', async (req, res) => {
       res.status(500).json({ error: 'Server error' });
     }
 });
+// *******************retrieve a specific teacher info*********************
+router.get("/:teacherId", async (req, res) => {
+  try {
+    const { teacherId } = req.params;
+    const teacherDetails = await Teacher.findOne({
+      where: { teacherId },
+      include: [
+        {
+          model: TeacherContact,
+          as: "contacts",
+          attributes: ["contactNumber"],
+        },
+        {
+          model: Module,
+          as: "modules",
+          attributes: ["moduleId"],
+        },
+      ],
+    });
+
+    if (!teacherDetails) {
+      return res.status(404).json({ error: "Teacher not found" });
+    }
+
+    res.json(teacherDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router

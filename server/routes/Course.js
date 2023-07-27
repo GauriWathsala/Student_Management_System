@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Course,Module, Book} = require("../models");
+const {Course,Module, Book,CourseModule} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -37,6 +37,27 @@ function generateRandomNumbers(length) {
         res.status(500).json({ error: 'Server error' });
       }
     
+});
+
+// POST /course/:courseId/modules
+router.post("/:courseId/modules", async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { moduleIds } = req.body;
+
+    const course = await Course.findByPk(courseId);
+    const modules = await Module.findAll({
+      where: {
+        moduleId: moduleIds,
+      },
+    });
+    await course.addModules(modules);
+
+    res.json({ message: 'Modules added to the course successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 
@@ -76,6 +97,28 @@ router.get("/:id", async (req, res) => {
       res.status(500).json({ error: "Server error" });
     }
   });
+
+  // DELETE /course/:courseId/modules/:moduleId
+router.delete('/:courseId/modules/:moduleId', async (req, res) => {
+  try {
+    const { courseId, moduleId } = req.params;
+
+    const course = await Course.findByPk(courseId);
+    const module = await Module.findByPk(moduleId);
+
+    if (!course || !module) {
+      return res.status(404).json({ error: 'Course or Module not found' });
+    }
+
+    await course.removeModule(module);
+
+    res.json({ message: 'Module removed from the course successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
   
 
  //Delete a course
