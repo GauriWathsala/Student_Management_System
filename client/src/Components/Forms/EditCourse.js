@@ -1,3 +1,4 @@
+
 import React,{ useState,useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import {Select,Button,Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
@@ -14,142 +15,144 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 
+function generate(element) {
+  return [0, 1, 2].map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    }),
+  );
+}
 
 
 const Demo = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-  }));
+  backgroundColor: theme.palette.background.paper,
+}));
 
-const EditCourse = ({ course, onInputChange, disableCourseId, disableCourseName }) => {
 
-  const [modules, setModules] = useState([]);
-  const [selectedModules, setSelectedModules] = useState([]);
-  const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedModulesInDialog, setSelectedModulesInDialog] = useState([]);
 
+const EditCourse = ({ course, handleCloseEditDialog }) => {
+
+  const [dense, setDense] = React.useState(false);
+  const [secondary, setSecondary] = React.useState(false);
+
+  const [formValues, setFormValues] = useState({
+    courseId: '',
+    courseName: '',
+    courseDuration: '',
+    durationType: '',
+    courseFee: '',
+    modules : [],
+  });
 
   useEffect(() => {
-    const fetchModules = async () => {
+    const fetchModulesAndTeachers = async () => {
       try {
+        const courseResponse = await axios.get(`http://localhost:3001/course/${course.courseId}`);
+        const courseData = courseResponse.data;
+        const moduleIdsInCourse = courseData.modules;
+        console.log('Module IDs in Course:', moduleIdsInCourse);
+
         const modulesResponse = await axios.get('http://localhost:3001/module');
-        const teacherResponse = await axios.get('http://localhost:3001/teacher');
+        console.log('All Modules:', modulesResponse.data);
 
-         // Merge the teacher details with the modules
-         const modulesWithTeacher = modulesResponse.data.map((module) => {
-            const teacher = teacherResponse.data.find((t) => t.teacherId === module.teacherId);
-            return {
-              ...module,
-              teacher: teacher ? `${teacher.firstname} ${teacher.lastname}` : null,
-            };
-          });
+        // Merge the teacher details with the modules
+        const modulesWithTeacher = modulesResponse.data.filter((module) => 
+        moduleIdsInCourse.includes(module.moduleId)
+        );
+        
+         const teacherResponse = await axios.get('http://localhost:3001/teacher');
+         const teacherMap = new Map();
+         teacherResponse.data.forEach((teacher) => {
+          teacherMap.set(teacher.teacherId, `${teacher.firstname} ${teacher.lastname}`);
+        });
 
-        setModules(modulesWithTeacher);
+        //   const teacher = teacherResponse.data.find((t) => t.teacherId === module.teacherId);
+        //   return {
+        //     ...module,
+        //     teacher: teacher ? `${teacher.firstname} ${teacher.lastname}` : null,
+        //   };
+        // );
+
+        const modulesWithTeacherDetails = modulesWithTeacher.map((module) => {
+          const teacherName = teacherMap.get(module.teacherId);
+          return {
+            ...module,
+            teacher: teacherName ? teacherName : null,
+          };
+        });
+        console.log('Modules with Teacher Details:', modulesWithTeacherDetails);
+        setFormValues((prevFormValues) => ({
+          ...prevFormValues,
+          courseId: course.courseId,
+          courseName: course.courseName,
+          courseDuration: course.courseDuration,
+          durationType: course.durationType,
+          courseFee: course.courseFee,
+          modules:modulesWithTeacherDetails,
+        }));
       } catch (error) {
         console.error('Error fetching modules:', error);
       }
     };
-    fetchModules();
-  }, []);
+    if (course) {
+      fetchModulesAndTeachers();
+    }
+  }, [course]);
 
-//   const handleAddModule = () => {
-//     const moduleIds = selectedModules.map((module) => module.moduleId);
-//     axios.post('http://localhost:3001/course', {
-//       courseName: 'courseId', 
-//       moduleIds,
-//     })
-//     .then((response) => {
-//       // Handle success
-//       console.log('Modules added to the course:', response.data);
-//       // Clear the selected modules after adding them to the course
-//       setSelectedModules([]);
-//     })
-//     .catch((error) => {
-//       // Handle error
-//       console.error('Error adding modules to the course:', error);
-//     });
-//   };
-const handleAddModule = () => {
-    setDialogOpen(true);
-  };
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
-  const handleModuleSelect = (moduleId) => {
-    setSelectedModules((prevSelectedModules) => {
-        const isModuleSelected = prevSelectedModules.some((module) => module.moduleId === moduleId);
-        if (isModuleSelected) {
-          // Module is already selected, remove it from the selectedModules state
-          return prevSelectedModules.filter((module) => module.moduleId !== moduleId);
-        } else {
-          // Module is not selected, add it to the selectedModules state
-          return [...prevSelectedModules, modules.find((module) => module.moduleId === moduleId)];
-        }
-      });
-  };
-
-  const handleModuleSelectInDialog = (moduleId) => {
-    setSelectedModulesInDialog((prevSelectedModules) =>
-      prevSelectedModules.some((module) => module.moduleId === moduleId)
-        ? prevSelectedModules.filter((module) => module.moduleId !== moduleId)
-        : [...prevSelectedModules, modules.find((module) => module.moduleId === moduleId)]
-    );
-  };
-
-  const handleAddSelectedModules = async () => {
+  const handleRemoveModule = async (moduleId) => {
     try {
-        // Get the moduleIds of the selected modules
-        const moduleIds = selectedModulesInDialog.map((module) => module.moduleId);
-    
-        // Create an array to store the selected modules with their teacher information
-        const selectedModulesWithTeacher = [];
-    
-        // Make an API call for each selected module to fetch the teacher information
-        for (const moduleId of moduleIds) {
-          const response = await axios.get(`http://localhost:3001/teacher/${moduleId}`);
-          const moduleWithTeacher = response.data;
-          selectedModulesWithTeacher.push(moduleWithTeacher);
-   };
-   setSelectedModules([...selectedModules, ...selectedModulesWithTeacher]);
-   const updatedSelectedModules = [...selectedModules, ...selectedModulesWithTeacher];
-    //const updatedCourse = { ...course, modules: updatedSelectedModules };
-   handleDialogClose();
-   console.log('Selected modules to add:',selectedModulesWithTeacher);
+      // Send DELETE request to the server to remove the module from the course
+      await axios.delete(`http://localhost:3001/course/${formValues.courseId}/modules/${moduleId}`);
 
-   const moduleIdsToAdd = selectedModulesWithTeacher.map((module) => module.moduleId);
-      await axios.post(`http://localhost:3001/course/${course.courseId}`, {
-        moduleIds: moduleIdsToAdd,
-      });
-      console.log('Selected modules added to the course:', moduleIdsToAdd);
-      //onInputChange(null, updatedCourse);
-} catch (error) {
-    console.error('Error fetching selected modules with teacher details:', error);
-  }
-};
+      // Update the modules list in formValues after successful removal
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        modules: prevFormValues.modules.filter((module) => module.moduleId !== moduleId),
+      }));
+    } catch (error) {
+      console.error('Error removing module:', error);
+    }
+  };
 
-return (
+   // Handler for text field changes
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [name]: value,
+    }));
+  };
+  const handleSaveChanges = async () => {
+    try {
+      // Send the updated formValues to the server to save the changes
+      await axios.put(`http://localhost:3001/course/${formValues.courseId}`, formValues);
+      // Close the dialog or perform any other actions after successful update
+      handleCloseEditDialog();
+    } catch (error) {
+      console.error('Error saving changes:', error);
+    }
+  };
+
+  return (
     <div className='edit-course'>
-        
-        <TextField
+       <TextField
         label="Course ID"
         className="text-fields"
         name="courseId"
-        value={course.courseId}
-        disabled = {disableCourseId}
         id="outlined-disabled"
         size="small"
-        onChange={onInputChange}
-        />
+        disabled
+        value={formValues.courseId}
+      />
        <div className='edit-field'>
         <TextField
         label="Course Name"
         className="text-fields"
         name='courseName'
-        value={course.courseName}
-        disabled={disableCourseName}
         id="outlined-disabled"
         size="small"
-        onChange={onInputChange}
+        disabled
+        value={formValues.courseName}
         />
         </div>
         <div className='edit-field'>
@@ -157,89 +160,68 @@ return (
         className="text-fields"
         label="Course Duration"
         name="courseDuration"
-        value={course.courseDuration}
         size="small"
-        onChange={onInputChange}
-       
-        />  
+        value={formValues.courseDuration}
+        onChange={handleFieldChange}
+        />
         <Select className='text-fields'
         name='durationType'
         id='duration'
         native  
         size="small"
-        value={course.durationType}
-        onChange={onInputChange}
-      >
+        value={formValues.durationType}
+        onChange={handleFieldChange}
+       >
         <option value='Years'>Years</option>
         <option value='Months'>Months</option>
         <option value='Days'>Days</option>
         <option value='Hours'>Hours</option>
       </Select>
-      </div>
-      <div className='edit-field'>
+        </div>
+
+        <div className='edit-field'>
         <TextField
         label="Course Fee"
         name="courseFee"
         id='fee'
         size="small"
-        value={course.courseFee}
-        onChange={onInputChange}
+        value={formValues.courseFee}
+        onChange={handleFieldChange}
         />
-        </div>
-
+        </div> 
         <Grid item xs={6} md={6}>
           <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
             Modules
           </Typography>
           <Demo>
-            <List dense className='list'>
-              {selectedModules.map((module) => (
-                <ListItem  key={module.moduleId} className='list-item'>
-                 <ListItemText className='list-text'
-                   primary={module.moduleId}
+            <List dense={dense}>
+              {formValues.modules.map((module, index) =>{
+                return (
+                  <ListItem key={index}>
+                 <ListItemText
+                    primary={module.moduleId}
                     secondary={module.teacher ? `Teacher: ${module.teacher}` : null}
-                  /> 
-                  <ListItemIcon className='list-icon'>
-                  <RemoveCircleIcon  id='remove' onClick={() => handleModuleSelect(module.moduleId)}/>
-                 </ListItemIcon>
-
+                  />
+                  <ListItemIcon>
+                <RemoveCircleIcon id = "remove" onClick={() => handleRemoveModule(module.moduleId)}/>
+                </ListItemIcon>
                 </ListItem>
-              ))}
+                )})}
             </List>
           </Demo>
         </Grid>
-            <Button
-                id="add-module"
-                startIcon={<AddCircleIcon />}
-                onClick={handleAddModule}
-            >Add Module
-            </Button>
-            <Dialog open={isDialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>Select Modules</DialogTitle>
-        <DialogContent>
-          <List dense>
-            {modules.map((module) => (
-              <ListItem key={module.moduleId}>
-                <ListItemIcon>
-                  <Checkbox
-                    checked={selectedModulesInDialog.some((m) => m.moduleId === module.moduleId)}
-                    onClick={() => handleModuleSelectInDialog(module.moduleId)}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={module.moduleId} />
-              </ListItem>
-            ))}
-          </List>
-          </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleAddSelectedModules} color='primary'>
-            OK
+        <Button
+          id="add-module"
+          startIcon={<AddCircleIcon />}
+          >Add Module
           </Button>
-        </DialogActions>
-      </Dialog>
+          <div>
+        <Button variant="contained" color="primary" onClick={handleSaveChanges}>
+        Save Changes
+      </Button>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default EditCourse

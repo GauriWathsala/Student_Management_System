@@ -213,6 +213,30 @@ router.delete('/:courseId/books/:bookId', async (req, res) => {
   }
 });
 
+// // Unassign a module from a course
+// router.put('/:courseId/unassign', async (req, res) => {
+//   try {
+//     const { courseId } = req.params;
+
+//     // Find the module with the given ID
+//     const module = await Module.findOne({ where: { moduleId } });
+
+//     if (!module) {
+//       return res.status(404).json({ error: 'Module not found' });
+//     }
+
+//     // Unassign the teacher from the module (set teacherId to null)
+//     module.teacherId = null;
+//     await module.save();
+
+//     res.json({ message: 'Teacher unassigned from module successfully' });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// });
+
+
 
 
 module.exports = router

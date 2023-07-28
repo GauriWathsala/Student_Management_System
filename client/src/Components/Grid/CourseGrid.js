@@ -7,39 +7,37 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState,useEffect } from 'react';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+//import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+//import AddCircleIcon from '@mui/icons-material/AddCircle';
 import axios from 'axios';
-import TextField from '@mui/material/TextField'
+//import TextField from '@mui/material/TextField'
 import EditCourse from '../Forms/EditCourse';
+//import { styled } from '@mui/material/styles';
 
 const CourseGrid = ({ course, onDelete }) => {
     const [isViewDialogOpen, setViewDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [isEditDialogOpen, setEditDialogOpen] = useState(false);
-    const [editedCourse, setEditedCourse] = useState({
-      courseId :course.courseId,
-      courseName : course.courseName,
-      courseDuration: course.courseDuration,
-      durationType: course.durationType,
-      courseFee: course.courseFee,
-    });
+    
     const [modules, setModules] = useState([]);
-    const [selectedModules, setSelectedModules] = useState(course.modules || []);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [isEditDialogOpen, setEditDialogOpen] = useState(false);
 
     useEffect(() => {
-      const fetchModules = async () => {
+        
+      const fetchCourseDetails = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/module');
-          setModules(response.data);
+          const response = await axios.get(`http://localhost:3001/course/${course.courseId}`);
+          setSelectedCourse(response.data);
         } catch (error) {
-          console.error('Error fetching modules:', error);
+          console.error('Error fetching course details:', error);
         }
       };
-      fetchModules();
-    }, []);
+      if (course) {
+        fetchCourseDetails();
+      }
+    }, [course]);
   
-
+    //*******************Dialog box for View***************** */
     const handleOpenViewDialog = () => {
         setViewDialogOpen(true);
       };
@@ -47,7 +45,7 @@ const CourseGrid = ({ course, onDelete }) => {
       const handleCloseViewDialog = () => {
         setViewDialogOpen(false);
       };
-
+    //**************************Dialog box for delete************* */
       const handleOpenDeleteDialog = () => {
         setDeleteDialogOpen(true);
       };
@@ -60,48 +58,16 @@ const CourseGrid = ({ course, onDelete }) => {
         setDeleteDialogOpen(true);
         onDelete(course.courseId);
       };
+      
+      //***********************Dialog box for edit**************** */
       const handleOpenEditDialog = () => {
-        setEditedCourse({
-          courseId: course.courseId,
-          courseName: course.courseName,
-          courseDuration: course.courseDuration,
-          durationType: course.durationType,
-          courseFee: course.courseFee,
-        });
         setEditDialogOpen(true);
       };
+    
       const handleCloseEditDialog = () => {
         setEditDialogOpen(false);
-        // setEditedCourse({
-        //   courseDuration: course.courseDuration,
-        //   courseFee: course.courseFee,
-        // });
       };
-
-      const handleEditCourse = async () => {
-        try {
-          // Send a PUT request to update the course details
-          await axios.put(`http://localhost:3001/course/${course.courseId}`, editedCourse);
-    
-          // Close the edit dialog box and refresh the course data after editing
-          handleCloseEditDialog();
-          
-        } catch (error) {
-          console.error('Error editing course:', error);
-        }
-      };
-
-      const handleRemoveModule = (moduleId) => {
-        setSelectedModules((prevModules) => prevModules.filter((mod) => mod.moduleId !== moduleId));
-      };
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setEditedCourse((prevCourse) => ({
-          ...prevCourse,
-          [name]: value,
-        }));
-      };
-    
+   
 
     return (
     <div className="course-grid-container">
@@ -111,18 +77,6 @@ const CourseGrid = ({ course, onDelete }) => {
              <h3>{course.courseName}</h3>
                 <p>Duration: {course.courseDuration} {course.durationType}</p>
                 <p>Fee: {course.courseFee}  </p> 
-                <div className="modules">
-                <h4>Modules:</h4>
-                <ul>
-                {selectedModules.map((module) => (
-                  <li key={module.moduleId}>
-                    {module.moduleName}{' '}
-                    <RemoveCircleIcon onClick={() => handleRemoveModule(module.moduleId)} />
-                  </li>
-                ))}
-              </ul>
-             
-               </div>
                 <div className='vedbitton'>
                 <Button  id ="view" onClick={handleOpenViewDialog}>View Course</Button>
                 <Button  id ="edit" onClick={handleOpenEditDialog}>Edit Course</Button>
@@ -130,9 +84,8 @@ const CourseGrid = ({ course, onDelete }) => {
                 <Button id="delete" onClick={handleOpenDeleteDialog} startIcon={<DeleteIcon />} color="error">
                     Delete Course
                 </Button>
-                
-                 </div>
-       
+                </div>
+       {/* **************************View Button****************************** */}
      
       <Dialog open={isViewDialogOpen} onClose={handleCloseViewDialog}>
         <DialogTitle>Course Details</DialogTitle>
@@ -140,17 +93,18 @@ const CourseGrid = ({ course, onDelete }) => {
           <p>Name: {course.courseName}</p>
           <p>Duration: {course.courseDuration} {course.durationType}</p>
           <p>Fee: {course.courseFee}</p>
-          
-        </DialogContent>
-        <DialogActions>
+          </DialogContent>
+          <DialogActions>
           <Button onClick={handleCloseViewDialog} color="primary">
             Close
           </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
-            {/* <DialogTitle>Are you sure?</DialogTitle> */}
-            <DialogContent>
+          </DialogActions>
+          </Dialog>
+           
+          {/* ****************************Delete Button*********************** */}
+
+           <Dialog open={isDeleteDialogOpen} onClose={handleCloseDeleteDialog}>
+           <DialogContent>
               <p>Do you want to delete this course?</p>
             </DialogContent>
             <DialogActions>
@@ -163,25 +117,25 @@ const CourseGrid = ({ course, onDelete }) => {
             </DialogActions>
           </Dialog>
 
-          <Dialog open={isEditDialogOpen} onClose={handleCloseEditDialog}>
+      {/* **************************Edit Button Dialog*********************** */}
+      <Dialog open={isEditDialogOpen} onClose={handleCloseEditDialog}>
             <DialogTitle>Edit Course</DialogTitle>
             <DialogContent>
-            <EditCourse
-                course={editedCourse}
-                onInputChange={handleInputChange}
-                disableCourseId={true}
-                disableCourseName={true}
-              />
-              </DialogContent>
+              {/* Pass the selected course details to EditCourse */}
+              {selectedCourse && (
+              <EditCourse 
+              course={selectedCourse}
+              handleCloseEditDialog={handleCloseEditDialog} />)}
+            </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseEditDialog}>Cancel</Button>
-              <Button onClick={handleEditCourse} color="primary">
-                Save
+              <Button onClick={handleCloseEditDialog} color="primary">
+                Close
               </Button>
             </DialogActions>
           </Dialog>
-      
-        </div>
+
+
+      </div>
         ) : (
             <p>Loading...</p>
         )}
