@@ -34,6 +34,7 @@ const EditCourse = ({ course, handleCloseEditDialog }) => {
 
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(false);
+  
 
   const [formValues, setFormValues] = useState({
     courseId: '',
@@ -133,6 +134,62 @@ const EditCourse = ({ course, handleCloseEditDialog }) => {
     }
   };
 
+
+  const [openAddModulesDialog, setOpenAddModulesDialog] = useState(false);
+  const [availableModules, setAvailableModules] = useState([]);
+
+  useEffect(() => {
+    const fetchAvailableModules = async () => {
+      try {
+        const modulesResponse = await axios.get('http://localhost:3001/module');
+        const allModules = modulesResponse.data;
+        const modulesNotInCourse = allModules.filter(
+          (module) => !formValues.modules.some((existingModule) => existingModule.moduleId === module.moduleId)
+        );
+        setAvailableModules(modulesNotInCourse);
+      } catch (error) {
+        console.error('Error fetching available modules:', error);
+      }
+    };
+
+    if (openAddModulesDialog) {
+      fetchAvailableModules();
+    }
+  }, [openAddModulesDialog, formValues.modules]);
+
+  const handleOpenAddModulesDialog = () => {
+    setOpenAddModulesDialog(true);
+  };
+
+  const handleCloseAddModulesDialog = () => {
+    setOpenAddModulesDialog(false);
+  };
+  const [selectedModules, setSelectedModules] = useState([]);
+
+  const handleModuleCheckboxChange = (moduleId) => (e) => {
+    const { checked } = e.target;
+    if (checked) {
+      setSelectedModules((prevSelectedModules) => [...prevSelectedModules, moduleId]);
+    } else {
+      setSelectedModules((prevSelectedModules) => prevSelectedModules.filter((id) => id !== moduleId));
+    }
+  };
+  const handleAddModules = async () => {
+    try {
+      // Send the selected modules to the server and update the course data
+      const updatedModules = availableModules.filter((module) => selectedModules.includes(module.moduleId));
+      const updatedCourse = {
+        ...formValues,
+        modules: [...formValues.modules, ...updatedModules],
+      };
+      await axios.put(`http://localhost:3001/course/${formValues.courseId}`, updatedCourse);
+      setFormValues(updatedCourse);
+      handleCloseAddModulesDialog();
+    } catch (error) {
+      console.error('Error adding modules:', error);
+    }
+  };
+
   return (
     <div className='edit-course'>
        <TextField
@@ -213,8 +270,36 @@ const EditCourse = ({ course, handleCloseEditDialog }) => {
         <Button
           id="add-module"
           startIcon={<AddCircleIcon />}
+          onClick={handleOpenAddModulesDialog}
           >Add Module
           </Button>
+
+          <Dialog open={openAddModulesDialog} onClose={handleCloseAddModulesDialog}>
+        <DialogTitle>Add Modules to Course</DialogTitle>
+        <DialogContent>
+          <List dense={dense}>
+            {availableModules.map((module) => (
+              <ListItem key={module.moduleId}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={selectedModules.includes(module.moduleId)}
+                    onChange={handleModuleCheckboxChange(module.moduleId)}
+                  />
+                   </ListItemIcon>
+                <ListItemText primary={module.moduleId} secondary={module.moduleName} />
+              </ListItem>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAddModulesDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleAddModules} color="primary">
+            Add Modules
+          </Button>
+        </DialogActions>
+      </Dialog>
           <div>
         <Button variant="contained" color="primary" onClick={handleSaveChanges}>
         Save Changes
