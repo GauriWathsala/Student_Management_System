@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (Sequelize,DataTypes) => {
     const ScheduleExam = Sequelize.define ("ScheduleExam", {
         sId:{
-            type :DataTypes.INTEGER(6),
+            type :DataTypes.STRING,
             allowNull :false,
             primaryKey: true,
         },
@@ -24,7 +24,11 @@ module.exports = (Sequelize,DataTypes) => {
                 "Marks Released",
               ),
             allowNull: false,
-        }
+        },
+        registeredStudents: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0, 
+          },
         
     });
 

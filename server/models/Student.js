@@ -8,13 +8,22 @@ module.exports = (sequelize,DataTypes) => {
             allowNull :false,
             primaryKey: true,
         },
-        name:  {
+        firstname:  {
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
+        lastname:  {
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
+        fullname:  {
             type :DataTypes.STRING,
             allowNull :false,
         },
         nic:  {
             type :DataTypes.STRING,
             allowNull :false,
+            unique: true,
         },
         dob:  {
             type :DataTypes.DATE,
@@ -26,7 +35,7 @@ module.exports = (sequelize,DataTypes) => {
             allowNull :false,
         },
         contactNo:  {
-            type :DataTypes.INTEGER,
+            type :DataTypes.STRING,
             allowNull :false,
         },
         gender :{

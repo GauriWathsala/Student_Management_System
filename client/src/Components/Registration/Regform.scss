@@ -1,0 +1,28 @@
+.registrationFrom{
+    //border: 1px solid red;
+    width: 50%;
+    padding: 10px;
+    align-items: center;
+
+    .form-content{
+        //background-color: aqua;
+        align-items: center;
+        //margin-left: 50px;
+        position: relative;
+
+       
+    }
+    #next-button {
+        /* Add styles to position the button in the right corner */
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 16px;
+        background-color: rgb(95, 95, 238);
+        color: aliceblue;
+      }
+   
+   
+    
+    
+}

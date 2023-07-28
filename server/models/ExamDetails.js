@@ -8,7 +8,7 @@ module.exports = (Sequelize,DataTypes) => {
             primaryKey: true,
         },
         examName: {
-            type :DataTypes.STRING(5),
+            type :DataTypes.STRING,
             allowNull :false,
         },
         duration:{
@@ -24,7 +24,12 @@ module.exports = (Sequelize,DataTypes) => {
                 "Mid Exam",
               ),
             allowNull: false,
-        }
+        },
+        maxStudents:{
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        } 
+
     });
 
     ExamDetails.associate = (models) => {

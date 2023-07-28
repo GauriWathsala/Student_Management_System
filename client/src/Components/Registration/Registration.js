@@ -1,11 +1,19 @@
 import React from 'react'
-import './Registration.css';
+import './Registration.scss';
+import Welcomeheader from './Welcomeheader';
+import RegistrationFrom from './RegistrationFrom';
 
 export const Registration = () => {
   return (
-    <>
-        <h1>Registration</h1>
-    </>
+   <div className='registration'>
+      <Welcomeheader />
+      <div className='form-background'>
+      <h1 id = "regi-topic">REGISTRATION FORM</h1>
+      <RegistrationFrom />
+      </div>
+      </div>
+    
+
   )
 }
 
