@@ -15,9 +15,11 @@ import { Button } from '@mui/material';
 import dayjs from 'dayjs';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios';
 
 function RegistrationFrom() {
   const navigate = useNavigate();
+  const [selectedGender, setSelectedGender] = useState('');
   const handleCancel = () => {
     navigate('/');
   };
@@ -33,6 +35,9 @@ function RegistrationFrom() {
     contactNumber: "",
     email: "",
     profession: "",
+    preference: "",
+    country: "",
+    score: "",
     errors: {},
   });
 
@@ -42,22 +47,62 @@ function RegistrationFrom() {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: value ,
     }));
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateNIC()) {
-      // Form is valid, handle form submission here
-      console.log('Form submitted:', formData);
-      // Replace the console.log with your form submission logic (e.g., sending data to the server)
-    } else {
-      setIsNICValid(false);
+    const requiredFields = ['firstName', 'lastName', 'fullName', 'address', 'nic', 'dob', 'gender', 'contactNumber', 'email', 'profession'];
+    const hasEmptyFields = requiredFields.some((field) =>{
+      const fieldValue = formData[field];
+      return fieldValue === undefined || fieldValue === null ||(typeof fieldValue === 'string' && fieldValue.trim() === '');
+    });
+    if (hasEmptyFields) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        errors: {
+          ...prevFormData.errors,
+          ...requiredFields.reduce((acc, field) => {
+            if (!prevFormData[field].trim()) {
+              acc[field] = 'This field is required';
+            }
+            return acc;
+          }, {}),
+        },
+      }));
+    } 
+    else if (validateNIC()) {
+      try {
+        const response = await axios.get('http://localhost:3001/student'); 
+        const students = response.data;
+        const isNICRegistered = students.some((student) => student.nic === formData.nic);
+        if (isNICRegistered) {
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            errors: {
+              ...prevFormData.errors,
+              nic: 'This NIC is already registered as a student',
+            },
+          }));
+       } else {
+        console.log('Form submitted:', formData);
+        navigate('/paymentmethod'); 
       
     }
-  };
- 
-
+  } catch (error) {
+    console.error('Error fetching student details:', error);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      errors: {
+        ...prevFormData.errors,
+        nic: 'Error occurred while checking the NIC. Please try again later.',
+      },
+    }));
+  }
+      } else {
+        setIsNICValid(false);
+      }
+    };  
   
   const validateNIC = () => {
     const { nic } = formData;
@@ -89,8 +134,12 @@ function RegistrationFrom() {
             size="small"
              fullWidth
              name="firstName"
-           
+             value={formData.firstName}
+             onChange={handleInputChange}
              />
+             {formData.errors && formData.errors.firstName && (
+                <div className='error-message'>{formData.errors.firstName}</div>
+              )}
         </Grid>
         <Grid item xs={6} className='name-fields-right'>
         <InputLabel>Last Name</InputLabel>
@@ -102,8 +151,12 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="lastName"
-           
+          value={formData.lastName}
+          onChange={handleInputChange}
            />
+           {formData.errors && formData.errors.lastName && (
+                <div className='error-message'>{formData.errors.lastName}</div>
+              )}
         </Grid>
        
         <Grid item xs={12} className='full-name-field'>
@@ -116,8 +169,12 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="fullName"
-        
+          value={formData.fullName}
+          onChange={handleInputChange}
            />
+           {formData.errors && formData.errors.fullName && (
+                <div className='error-message'>{formData.errors.fullName}</div>
+              )}
         </Grid>
         
         <Grid item xs={12} className='address-name-field'>
@@ -130,8 +187,12 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="address"
-            
+          value={formData.address}
+          onChange={handleInputChange}
           />
+          {formData.errors && formData.errors.address && (
+                <div className='error-message'>{formData.errors.address}</div>
+              )}
         </Grid>
       
         
@@ -151,18 +212,23 @@ function RegistrationFrom() {
           onBlur={validateNIC} 
           fullWidth
           />
-           
+            {formData.errors && formData.errors.nic && (
+                <div className='error-message'>{formData.errors.nic}</div>
+              )}
         </Grid>
-        <Grid item xs={6} className='name-fields-right' size="small" fullWidth >
+        <Grid item xs={6} className='name-fields-right' size="small" >
         <InputLabel>Date of Birth</InputLabel>
-          <LocalizationProvider dateAdapter={AdapterDayjs} size="small" fullWidth>
+          <LocalizationProvider dateAdapter={AdapterDayjs} size="small" >
             <DatePicker 
             label="MM/DD/YYYY" 
             size="small"  
              name="dob" 
-             fullWidth
-            
+              value={formData.dob}
+              onChange={(date) => handleInputChange({ target: { name: 'dob', value: date } })}
             />
+             {formData.errors && formData.errors. dob && (
+                <div className='error-message'>{formData.errors. dob}</div>
+              )}
           </LocalizationProvider>
         </Grid>
         <Grid item xs={6} className='contact-name-field' >
@@ -171,21 +237,25 @@ function RegistrationFrom() {
           required 
           id="filled-required" 
           label="Required" 
-          variant="filled" 
+          variant="filled"  
           size="small" 
           name="contactNumber"
           fullWidth
-          
+          value={formData.contactNumber}
+          onChange={handleInputChange}
            />
+            {formData.errors && formData.errors.contactNumber && (
+                <div className='error-message'>{formData.errors.contactNumber }</div>
+              )}
         </Grid>
         <Grid item xs={6}className='gender-name-field' >
         <InputLabel>Gender</InputLabel>
-          <RadioGroup row aria-label="gender" name="row-radio-buttons-group" className="radio-group" size="small"
-         
+          <RadioGroup row aria-label="gender" name="row-radio-buttons-group" className="radio-group" 
+           value={selectedGender}  onChange={(e) => setSelectedGender(e.target.value)}
           >
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
+            <FormControlLabel value="female" control={<Radio />} label="Female"  />
+            <FormControlLabel value="male" control={<Radio />} label="Male"   />
+            <FormControlLabel value="other" control={<Radio />} label="Other"  />
           </RadioGroup>
         </Grid>
       
@@ -195,12 +265,16 @@ function RegistrationFrom() {
           required 
           id="filled-required" 
           label="Required" 
-          variant="filled" 
+          variant="filled"   
           fullWidth  
           size="small"
           name="email"
-          
+          value={formData.email}
+          onChange={handleInputChange}
             />
+            {formData.errors && formData.errors.email && (
+                <div className='error-message'>{formData.errors.email }</div>
+              )} 
         </Grid>
         <Grid item xs={6} className='profession-name-field'>
         <InputLabel>Profession</InputLabel>
@@ -212,7 +286,12 @@ function RegistrationFrom() {
           size="small" 
           name="profession"
           fullWidth
+          value={formData.profession}
+          onChange={handleInputChange}
           />
+           {formData.errors && formData.errors. profession && (
+                <div className='error-message'>{formData.errors. profession }</div>
+              )} 
         </Grid>
         <Grid item xs={6} className='profession-name-field'>
         <InputLabel>Preference</InputLabel>
@@ -223,11 +302,14 @@ function RegistrationFrom() {
             value={formData.preference}
             onChange={handleInputChange}
             label="Preference"
-            fullWidth
+           
           >
       <MenuItem value="academic">Academic</MenuItem>
       <MenuItem value="general">General</MenuItem>
     </Select>
+    {formData.errors && formData.errors.preference && (
+                  <div className='error-message'>{formData.errors.preference}</div>
+                )}
   </FormControl> 
         </Grid>
         <Grid item xs={6} className='profession-name-field'>
@@ -236,10 +318,15 @@ function RegistrationFrom() {
           id="filled-required" 
           variant="filled"  
           size="small" 
-          name="profession"
+          name="country"
           fullWidth
-          
+          value={formData.country}
+          onChange={handleInputChange}
+
           />
+           {formData.errors && formData.errors.country && (
+                <div className='error-message'>{formData.errors.country}</div>
+              )}
         </Grid>
         <Grid item xs={6} className='profession-name-field'>
         <InputLabel>Requred Score</InputLabel>
@@ -249,8 +336,12 @@ function RegistrationFrom() {
           size="small" 
           name="score"
           fullWidth
-         
+          value={formData.score}
+          onChange={handleInputChange}
           />
+          {formData.errors && formData.errors.score && (
+                <div className="error-message">{formData.errors.score}</div>
+              )}
         </Grid>
         <Grid item xs={12}>
         <Button id='cancel-button' type='submit' className='reg-button'  onClick={handleCancel}>CANCEL</Button>

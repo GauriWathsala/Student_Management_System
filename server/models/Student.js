@@ -20,6 +20,10 @@ module.exports = (sequelize,DataTypes) => {
             type :DataTypes.STRING,
             allowNull :false,
         },
+        address :{
+            type :DataTypes.STRING,
+            allowNull :false,
+        },
         nic:  {
             type :DataTypes.STRING,
             allowNull :false,
@@ -42,32 +46,31 @@ module.exports = (sequelize,DataTypes) => {
             type: DataTypes.ENUM('Male','Female','Other'),
             allowNull :false,
         },
-
-        preference:{
-            type :DataTypes.ENUM('Academic', 'General'),
-            allowNull :false,
-        },
-        country:{
+        profession :{
             type :DataTypes.STRING,
             allowNull :false,
         },
+
+        preference:{
+            type :DataTypes.ENUM('Academic', 'General'),
+            allowNull :true,
+        },
+        country:{
+            type :DataTypes.STRING,
+            allowNull :true,
+        },
         requiredScore:  {
             type :DataTypes.DECIMAL(5,2),
-            allowNull :false,
+            allowNull :true,
         },
-        status:{
-            type:DataTypes.ENUM('Registered', 'Enrolled','Completed','Blocked'),
-            allowNull :false,
-        }
+        // status:{
+        //     type:DataTypes.ENUM('Registered', 'Enrolled','Completed','Blocked'),
+        //     allowNull :false,
+        // }
     });
 
     Student.associate = (models) => {
-        // Student.belongsTo(models.User, {
-        //     foreignKey: 'userId',
-        //     as: 'user',
-        //     onDelete: 'CASCADE',
-        //     onUpdate : 'CASCADE',
-        // });
+       
         Student.belongsTo(models.Course, {
             foreignKey: "courseId",
             as: "course",

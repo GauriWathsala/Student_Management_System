@@ -8,8 +8,8 @@ app.use(cors());
 const db = require ('./models');
 
 //Routers
-// const studentRouter = require('./routes/Student');
-// app.use("/student",studentRouter);
+const studentRouter = require('./routes/Student');
+app.use("/student",studentRouter);
 // const paymentRouter = require('./routes/Payment');
 // app.use("/payment",paymentRouter);   
 const courseRouter = require('./routes/Course');
