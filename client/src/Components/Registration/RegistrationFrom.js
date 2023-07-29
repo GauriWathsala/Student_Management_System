@@ -43,34 +43,61 @@ function RegistrationFrom() {
 
   const [isNICValid, setIsNICValid] = useState(true);
 
+  // const handleInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     [name]: value ,
+  //   }));
+  // };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value ,
-    }));
+  
+    // Handle special cases like date picker
+    if (name === 'dob') {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        dob: value, // value is already a date object from the date picker
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.trim(), // For other fields, apply trim as usual
+      }));
+    }
   };
+  
+  
   const handleSubmit = async (event) => {
+    console.log('Button clicked')
     event.preventDefault();
     const requiredFields = ['firstName', 'lastName', 'fullName', 'address', 'nic', 'dob', 'gender', 'contactNumber', 'email', 'profession'];
-    const hasEmptyFields = requiredFields.some((field) =>{
+    const hasEmptyFields = requiredFields.some((field) => {
       const fieldValue = formData[field];
-      return fieldValue === undefined || fieldValue === null ||(typeof fieldValue === 'string' && fieldValue.trim() === '');
+    
+      // Check if the value is null, undefined, or an empty string
+      return fieldValue === null || fieldValue === undefined || (typeof fieldValue === 'string' && fieldValue.trim() === '');
     });
+    
     if (hasEmptyFields) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         errors: {
-          ...prevFormData.errors,
           ...requiredFields.reduce((acc, field) => {
-            if (!prevFormData[field].trim()) {
+            const fieldValue = prevFormData[field];
+    
+            // Check if the value is null, undefined, or an empty string
+            if (fieldValue === null || fieldValue === undefined || (typeof fieldValue === 'string' && fieldValue.trim() === '')) {
               acc[field] = 'This field is required';
             }
+    
             return acc;
           }, {}),
         },
       }));
-    } 
+    }
+    
     else if (validateNIC()) {
       try {
         const response = await axios.get('http://localhost:3001/student'); 
@@ -84,24 +111,26 @@ function RegistrationFrom() {
               nic: 'This NIC is already registered as a student',
             },
           }));
-       } else {
-        console.log('Form submitted:', formData);
-        navigate('/paymentmethod'); 
-      
-    }
-  } catch (error) {
-    console.error('Error fetching student details:', error);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      errors: {
-        ...prevFormData.errors,
-        nic: 'Error occurred while checking the NIC. Please try again later.',
-      },
-    }));
+          console.log(isNICRegistered)
+        } else {
+          console.log('Form submitted:', formData);
+          navigate('/paymentmethod');
+        }
+        
+      } catch (error) {
+        console.error('Error fetching student details:', error);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          errors: {
+            ...prevFormData.errors,
+            nic: 'Error occurred while checking the NIC. Please try again later.',
+          },
+        }));
   }
       } else {
         setIsNICValid(false);
       }
+      console.log()
     };  
   
   const validateNIC = () => {
@@ -345,7 +374,7 @@ function RegistrationFrom() {
         </Grid>
         <Grid item xs={12}>
         <Button id='cancel-button' type='submit' className='reg-button'  onClick={handleCancel}>CANCEL</Button>
-        <Button id='next-button' type='submit' className='reg-button'>PROCEED TO PAYMENT</Button>
+        <Button id='next-button' type='submit' className='reg-button' onClick={handleSubmit}>PROCEED TO PAYMENT</Button>
         </Grid>
         </Grid>
        </form>
