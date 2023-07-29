@@ -21,6 +21,7 @@ import EditTeacher from './Pages/Teacher/EditTeacher';
 import Course from './Pages/CourseModules/Course';
 import Module from './Pages/CourseModules/Module';
 import EditCourse from './Components/Forms/EditCourse';
+import PaymentMethod from './Components/Registration/PaymentMethod';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         </Route>
         <Route path='/registration' element={<Registration />} />
+        <Route path='/paymentmethod' element={<PaymentMethod />} />
         <Route path='/login' element={<Login />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/student' element={<Student />}></Route>
@@ -45,6 +47,7 @@ function App() {
         <Route path = '/course' element={<Course />} ></Route>
         <Route path = '/module' element={<Module />} ></Route>
         <Route path = '/editcourse' element={<EditCourse />} ></Route>
+
       </Routes>
       </BrowserRouter>
     </div>

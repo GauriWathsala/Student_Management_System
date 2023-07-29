@@ -1,4 +1,5 @@
 import React,{ useState }  from 'react'
+import { useNavigate } from 'react-router-dom';
 import './Regform.scss'
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel'; 
@@ -12,9 +13,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Button } from '@mui/material';
 import dayjs from 'dayjs';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 function RegistrationFrom() {
-  
+  const navigate = useNavigate();
+  const handleCancel = () => {
+    navigate('/');
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -50,182 +56,23 @@ function RegistrationFrom() {
       
     }
   };
-  // const validateNIC = () => {
-  //   const { nic } = formData;
-  //   const isValidLength = nic.length === 10 || nic.length === 12;
-  //   const isValidFormat10Chars =  /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])\d{4}$/g.test(nic);
-  //   const isValidFormat12Chars =  /^\d{12}$/.test(nic);
+ 
 
-  //   const dobYear = dayjs(formData.dob).format('YY');
-  //   const isValidYear = nic.length !== 10 || (nic.slice(0, 2) === dobYear);
-  //   const isValid = isValidLength && 
-  //   ((nic.length === 10 && isValidFormat10Chars && isValidYear) ||(nic.length === 12 && isValidFormat12Chars));
-  //   setIsNICValid(isValid);
-  //   return isValid;
-
-  // };
+  
   const validateNIC = () => {
     const { nic } = formData;
     const isValidLength = nic.length === 10 || nic.length === 12;
-    const isValidFormat10Chars = /^\d{2}(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])\d{4}$/g.test(nic);
+    const isValidFormat10Chars = /^\d{9}[vV]$/.test(nic);
     const isValidFormat12Chars = /^\d{12}$/.test(nic);
-
-    if (nic.length === 10){
-      const lastChar = nic.charAt(nic.length - 1);
-      const isLastCharValid = lastChar === 'V' || lastChar === 'v';
-      setIsNICValid(isValidLength && isValidFormat10Chars && isLastCharValid);
-      return isValidLength && isValidFormat10Chars && isLastCharValid;
-    }
-    const dobYear = dayjs(formData.dob).format('YY');
-    const isValidYear = nic.length !== 10 || (nic.slice(0, 2) === dobYear);
-
-    // const isValid = isValidLength && (
-    //   (nic.length === 10 && isValidFormat10Chars && isValidYear) ||
-    //   (nic.length === 12 && isValidFormat12Chars)
-    // );
-    setIsNICValid(isValidLength && ((nic.length === 10 && isValidFormat10Chars && isValidYear) ||(nic.length === 12 && isValidFormat12Chars)));
-    return isValidLength && ((nic.length === 10 && isValidFormat10Chars && isValidYear) || (nic.length === 12 && isValidFormat12Chars));
+    const isValid = isValidLength && (
+      (nic.length === 10 && isValidFormat10Chars) ||
+      (nic.length === 12 && isValidFormat12Chars)
+    );
+    setIsNICValid(isValid);
+    return isValid;
   };
-
-//   const handleChange = (event) => {
-//     setState({
-//       ...state,
-//       [event.target.name]: event.target.value,
-//     });
- 
-//   if (event.target.name === "nic") {
-//     validateNIC(event.target.value);
-//   } else if (event.target.name === "email") {
-//     validateEmail(event.target.value);
-//   }
-// };
-//   const handleDateChange = (date) => {
-//     setState({
-//       ...state,
-//       dob: date,
-//     });
-//     validateNIC(state.nic);
-//   };
-//   // const handleEmailChange = (event) => {
-//   //   const { value } = event.target;
-//   //   setState((prevState) => ({
-//   //     ...prevState,
-//   //     email: value,
-//   //   }));
-//   //   validateEmail(value);
-//   // };
-//   const handleNICChange = (event) => {
-//     const { value } = event.target;
-//     setState((prevState) => ({
-//       ...prevState,
-//       nic: value,
-//     }));
-//     validateNIC(value);
-//   };
-
-//   const validateNIC = (value) => {
-//     const errors = { ...state.errors };
-//     if (value.length === 10) {
-//       if (!value.endsWith("V") && !value.endsWith("v")) {
-//         errors.nic = "Invalid NIC format";
-//       } else {
-//         const birthYear = state.dob ? state.dob.format("YY") : null;
-//         const nicYear = value.substring(0, 2);
-//         if (birthYear !== nicYear) {
-//           errors.nic = "NIC does not match birth year";
-//         }else {
-//           errors.nic = ""; // Clear the error if NIC is valid
-//         }
-//       }
-//     } else if (value.length === 12) {
-//       if (!/^\d+$/.test(value)) {
-//         errors.nic = "Invalid NIC format";
-//       } else {
-//         const birthYear = state.dob ? state.dob.format("YYYY") : null;
-//         const nicYear = value.substring(0, 4);
-//         if (birthYear !== nicYear) {
-//           errors.nic = "NIC does not match birth year";
-//         }else {
-//           errors.nic = ""; // Clear the error if NIC is valid
-//         }
-//       }
-//     } else {
-//       errors.nic = "Invalid NIC format";
-//     }
-//     setState({
-//       ...state,
-//       errors,
-//     });
-//   };
-//   const validateEmail = (value) => {
-//     const errors = { ...state.errors };
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!emailRegex.test(value)) {
-//       errors.email = "Invalid email format";
-//     }
-
-//     setState({
-//       ...state,
-//       errors,
-//     });
-//   };
-
-//   const validateForm = () => {
-//     const errors = {};
-//     // Validate each field
-//     if (state.firstName.trim() === "") {
-//       errors.firstName = "First Name cannot be empty";
-//     }
-//     if (state.lastName.trim() === "") {
-//       errors.lastName = "Last Name cannot be empty";
-//     }
-//     if (state.fullName.trim() === "") {
-//       errors.fullName = "Full Name cannot be empty";
-//     }
-//     if (state.address.trim() === "") {
-//       errors.address = "Address cannot be empty";
-//     }
-//     if (state.nic.trim() === "") {
-//       errors.nic = "NIC cannot be empty";
-//     }
-//     if (state.dob === null) {
-//       errors.dob = "Date of Birth cannot be empty";
-//     }
-//     if (state.gender === "") {
-//       errors.gender = "Gender cannot be empty";
-//     }
-//     if (state.contactNumber.trim() === "") {
-//       errors.contactNumber = "Contact Number cannot be empty";
-//     }
-//     if (state.email.trim() === "") {
-//       errors.email = "Email cannot be empty";
-//     }
-//     if (state.profession.trim() === "") {
-//       errors.profession = "Profession cannot be empty";
-//     }
-
-//       // Validate NIC and Email
-//       validateNIC();
-//       validateEmail();
   
-//       // Update the state with the errors
-//       setState({
-//         ...state,
-//         errors,
-//       });
-  
-//       // Return true if the form is valid (no errors)
-//       return Object.keys(errors).length === 0;
-//     };
 
-//     const handleSubmit = (event) => {
-//       event.preventDefault();
-//       const isFormValid = validateForm();
-//       if (isFormValid) {
-//         // Submit the form or perform other actions
-//         // ...
-//       }
-//     };
 
   return (
     <div className='registrationFrom'>
@@ -242,10 +89,7 @@ function RegistrationFrom() {
             size="small"
              fullWidth
              name="firstName"
-            //  value={state.firstName}
-            //  onChange={handleChange}
-            //  error={Boolean(state.errors.firstName)}
-            //  helperText={state.errors.firstName} 
+           
              />
         </Grid>
         <Grid item xs={6} className='name-fields-right'>
@@ -258,10 +102,7 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="lastName"
-          // value={state.lastName}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.lastName)}
-          // helperText={state.errors.lastName}  
+           
            />
         </Grid>
        
@@ -275,10 +116,7 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="fullName"
-          // value={state.fullName}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.fullName)}
-          // helperText={state.errors.fullName} 
+        
            />
         </Grid>
         
@@ -292,10 +130,7 @@ function RegistrationFrom() {
           size="small" 
           fullWidth
           name="address"
-          // value={state.address}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.address)}
-          // helperText={state.errors.address}  
+            
           />
         </Grid>
       
@@ -314,33 +149,21 @@ function RegistrationFrom() {
           error={!isNICValid}
           helperText={!isNICValid && 'Invalid NIC'}
           onBlur={validateNIC} 
+          fullWidth
           />
            
         </Grid>
-        <Grid item xs={6} className='name-fields-right' size="small" >
+        <Grid item xs={6} className='name-fields-right' size="small" fullWidth >
         <InputLabel>Date of Birth</InputLabel>
-          <LocalizationProvider dateAdapter={AdapterDayjs} size="small">
+          <LocalizationProvider dateAdapter={AdapterDayjs} size="small" fullWidth>
             <DatePicker 
             label="MM/DD/YYYY" 
             size="small"  
-            // value={state.dob}  
-            name="dob" 
-            // onChange={handleDateChange}  
+             name="dob" 
+             fullWidth
+            
             />
           </LocalizationProvider>
-        </Grid>
-        <Grid item xs={6}className='gender-name-field' >
-        <InputLabel>Gender</InputLabel>
-          <RadioGroup row aria-label="gender" name="row-radio-buttons-group" className="radio-group" size="small"
-          //  value={state.gender}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.gender)}
-          // helperText={state.errors.gender}
-          >
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
-            <FormControlLabel value="other" control={<Radio />} label="Other" />
-          </RadioGroup>
         </Grid>
         <Grid item xs={6} className='contact-name-field' >
         <InputLabel>Contact Number</InputLabel>
@@ -351,12 +174,21 @@ function RegistrationFrom() {
           variant="filled" 
           size="small" 
           name="contactNumber"
-          // value={state.contactNumber}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.contactNumber)}
-          // helperText={state.errors.contactNumber}
+          fullWidth
+          
            />
         </Grid>
+        <Grid item xs={6}className='gender-name-field' >
+        <InputLabel>Gender</InputLabel>
+          <RadioGroup row aria-label="gender" name="row-radio-buttons-group" className="radio-group" size="small"
+         
+          >
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="other" control={<Radio />} label="Other" />
+          </RadioGroup>
+        </Grid>
+      
         <Grid item xs={12} className='email-name-field'>
         <InputLabel>Email</InputLabel>
           <TextField 
@@ -367,10 +199,7 @@ function RegistrationFrom() {
           fullWidth  
           size="small"
           name="email"
-          // value={state.email}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.email)}
-          // helperText={state.errors.email}
+          
             />
         </Grid>
         <Grid item xs={6} className='profession-name-field'>
@@ -382,14 +211,50 @@ function RegistrationFrom() {
           variant="filled"  
           size="small" 
           name="profession"
-          // value={state.profession}
-          // onChange={handleChange}
-          // error={Boolean(state.errors.profession)}
-          // helperText={state.errors.profession}
+          fullWidth
+          />
+        </Grid>
+        <Grid item xs={6} className='profession-name-field'>
+        <InputLabel>Preference</InputLabel>
+        <FormControl fullWidth variant="filled" size="small">
+          <Select
+            required
+            name="preference"
+            value={formData.preference}
+            onChange={handleInputChange}
+            label="Preference"
+            fullWidth
+          >
+      <MenuItem value="academic">Academic</MenuItem>
+      <MenuItem value="general">General</MenuItem>
+    </Select>
+  </FormControl> 
+        </Grid>
+        <Grid item xs={6} className='profession-name-field'>
+        <InputLabel>Country</InputLabel>
+        <TextField 
+          id="filled-required" 
+          variant="filled"  
+          size="small" 
+          name="profession"
+          fullWidth
+          
+          />
+        </Grid>
+        <Grid item xs={6} className='profession-name-field'>
+        <InputLabel>Requred Score</InputLabel>
+        <TextField 
+          id="filled-required" 
+          variant="filled"  
+          size="small" 
+          name="score"
+          fullWidth
+         
           />
         </Grid>
         <Grid item xs={12}>
-        <Button id='next-button' type='submit'>NEXT</Button>
+        <Button id='cancel-button' type='submit' className='reg-button'  onClick={handleCancel}>CANCEL</Button>
+        <Button id='next-button' type='submit' className='reg-button'>PROCEED TO PAYMENT</Button>
         </Grid>
         </Grid>
        </form>

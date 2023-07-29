@@ -12,17 +12,35 @@
 
        
     }
+    
+         //height: 10px;
     #next-button {
-        /* Add styles to position the button in the right corner */
-        position: absolute;
-        bottom: 0;
-        right: 0;
         margin: 16px;
         background-color: rgb(95, 95, 238);
         color: aliceblue;
+        height: 50px;
+        font-weight: bold;
+
+        &:hover {
+            background-color: transparent;
+            color: blue; 
+            border: 1px solid blue;
+          }
+      }
+   #cancel-button{
+    background-color: rgb(177, 83, 83);
+    color: aliceblue;
+    height: 50px;
+    width: 150px;
+    margin-left: 28%;
+    font-weight: bold;
+    &:hover {
+        background-color: transparent;
+        color: red; 
+        border: 1px solid red;
       }
    
    
-    
+}
     
 }
