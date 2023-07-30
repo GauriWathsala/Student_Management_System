@@ -1,6 +1,6 @@
 const express = require ('express')
 const router = express.Router()
-const {Course,Module, Book,CourseModule} = require("../models");
+const {Course,Module, Book,CourseModule, Fees} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -31,6 +31,12 @@ function generateRandomNumbers(length) {
           });
           await course.addModules(modules);
         }
+        await Fees.create({
+          feeId: courseId,
+          feeType: courseId,
+          amount: courseFee,
+        });
+
         res.json(course);
       } catch (error) {
         console.error(error);

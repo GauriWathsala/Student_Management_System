@@ -47,7 +47,10 @@ app.use("/admin",adminRouter);
 // app.use("/studentNotification",studentNotificationRouter);
 
 
-
+// db.Student.belongsTo(db.Status, {
+//     foreignKey: 'statusId',
+//     as: 'status',
+//   });
 
 
 

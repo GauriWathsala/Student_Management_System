@@ -22,6 +22,9 @@ import Course from './Pages/CourseModules/Course';
 import Module from './Pages/CourseModules/Module';
 import EditCourse from './Components/Forms/EditCourse';
 import PaymentMethod from './Components/Registration/PaymentMethod';
+import ManualReg from './Pages/Student/ManualReg';
+import DropdownButton from './Pages/Test/DropdownButton';
+
 
 
 function App() {
@@ -47,6 +50,10 @@ function App() {
         <Route path = '/course' element={<Course />} ></Route>
         <Route path = '/module' element={<Module />} ></Route>
         <Route path = '/editcourse' element={<EditCourse />} ></Route>
+        <Route path = '/manualreg' element={<ManualReg />} ></Route>
+        <Route path = '/test' element={<DropdownButton />} ></Route>
+       
+        
 
       </Routes>
       </BrowserRouter>

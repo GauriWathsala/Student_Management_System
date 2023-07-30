@@ -17,7 +17,18 @@ import Select from '@mui/material/Select';
 
 
 
-const AddstaffForm = () => {
+const AddstaffForm = ({ onCancel, onAdd }) => {
+
+  const handleSubmitForm = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    console.log('Form data:', {
+      name: formData.get('name'),
+      password: formData.get('password'),
+    });
+    event.target.reset();
+    // Optionally, you can call `onAdd` here to handle form submission
+  };
 
   const [role, setRole] = React.useState('');
 
@@ -29,7 +40,7 @@ const AddstaffForm = () => {
   return (
     <form className='addStaff'>
       <Grid container spacing={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <InputLabel>Role</InputLabel>
         <FormControl required label="Required" variant="filled" sx={{ m: 1, minWidth: 120 }} size="small">
         <Select
@@ -46,7 +57,7 @@ const AddstaffForm = () => {
           <MenuItem value={30}>Receptionist</MenuItem>
         </Select>
       </FormControl>
-        </Grid>
+        </Grid> */}
         <Grid item xs={6}>
         <InputLabel>First Name</InputLabel>
           <TextField required id="filled-required" label="Required" variant="filled" size="small"   />
@@ -106,6 +117,12 @@ const AddstaffForm = () => {
           />
         </Grid>
       </Grid>
+      <div className="form-buttons">
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="submit">Add</button>
+      </div>
     </form>
   )
     

@@ -15,12 +15,18 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    
   });
 
   Fees.associate = (models) => {
     Fees.hasMany(models.Payment, {
       foreignKey: "feeId",
       as: "payments",
+    });
+    Fees.belongsTo(models.Course, {
+      foreignKey: "feeType",
+      targetKey: "courseId",
+      as: "course",
     });
   };
 

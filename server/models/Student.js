@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 
+
 module.exports = (sequelize,DataTypes) => {
     const Student = sequelize.define ("Student", {
         stuId:  {
@@ -63,10 +64,7 @@ module.exports = (sequelize,DataTypes) => {
             type :DataTypes.DECIMAL(5,2),
             allowNull :true,
         },
-        // status:{
-        //     type:DataTypes.ENUM('Registered', 'Enrolled','Completed','Blocked'),
-        //     allowNull :false,
-        // }
+       
     });
 
     Student.associate = (models) => {
@@ -74,9 +72,8 @@ module.exports = (sequelize,DataTypes) => {
         Student.belongsTo(models.Course, {
             foreignKey: "courseId",
             as: "course",
-          });
-        
-    }
-
+          }); 
+             
+        }
     return Student
 }

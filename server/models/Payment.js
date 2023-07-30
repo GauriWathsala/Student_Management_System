@@ -11,10 +11,10 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    paymentDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false,
-    },
+    // paymentDate: {
+    //   type: DataTypes.DATEONLY,
+    //   allowNull: false,
+    // },
     paymentType :{
         type : DataTypes.ENUM ('Installment','Full'),
         allowNull: false,

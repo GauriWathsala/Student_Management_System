@@ -26,6 +26,7 @@ module.exports = (Sequelize,DataTypes) => {
         nic:  {
             type :DataTypes.STRING,
             allowNull :false,
+            unique: true,
             validate: {
                 isNICFormat(value) {
                   const is10CharacterNIC = value.length === 10 && /[0-9]{9}[Vv]/.test(value);

@@ -36,10 +36,45 @@ const CourseGrid = ({ course, onDelete }) => {
         fetchCourseDetails();
       }
     }, [course]);
+
+    const fetchModulesAndTeachers = async () => {
+      try {
+        const moduleIdsInCourse = selectedCourse.modules.map((module) => module.moduleId);
+        const modulesResponse = await axios.get('http://localhost:3001/module');
+        const teacherResponse = await axios.get('http://localhost:3001/teacher');
+  
+        // Merge the teacher details with the modules
+        const modulesWithTeacher = modulesResponse.data.filter((module) =>
+          moduleIdsInCourse.includes(module.moduleId)
+        );
+  
+        const teacherMap = new Map();
+        teacherResponse.data.forEach((teacher) => {
+          teacherMap.set(teacher.teacherId, {
+            firstname: teacher.firstname,
+            lastname: teacher.lastname,
+          });
+        });
+  
+        const modulesWithTeacherDetails = modulesWithTeacher.map((module) => {
+          const teacherDetails = teacherMap.get(module.teacherId);
+          return {
+            ...module,
+            teacher: teacherDetails ? teacherDetails : null,
+          };
+        });
+  
+        setModules(modulesWithTeacherDetails);
+      } catch (error) {
+        console.error('Error fetching modules and teacher details:', error);
+      }
+    };
+
   
     //*******************Dialog box for View***************** */
     const handleOpenViewDialog = () => {
         setViewDialogOpen(true);
+        fetchModulesAndTeachers();
       };
 
       const handleCloseViewDialog = () => {

@@ -8,7 +8,10 @@ import axios from 'axios';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom'; 
-import { Button } from '@mui/material';
+import { Button  ,Select, MenuItem, InputLabel, FormControl} from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SearchIcon from '@mui/icons-material/Search';
+import DropdownButton from '../Test/DropdownButton';
 
 
 const Staff = () => {
@@ -17,6 +20,10 @@ const Staff = () => {
   const [rows, setRows] = useState([]);
 
    const navigate = useNavigate();
+   const [selectedRole, setSelectedRole] = useState('');
+  
+
+   
 
    const getRowStyle = (params) => {
  return {
@@ -96,7 +103,11 @@ const Staff = () => {
         </div>
         <div className='two-two'>
           <div className='shead'>
-            <SearchAdd currentPage='staff' />
+          <div className='searchbar'>
+            <SearchIcon />
+            <input type='text' placeholder='Search' />
+            </div>
+             <DropdownButton id='drop-down-component' />
           </div>
           <div className='sbottom'>
             <div className='ssbottom'>
