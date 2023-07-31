@@ -8,11 +8,7 @@ router.get("/", async(req,res) => {
     
     try{
         const staffMembers = await Staff.findAll({
-            include:{
-                model: StaffContact,
-                as: 'contacts',
-                attributes: ['contactNumber'],
-            }
+
         });
         res.json(staffMembers);
     }catch (error){

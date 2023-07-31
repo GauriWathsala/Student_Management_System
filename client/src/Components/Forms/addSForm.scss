@@ -1,17 +1,49 @@
-.addStaff{
-    //background-color: aqua;
-    height: 100%;
-    padding: 20px;
-    align-items: center;
-    //display: flex;
-    border: 0.5px solid #1eb2a6;
+.addStaff {
+  display: flex;
+  flex-direction: column;
+  //background-color: #1eb2a6;
+  width: 35%;
+ 
 
-    .radio-group {
-        display: flex;
-      
-        .MuiFormControlLabel-root {
-          margin-right: 24px; /* Adjust the spacing between radio buttons as needed */
+  .MuiFormControl-root {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .radio-group {
+    margin-top: 8px;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+
+    button {
+      margin-left: 8px;
+      padding: 8px 16px;
+      background-color: #1eb2a6 ;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100px;
+      height: 50px;
+
+      &:hover {
+        background-color:white ;
+        color: #1eb2a6;
+        border:1px solid #1eb2a6;
+      }
+
+      &:first-child {
+        background-color: #ccc;
+        color: #333;
+
+        &:hover {
+          background-color: #bbb;
         }
       }
-      
+    }
+  }
 }

@@ -17,21 +17,15 @@ function generateRandomNumbers(length) {
 
 router.post('/', async (req, res) =>{
     try {
-        const {  firstname, lastname,fullname, address, email, contacts, nic,dob,salary,gender,qualifications } = req.body;
+        const {  firstname, lastname,fullname, address, email, contact, nic,dob,gender,qualifications } = req.body;
     
         // Create admin
         const adminId = 'A'+ generateRandomNumbers(4);
         const admin = {
-          adminId,firstname, lastname,fullname,email,nic,dob,salary,gender,qualifications,address 
+          adminId,firstname, lastname,fullname,email,nic,dob,gender,qualifications,address, contact
         };
         const createdAdmin = await Admin.create(admin);
 
-        // Create admin contacts
-      const contactNumbers = contacts.map((contact) => ({
-        adminId: createdAdmin.adminId,
-        contactNumber: contact,
-      }));
-      await AdminContact.bulkCreate(contactNumbers);
 
            // Create associated user entry
     const user = {
@@ -60,12 +54,7 @@ router.post('/', async (req, res) =>{
       };
       await Staff.create(staff);
 
-       // Create associated StaffContact entries
-    const staffContacts = contacts.map((contact) => ({
-      userId: createdAdmin.adminId,
-      contactNumber: contact,
-    }));
-    await StaffContact.bulkCreate(staffContacts);
+   
   
   
       res.json(createdAdmin);
@@ -115,11 +104,11 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { name,email, contacts , nic,dob,salary,gender,qualification} = req.body;
+      const { name,email, contacts , nic,dob,gender,qualification} = req.body;
   
       // Update admin details
       await Admin.update(
-        { name, email,nic,dob,salary,gender,qualification },
+        { name, email,nic,dob,gender,qualification },
         { where: { adminId: id } }
       );
   

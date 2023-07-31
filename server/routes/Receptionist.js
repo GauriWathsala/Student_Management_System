@@ -17,12 +17,12 @@ function generateRandomNumbers(length) {
 
 router.post('/', async (req, res) =>{
     try {
-        const { firstname, lastname,fullname, address, nic, dob, email, salary,contacts ,gender,qualifications} = req.body;
+        const { firstname, lastname,fullname, address, nic, dob, email,contact ,gender,qualifications} = req.body;
     
         // Create receptionist
         const receptionistId = 'R' + generateRandomNumbers(4);
         const receptionist = {
-          receptionistId,firstname, lastname,fullname,address, nic, dob,email, salary,gender,qualifications
+          receptionistId,firstname, lastname,fullname,address, nic, dob,email, gender,qualifications,contact
         };
         const createdReceptionist = await Receptionist.create(receptionist);
 
@@ -34,13 +34,6 @@ router.post('/', async (req, res) =>{
       userType: 'Receptionist',
     };
     await User.create(user);
-
-        // Create receptionist contacts
-    const contactNumbers = contacts.map((contact) => ({
-        receptionistId: createdReceptionist.receptionistId,
-        contactNumber: contact,
-      }));
-      await ReceptionistContact.bulkCreate(contactNumbers);
 
        //Create associated Staff entry
     const staff = {
@@ -60,12 +53,7 @@ router.post('/', async (req, res) =>{
     };
     await Staff.create(staff);
 
-    // Create associated StaffContact entries
-    const staffContacts = contacts.map((contact) => ({
-      userId: createdReceptionist.receptionistId,
-      contactNumber: contact,
-    }));
-    await StaffContact.bulkCreate(staffContacts);
+    
 
     
     res.json(createdReceptionist);
@@ -81,11 +69,11 @@ router.post('/', async (req, res) =>{
 router.put('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, address, nic, dob, email, salary, contacts, qualification,gender} = req.body;
+      const { name, address, nic, dob, email,  contacts, qualification,gender} = req.body;
   
       // Update receptionist details
       await Receptionist.update(
-        { name, address, nic, dob, email, salary,qualification,gender },
+        { name, address, nic, dob, email, qualification,gender },
         { where: { receptionistId: id } }
       );
   

@@ -107,8 +107,9 @@ const Staff = () => {
             <SearchIcon />
             <input type='text' placeholder='Search' />
             </div>
-             <DropdownButton id='drop-down-component' />
-          </div>
+            <DropdownButton id='drop-down-component' />
+            </div>
+           
           <div className='sbottom'>
             <div className='ssbottom'>
               <div className='fbutton'>
@@ -127,7 +128,7 @@ const Staff = () => {
                   },
                 }}
                 pageSizeOptions={[5, 10]}
-                checkboxSelection
+                
                 headerClassName='table-header'
                 getRowStyle={getRowStyle}
               />

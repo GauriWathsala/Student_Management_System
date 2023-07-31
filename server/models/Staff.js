@@ -66,6 +66,10 @@ module.exports = (Sequelize,DataTypes) => {
             type :DataTypes.ENUM('Teacher','Receptionist','Admin'),
             allowNull : false,
           },
+          contact :{
+            type :DataTypes.STRING,
+            allowNull : false
+          }
           
     });
 
@@ -95,12 +99,7 @@ module.exports = (Sequelize,DataTypes) => {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           });
-          Staff.hasMany(models.StaffContact, {
-            foreignKey: 'userId',
-            as: 'contacts',
-            onDelete: 'CASCADE',
-            onUpdate : 'CASCADE',
-          });
+         
       };
 
    

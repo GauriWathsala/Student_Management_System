@@ -45,10 +45,7 @@ module.exports = (Sequelize,DataTypes) => {
             type :DataTypes.DATE,
             allowNull :false,
         },
-        salary:{
-            type :DataTypes.DECIMAL(10,2),
-            allowNull :true,
-        },
+        
         gender :{
             type : DataTypes.ENUM('Male', 'Female','Other'),
             allowNull :false, 
@@ -57,17 +54,15 @@ module.exports = (Sequelize,DataTypes) => {
             type : DataTypes.TEXT,
             allowNull :true,
         },
+        contact :{
+            type : DataTypes.STRING,
+            allowNull : false
+        }
         
     });
 
     Admin.associate = (models) => {
-        Admin.hasMany(models.AdminContact, {
-          foreignKey: 'adminId',
-          as: 'contacts',
-          onDelete: 'CASCADE',
-            onUpdate : 'CASCADE',
-          
-        });
+      
         Admin.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user',

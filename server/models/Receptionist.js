@@ -47,10 +47,7 @@ module.exports = (Sequelize,DataTypes) => {
             allowNull :false,
         },
 
-        salary:{
-            type :DataTypes.DECIMAL(10,2),
-            allowNull :false,
-        },
+       
         gender :{
           type : DataTypes.STRING,
           allowNull :false, 
@@ -58,17 +55,16 @@ module.exports = (Sequelize,DataTypes) => {
         qualification :{
           type : DataTypes.TEXT,
           allowNull :true,
+        },
+        contact : {
+          type : DataTypes.STRING,
+          allowNull : false,
         }
         
     });
 
     Receptionist.associate = (models) => {
-        Receptionist.hasMany(models.ReceptionistContact, {
-          foreignKey: 'receptionistId',
-          as: 'contacts',
-          onDelete: 'CASCADE',
-      onUpdate : 'CASCADE',
-          });
+       
         Receptionist.belongsTo(models.User, {
           foreignKey: 'userId',
           as: 'user',

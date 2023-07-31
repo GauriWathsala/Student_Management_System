@@ -47,10 +47,7 @@ module.exports = (Sequelize,DataTypes) => {
             allowNull :false,
         },
 
-        salary:{
-            type :DataTypes.DECIMAL(10,2),
-            allowNull :false,
-        },
+        
         qualifications: {
             type: DataTypes.TEXT,
             allowNull: true,
@@ -59,16 +56,15 @@ module.exports = (Sequelize,DataTypes) => {
             type :DataTypes.ENUM('Male','Female','Other'),
             allowNull : false,
           },
+          contact:{
+            type : DataTypes.STRING,
+            allowNull :false
+          }
           
     });
 
     Teacher.associate = (models) => {
-        Teacher.hasMany(models.TeacherContact, {
-          foreignKey: 'teacherId',
-          as: 'contacts',
-          onDelete: 'CASCADE',
-          onUpdate : 'CASCADE',
-        });
+       
         Teacher.hasMany(models.Module, {
           foreignKey: 'teacherId',
           as: 'modules',
