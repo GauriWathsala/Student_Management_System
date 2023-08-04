@@ -77,6 +77,32 @@ const Student = () => {
     }
     fetchData();
    },[]);
+
+
+// //***********************************Assign Teacher****************** */
+// const handleAssignCourseConfirmation = async () => {
+//   try {
+//     await axios.put(
+//       `http://localhost:3001/module/${moduleToDelete.id}/teacher/${selectedTeacherId}`
+//     );
+//     setShowAssignTeacherDialog(false);
+//     setSelectedTeacherId(null);
+
+//   // Refresh the module data after assigning the teacher
+//   const response = await axios.get('http://localhost:3001/module');
+//   const modules = response.data;
+//   const formattedRows = modules.map((module) => ({
+//     id: module.moduleId,
+//     name: module.moduleName,
+//     teacher: module.teacherId ? module.teacherId : 'assignButton',
+//   }));
+//   setRows(formattedRows);
+// } catch (error) {
+//   console.error('Error assigning teacher:', error);
+// }
+// };   
+
+
   return (
     <div className='student'> 
       <div className='main-header'>

@@ -16,7 +16,7 @@ export default function Head() {
                     <span>INSTITUTE of IELTS & CAE</span>
                 </div>
                 <div>
-                  <button className='log-in'onClick={handleClick}>Log In</button>
+                  <button id="log-in "className='log-in'onClick={handleClick}>Log In</button>
                 </div>
             </div>
         </section>

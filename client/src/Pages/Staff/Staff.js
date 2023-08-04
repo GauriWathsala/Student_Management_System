@@ -40,7 +40,7 @@ const Staff = () => {
         const formattedRows = staff.map((staff) => ({
           id: staff.userId,
           name : `${staff.firstname} ${staff.lastname}`,
-          contact: staff.contacts[0]?.contactNumber || '',
+          contact: staff.contact,
           email: staff.email,
           nic :staff.nic,
           role : staff.userType

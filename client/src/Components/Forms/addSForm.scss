@@ -1,49 +1,185 @@
-.addStaff {
-  display: flex;
-  flex-direction: column;
-  //background-color: #1eb2a6;
-  width: 35%;
+// // // .addStaff {
+// // //   display: flex;
+// // //   flex-direction: column;
+// // //   //background-color: #1eb2a6;
+// // //   width: 35%;
  
 
-  .MuiFormControl-root {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
+// // //   .MuiFormControl-root {
+// // //     margin-top: 8px;
+// // //     margin-bottom: 8px;
+// // //   }
 
-  .radio-group {
-    margin-top: 8px;
-  }
+// // //   .radio-group {
+// // //     margin-top: 8px;
+// // //   }
 
-  .form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 16px;
+// // //   .form-buttons {
+// // //     display: flex;
+// // //     justify-content: flex-end;
+// // //     margin-top: 16px;
 
-    button {
-      margin-left: 8px;
-      padding: 8px 16px;
-      background-color: #1eb2a6 ;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100px;
-      height: 50px;
+// // //     button {
+// // //       margin-left: 8px;
+// // //       padding: 8px 16px;
+// // //       background-color: #1eb2a6 ;
+// // //       color: white;
+// // //       border: none;
+// // //       border-radius: 4px;
+// // //       cursor: pointer;
+// // //       width: 100px;
+// // //       height: 50px;
 
-      &:hover {
-        background-color:white ;
-        color: #1eb2a6;
-        border:1px solid #1eb2a6;
-      }
+// // //       &:hover {
+// // //         background-color:white ;
+// // //         color: #1eb2a6;
+// // //         border:1px solid #1eb2a6;
+// // //       }
 
-      &:first-child {
-        background-color: #ccc;
-        color: #333;
+// // //       &:first-child {
+// // //         background-color: #ccc;
+// // //         color: #333;
 
-        &:hover {
-          background-color: #bbb;
-        }
-      }
-    }
-  }
-}
+// // //         &:hover {
+// // //           background-color: #bbb;
+// // //         }
+// // //       }
+// // //     }
+// // //   }
+// // // }
+
+// // /* Styling the form container */
+// // form {
+// //   display: flex;
+// //   flex-direction: column;
+// //   max-width: 400px;
+// //   margin: 0 auto;
+// //   padding: 20px;
+// //   border: 1px solid #ccc;
+// //   border-radius: 8px;
+// //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// // }
+
+// // /* Styling the form labels */
+// // label {
+// //   margin-bottom: 10px;
+// //   font-weight: bold;
+// //   color: #333;
+// // }
+
+// // /* Styling the form input fields */
+// // input[type="text"],
+// // select {
+// //   padding: 8px;
+// //   border: 1px solid #ccc;
+// //   border-radius: 4px;
+// //   margin-bottom: 15px;
+// //   width: 100%;
+// //   font-size: 14px;
+// // }
+
+// // /* Styling the select dropdown arrow */
+// // select {
+// //   appearance: none;
+// //   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='4' viewBox='0 0 8 4'%3E%3Cpath d='M0 0l4 4 4-4z'/%3E%3C/svg%3E");
+// //   background-repeat: no-repeat;
+// //   background-position: right 8px center;
+// //   background-size: 8px 4px;
+// //   padding-right: 24px;
+// // }
+
+// // /* Styling the submit button */
+// // button[type="submit"] {
+// //   padding: 10px;
+// //   border: none;
+// //   border-radius: 4px;
+// //   background-color: #007bff;
+// //   color: #fff;
+// //   cursor: pointer;
+// //   font-size: 16px;
+// //   transition: background-color 0.3s ease;
+// // }
+
+// // button[type="submit"]:hover {
+// //   background-color: #0056b3;
+// // }
+
+// // /* Additional styling for spacing and layout */
+// // br {
+// //   height: 15px;
+// // }
+
+// // /* You can add more styles as needed to customize the form further */
+
+// /* addSForm.scss */
+
+// // 
+
+
+// /* addSForm.scss */
+
+// form {
+//   display: flex;
+//   flex-wrap: wrap;
+//   max-width: 800px;
+//   margin: 0 auto;
+//   padding: 20px;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+// label {
+//   flex-basis: 100%;
+//   font-weight: bold;
+//   color: #333;
+// }
+
+// /* Increased margin between text boxes */
+// input[type="text"],
+// select {
+//   padding: 8px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+//   margin-bottom: 20px; /* Adjust the margin as needed */
+//   width: 100%;
+//   font-size: 14px;
+// }
+
+// select {
+//   appearance: none;
+//   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='4' viewBox='0 0 8 4'%3E%3Cpath d='M0 0l4 4 4-4z'/%3E%3C/svg%3E");
+//   background-repeat: no-repeat;
+//   background-position: right 8px center;
+//   background-size: 8px 4px;
+//   padding-right: 24px;
+// }
+
+// button[type="submit"] {
+//   padding: 10px;
+//   border: none;
+//   border-radius: 4px;
+//   background-color: #007bff;
+//   color: #fff;
+//   cursor: pointer;
+//   font-size: 16px;
+//   transition: background-color 0.3s ease;
+// }
+
+// button[type="submit"]:hover {
+//   background-color: #0056b3;
+// }
+
+// /* Double column layout on larger screens */
+// @media (min-width: 768px) {
+//   label,
+//   input[type="text"],
+//   select {
+//     flex-basis: calc(50% - 10px);
+//   }
+// }
+
+// /* Additional styling for spacing and layout */
+// br {
+//   height: 15px;
+// }

@@ -1,10 +1,17 @@
 import React, {useState} from 'react'
 import Head from './Head'
 import './Header.css';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 export default function Header() {
   const [click, setClick] = useState(false)
+
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/registration');
+  };
+
   return (
     <div>
       <Head />
@@ -25,7 +32,9 @@ export default function Header() {
             </li>
           </ul>
           <div className='start'>
-            <div className='button'>Get Register</div>
+          <div className='button' onClick={handleButtonClick}>
+        Get Register
+      </div>
           </div>
           <button className='toggle'  onClick={() => setClick(!click)}>
             {click ? <i className='fa fa-times'></i> : <i className='fa fa-bars'></i>}

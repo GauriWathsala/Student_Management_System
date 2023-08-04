@@ -1,0 +1,36 @@
+.rgfee{
+    //background-color: aqua;
+    margin-top: 10px;
+}
+.fee-heading{
+    display: flex;
+align-items: center;
+justify-content: space-between;
+//background-color: aqua;
+width: 70%;
+margin-left: 15%;
+}
+
+#fee-title{
+color: gray;
+
+}
+
+#add-fee{
+background-color: rgb(57, 57, 173);
+color: aliceblue;
+font-weight: 600;
+font-size:medium;
+height: 50px;
+
+&:hover{
+    background-color: blue;
+}
+}
+
+.fee-table{
+    margin-top: 40px;
+    background-color: rgb(192, 124, 41);
+    width: 70%;
+    margin-left: 15%;
+}

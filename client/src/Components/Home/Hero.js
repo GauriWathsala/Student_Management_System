@@ -7,10 +7,9 @@ import {useNavigate } from 'react-router-dom';
 export const Hero = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleButtonClick = () => {
     navigate('/registration');
   };
-
   return (
     <>
         <section className='hero'>
@@ -18,11 +17,12 @@ export const Hero = () => {
             <div className='row'>
               <Title subtitle='WELOME TO GIFTED EDUCATION' title='Best Institute of IELTS & CAE' />
               <p>We will be assisting you in making your overseas educational goal a success </p>
-              <button className='primary-btn' onClick={handleClick}> GET STARTED NOW <i className='fa fa-long-arrow-alt-right'></i>
+
+              {/* <button className='primary-btn' onClick={handleButtonClick}> GET STARTED NOW 
               </button>
               
                 <button > VIEW COURSE <i className='fa fa-long-arrow-alt-right'></i>
-                </button>
+                </button> */}
              
             </div>
           </div>

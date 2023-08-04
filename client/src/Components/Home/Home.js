@@ -13,7 +13,7 @@ export const Home = () => {
     <Hero />
     <AboutCard />
     <HAbout />
-    <Test />
+    {/* <Test /> */}
     </>
   )
 }

@@ -23,11 +23,18 @@ import Module from './Pages/CourseModules/Module';
 import EditCourse from './Components/Forms/EditCourse';
 import PaymentMethod from './Components/Registration/PaymentMethod';
 import ManualReg from './Pages/Student/ManualReg';
-import DropdownButton from './Pages/Test/DropdownButton';
+import OnlinePay from './Components/Registration/OnlinePay'
+import BankPayment from './Components/Registration/BankPayment';
+import Fee from './Pages/Fees/Fee';
 
 
 
 function App() {
+
+
+
+
+
   return(
     <div className='App'>
       <BrowserRouter>
@@ -51,7 +58,9 @@ function App() {
         <Route path = '/module' element={<Module />} ></Route>
         <Route path = '/editcourse' element={<EditCourse />} ></Route>
         <Route path = '/manualreg' element={<ManualReg />} ></Route>
-        <Route path = '/test' element={<DropdownButton />} ></Route>
+        <Route path = '/onlinepayment' element={<OnlinePay />} ></Route>
+        <Route path = '/bankpayment' element={<BankPayment />} ></Route>
+        <Route path = '/fees' element={<Fee />} ></Route>
        
         
 
