@@ -67,7 +67,7 @@ const PaymentMethod = () => {
               size="small"
               value={formData.firstname}
               className='FormData'
-              style={{ display: 'inline-block', width: '150px' }}
+              style={{ marginLeft: '35px'}}
             />
           </p>
         <p className='points'>
@@ -80,7 +80,7 @@ const PaymentMethod = () => {
               size="small"
               value={formData.lastname}
               className='FormData'
-              style={{ display: 'inline-block', width: '150px' }}
+              style={{ marginLeft: '40px'}}
             />
         </p>
         <p className='points'>
@@ -92,6 +92,7 @@ const PaymentMethod = () => {
               size="small"
               value={formData.fullname}
               className='FormData'
+              style={{ marginLeft: '45px'}}
             /> 
         </p>
         <p className='points'>
@@ -103,6 +104,7 @@ const PaymentMethod = () => {
               size="small"
               value= {formData.address}
               className='FormData'
+              style={{ marginLeft: '55px'}}
             /> 
         </p>
         <p className='points'>
@@ -114,40 +116,7 @@ const PaymentMethod = () => {
               size="small"
               value= {formData.nic}
               className='FormData'
-            /> 
-        </p>
-        <p className='points'>
-          <strong>Required Score :</strong> 
-          <strong>NIC :</strong>
-          <TextField
-             id="requiredScore"
-              name="requiredScore"
-              disabled
-              size="small"
-              value= {formData.requiredScore}
-              className='FormData'
-            /> 
-        </p>
-        <p className='points'>
-          <strong>Email :</strong>
-          <TextField
-             id="email"
-              name="email"
-              disabled
-              size="small"
-              value={formData.email}
-              className='FormData'
-            />  
-        </p>
-        <p className='points'>
-          <strong>Contact No :</strong> 
-          <TextField
-             id="contactNo"
-              name="contactNo"
-              disabled
-              size="small"
-              value= {formData.contactNo}
-              className='FormData'
+              style={{ marginLeft: '90px'}}
             /> 
         </p>
         <p className='points'>
@@ -159,28 +128,31 @@ const PaymentMethod = () => {
               size="small"
               value={formData.gender}
               className='FormData'
+              style={{ marginLeft: '65px'}}
             />  
         </p>
         <p className='points'>
-          <strong>Preference :</strong> 
+          <strong>Contact No :</strong> 
           <TextField
-             id="preference"
-              name="preference"
+             id="contactNo"
+              name="contactNo"
               disabled
               size="small"
-              value= {formData.preference}
+              value= {formData.contactNo}
               className='FormData'
+              style={{ marginLeft: '35px'}}
             /> 
         </p>
         <p className='points'>
-          <strong>Country :</strong>
+          <strong>Email :</strong>
           <TextField
-             id="country"
-              name="country"
+             id="email"
+              name="email"
               disabled
               size="small"
-              value= {formData.country}
+              value={formData.email}
               className='FormData'
+              style={{ marginLeft: '75px'}}
             />  
         </p>
         <p className='points'>
@@ -192,9 +164,46 @@ const PaymentMethod = () => {
               size="small"
               value=  {formData.profession}
               className='FormData'
+              style={{ marginLeft: '40px'}}
             />  
         </p>
-        </div>
+        <p className='points'>
+          <strong>Preference :</strong> 
+          <TextField
+             id="preference"
+              name="preference"
+              disabled
+              size="small"
+              value= {formData.preference}
+              className='FormData'
+              style={{ marginLeft: '38px'}}
+            /> 
+        </p>
+        <p className='points'>
+          <strong>Country :</strong>
+          <TextField
+             id="country"
+              name="country"
+              disabled
+              size="small"
+              value= {formData.country}
+              className='FormData'
+              style={{ marginLeft: '60px'}}
+            />  
+        </p>
+        <p className='points'>
+          <strong>Required Score :</strong> 
+          <TextField
+             id="requiredScore"
+              name="requiredScore"
+              disabled
+              size="small"
+              value= {formData.requiredScore}
+              className='FormData'
+              style={{ marginLeft: '5px'}}
+            /> 
+        </p>
+       </div>
         <div className='online-pay'>
           <span id='feeAmountTitle'> Registration Fee  </span>
           <TextField
@@ -205,14 +214,14 @@ const PaymentMethod = () => {
             disabled
             size="small"
             value=  {`Rs. ${registrationFee}`}
-            
            />
            <div className='online-box'>
          <OnlinePay/>
          </div>
        </div>
      </div>
-  <button onClick={handleRegister} className='register-button'>Register</button>
+  <button onClick={handleRegister} className='register-button'>REGISTER</button>
+  
     </div>
   );
 };
