@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { Student } = require("../models");
+const { Student,User } = require("../models");
 
 function generateRandomNumbers(length) {
     let result = '';
@@ -58,7 +58,16 @@ router.post('/', async (req, res) =>{
         };
         const createdStudent = await Student.create(student);
 
-        res.json(createdStudent);
+        // Create associated user entry
+      const user = {
+      userId: createdStudent.stuId ,
+      password: createdStudent.stuId ,
+      username: createdStudent.stuId ,
+      userType: ' Student',
+    };
+    await User.create(user);
+
+    res.json(createdStudent);
     } 
     catch (error) {
       console.error(error);
@@ -108,6 +117,26 @@ router.delete('/:id', async (req, res) => {
 });
 
 
+//********************Assign Courses********************************** */
+router.post('/:id/courses', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { courseId } = req.body;
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    await student.addCourses(courseId);
+
+    res.json({ message: 'Course assigned successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 module.exports = router;
 

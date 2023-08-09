@@ -3,9 +3,10 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   const Fees = sequelize.define("Fees", {
     feeId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     feeType: {
       type: DataTypes.STRING,
@@ -23,11 +24,7 @@ module.exports = (sequelize) => {
       foreignKey: "feeId",
       as: "payments",
     });
-    Fees.belongsTo(models.Course, {
-      foreignKey: "feeType",
-      targetKey: "courseId",
-      as: "course",
-    });
+  
   };
 
   return Fees;

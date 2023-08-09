@@ -1,0 +1,59 @@
+.dbheader{
+    height: 60px;
+    background-color:#1eb2a6;
+    display: flex;
+    align-items: center;
+    //width: 100%;
+    //font-size: 14px;
+    .wrapper {
+        width: 100%;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content:space-between ;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        .head-left{
+            display: flex;
+            align-items: center;
+            // border:0.5px solid #1eb2a6 ;
+            padding: 3px;
+
+
+            .ge{
+                width: 55px;
+                height: 59px;
+            }
+
+            .side-text{
+                color: white;
+
+                h1{
+                    font-size: 33px;
+                    font-weight: 900;
+                    
+                }
+            }
+            
+        }
+        .head-right{
+            display: flex;
+            align-items: center;
+
+            .ditem{
+                display: flex;
+                align-items: center;
+                margin: 5px;
+
+                .icond{
+                    font-size: 20px;
+                    color: white;
+                }
+            }
+        }
+    }
+
+
+
+}

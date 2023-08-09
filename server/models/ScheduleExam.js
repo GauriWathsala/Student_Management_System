@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (Sequelize,DataTypes) => {
     const ScheduleExam = Sequelize.define ("ScheduleExam", {
-        sId:{
+      schedule:{
             type :DataTypes.STRING,
             allowNull :false,
             primaryKey: true,
@@ -25,10 +25,7 @@ module.exports = (Sequelize,DataTypes) => {
               ),
             allowNull: false,
         },
-        registeredStudents: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0, 
-          },
+       
         
     });
 
@@ -36,6 +33,12 @@ module.exports = (Sequelize,DataTypes) => {
         ScheduleExam.belongsTo(models.ExamDetails, {
           foreignKey: "examId",
           as: "exam",
+        });
+        ScheduleExam.belongsToMany(models.Student, {
+          through: "StudentScheduleExams",
+          foreignKey: " scheduleId",
+          otherKey: " stuId",
+          as: "students",
         });
       };
 

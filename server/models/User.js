@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
       userId: {
-        type: DataTypes.STRING(5),
+        type: DataTypes.STRING(10),
         allowNull: false,
         primaryKey: true,
       },
@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'staff',
         onDelete: 'CASCADE',
         onUpdate : 'CASCADE',
+        });
+        User.hasOne(models.Student, {
+          foreignKey: 'userId', 
+          as: 'student',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         });
     };
     

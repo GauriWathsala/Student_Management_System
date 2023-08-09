@@ -10,12 +10,16 @@ const db = require ('./models');
 //Routers
 const studentRouter = require('./routes/Student');
 app.use("/student",studentRouter);
+const feesRouter = require('./routes/Fees');
+app.use("/fees",feesRouter);
+const examDetailsRouter = require('./routes/ExamDetails');
+app.use("/examDetails",examDetailsRouter);
+const placementTestRouter = require('./routes/PlacementTest');
+app.use("/placementTest",placementTestRouter);
 // const paymentRouter = require('./routes/Payment');
 // app.use("/payment",paymentRouter);   
 const courseRouter = require('./routes/Course');
 app.use("/course",courseRouter);
-// const staffRouter = require('./routes/Staff');
-// app.use("/staff",staffRouter);
 const moduleRouter = require('./routes/Module');
 app.use("/module",moduleRouter);
 const staffRouter = require('./routes/Staff');
@@ -42,6 +46,8 @@ const userRouter = require('./routes/User');
 app.use("/user",userRouter);
 const adminRouter = require('./routes/Admin');
 app.use("/admin",adminRouter);
+// const feesRouter = require('./routes/Fees');
+// app.use("/fees",feesRouter);
 
 // const studentNotificationRouter = require('./routes/StudentNotification');
 // app.use("/studentNotification",studentNotificationRouter);

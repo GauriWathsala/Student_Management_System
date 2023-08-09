@@ -45,11 +45,11 @@ module.exports = (Sequelize,DataTypes) => {
             as: 'students',
           });
 
-          Course.hasOne(models.Fees, {
-            foreignKey: "feeType",
-            sourceKey: "courseId",
-            as: "fee",
-        });
+        //   Course.hasOne(models.Fees, {
+        //     foreignKey: "feeType",
+        //     sourceKey: "courseId",
+        //     as: "fee",
+        // });
       };
 
     return Course

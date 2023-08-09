@@ -1,0 +1,110 @@
+.assigned-teacher{
+    display: flex;
+  align-items: center;
+}
+
+.delete-module #del-module{
+    border: 0.5px solid red;
+    &:hover{
+        color: red;
+        border: 0.5px solid red;
+      }
+}
+#assign-button{
+    &:hover{
+        color: blue;}
+}
+
+.module-header{
+    background-color: #1eb2a6;
+    color: aliceblue;
+}
+.module{
+    //background-color: pink;
+    width: 100%;
+    height: 100vh;
+
+    .main-header{
+       //background-color: aqua;
+       height: auto;
+    }
+    .bottom-header{
+        display: flex;
+        height: 100%;
+
+        .side-bar{
+            display: flex;
+            width:15%;
+            background-color: black;
+            height: auto;
+        }
+       .search-bar{
+        display: flex;
+        //background-color: antiquewhite;
+        width: 100%;
+        //display: flex;
+        flex-direction: column;
+        //height: 100vh;
+        .seach-button-component{
+            //background-color: blueviolet;
+            width: 100%;
+            height: 10%;
+            align-items: center;
+            .search-add{
+                background-color: aliceblue;
+                width: 75%;
+                align-items: center;
+                margin-left: 15%;
+                margin-top: 15px;
+             }
+        }
+        .title-button{
+            //background-color: red;
+            height: 15%;
+            .title-button-div{
+                display: flex;
+                justify-content:space-between;
+                width: 80%;
+                margin-left: 5%;
+                margin-top: 20px;
+                font-size: 30px;
+
+                #module-title{
+                    font-size: 50px;
+                    color: rgb(112, 109, 109);
+                }
+
+                #add{
+                    color: white;
+                    background-color: #1eb2a6;
+                    height: 50px;
+                    border: 0.5px solid #1eb2a6;
+                    font-weight: bold;
+                    &:hover{
+                        background-color: white;
+                        color: #1eb2a6;
+                        border: 0.5px solid #1eb2a6;
+                      }
+                }
+            }
+           }
+        .main-content{
+            //background-color: #1eb2a6;
+
+           .all-modules{
+            margin-left: 25%;
+            //background-color: #1eb2a6;
+
+            .moduledata{
+                background-color: aliceblue;
+                width: 57%;
+
+               
+            }
+           }
+        }
+       }
+    }
+    
+    
+}

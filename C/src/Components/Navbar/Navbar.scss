@@ -1,0 +1,48 @@
+.navbar{
+    height: 58px;
+    border-bottom: 0.5px solid #1eb2a6;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: gray;
+    .wrapper{
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content:space-between ;
+        // background-color: aqua;
+
+        .search{
+            display: flex;
+            align-items: center;
+            border:0.5px solid #1eb2a6 ;
+            padding: 3px;
+
+            input{
+                border: none;
+                outline: none;
+                background-color: transparent;
+
+                &::placeholder{
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .dbitems{
+            display: flex;
+            align-items: center;
+
+            .ditem{
+                display: flex;
+                align-items: center;
+                margin: 5px;
+
+                .icond{
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

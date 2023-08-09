@@ -12,34 +12,34 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
-    morningSlotAvailable: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-    afternoonSlotAvailable: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true,
-    },
-    morningSlotStudents: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    afternoonSlotStudents: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
+    
+    availability: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      studentsCount: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
+        },
+        // startTime:{
+        //   type: DataTypes.DATE,
+        //   allowNull: false,
+        //   defaultValue: new Date().setHours(9, 0, 0, 0),
+        // }
+
   });
 
   PlacementTestAvailability.associate = (models) => {
-    // Associate with ExamDetails (Placement Test)
     PlacementTestAvailability.belongsTo(models.ExamDetails, {
       foreignKey: "examId",
       as: "placementTest",
     });
+    PlacementTestAvailability.hasMany(models.Student, { 
+      foreignKey: " availabilityId",
+      as: 'students', 
+  });
   };
 
   return PlacementTestAvailability;

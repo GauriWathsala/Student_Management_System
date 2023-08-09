@@ -1,0 +1,29 @@
+.welcomeheader{
+    .top-header{
+        height: 60px;
+        background-color:#1eb2a6;
+        display: flex;
+        align-items: center; 
+        .ge{
+            width: 55px;
+            height: 59px;
+        }
+        .side-text{
+            color: white;
+            h1{
+                font-size: 33px;
+                font-weight: 900;
+            }
+        }
+    }
+    // .form-background{
+    //     align-items: center;
+    //     background-color: rgba(83, 192, 213, 0.5);;
+    //     height: 100vh;
+        // #regi-topic{
+        //     align-items: center;
+        //     margin-left: 35%;
+        // }
+    // }
+   
+}

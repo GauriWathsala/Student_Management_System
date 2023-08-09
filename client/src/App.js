@@ -26,6 +26,7 @@ import ManualReg from './Pages/Student/ManualReg';
 import OnlinePay from './Components/Registration/OnlinePay'
 import BankPayment from './Components/Registration/BankPayment';
 import Fee from './Pages/Fees/Fee';
+import UnavailableDates from './Pages/PlacementTest/UnavailableDates';
 
 
 
@@ -59,8 +60,9 @@ function App() {
         <Route path = '/editcourse' element={<EditCourse />} ></Route>
         <Route path = '/manualreg' element={<ManualReg />} ></Route>
         <Route path = '/onlinepayment' element={<OnlinePay />} ></Route>
-        <Route path = '/bankpayment' element={<BankPayment />} ></Route>
+        {/* <Route path = '/bankpayment' element={<BankPayment />} ></Route> */}
         <Route path = '/fees' element={<Fee />} ></Route>
+        <Route path = '/unavailableDates' element={<UnavailableDates />} ></Route>
        
         
 

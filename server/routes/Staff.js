@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Staff, StaffContact , User, Teacher, TeacherContact, Receptionist,ReceptionistContact,Admin, AdminContact} = require('../models');
+const { Staff,  User, Teacher,  Receptionist,Admin, } = require('../models');
 const { sequelize } = require('../models');
 
 //*******************Retrieve all staff details************************* */
@@ -41,18 +41,17 @@ router.delete('/:id', async (req, res) => {
       await sequelize.transaction(async (t) => {
       
        await User.destroy({ where: { userId: staffMember.userId }, transaction: t });
-       await StaffContact.destroy({ where: { userId: staffMember.userId }, transaction: t });
-
+       
        if (staffMember.admin) {
-        await AdminContact.destroy({ where: { adminId: staffMember.admin.adminId }, transaction: t });
+       
         await Admin.destroy({ where: { adminId: staffMember.admin.adminId }, transaction: t });
       }
       if (staffMember.receptionist) {
-        await ReceptionistContact.destroy({ where: { receptionistId: staffMember.receptionist.receptionistId }, transaction: t });
+       
         await Receptionist.destroy({ where: { receptionistId: staffMember.receptionist.receptionistId }, transaction: t });
       }
         if (staffMember.teacher) {
-            await TeacherContact.destroy({ where: { teacherId: staffMember.teacher.teacherId }, transaction: t });
+           
             await Teacher.destroy({ where: { teacherId: staffMember.teacher.teacherId }, transaction: t });
       }
         await Staff.destroy({ where: { userId: staffMember.userId }, transaction: t });

@@ -50,7 +50,7 @@ module.exports = (Sequelize,DataTypes) => {
             type : DataTypes.ENUM('Male', 'Female','Other'),
             allowNull :false, 
         },
-        qualification :{
+        qualifications :{
             type : DataTypes.TEXT,
             allowNull :true,
         },

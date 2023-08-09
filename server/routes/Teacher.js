@@ -12,57 +12,7 @@ function generateRandomNumbers(length) {
     }
     return result;
   }
-// // ************************************Add new teacher************************************
-// router.post('/', async (req, res) =>{
-//     try {
-//         const { firstname, lastname,fullname, address, nic, dob, email,  qualifications, contact , gender} = req.body;
-//         console.log (req.body);
-    
-//         // Create teacher
-//         const teacherId = 'T' + generateRandomNumbers(4);
-//         const teacher = {
-//           teacherId,firstname,lastname,fullname,address, nic, dob,email,  qualifications,gender, contact
-//         };
-//        const createdTeacher = await Teacher.create(teacher);
-//         console.log('createdTeacher ',createdTeacher)
-
-        
-   
-
-//        // Create associated user entry
-//     const user = {
-//       userId: createdTeacher.teacherId,
-//       password: createdTeacher.teacherId,
-//       username: createdTeacher.teacherId,
-//       userType: 'Teacher',
-//     };
-//     await User.create(user);
-
-//     //Create associated Staff entry
-//     const staff = {
-//       userId: createdTeacher.teacherId,
-//       firstname : createdTeacher.firstname,
-//       lastname: createdTeacher.lastname,
-//       fullname: createdTeacher.fullname,
-//       address: createdTeacher.address,
-//       nic:  createdTeacher.nic,
-//       dob: createdTeacher.dob,
-//       email: createdTeacher.email,
-//       qualifications:createdTeacher. qualifications,
-//       gender :createdTeacher.gender,
-//       password: user.password,
-//       username: user.username,
-//       userType: user.userType,
-//       contact : createdTeacher.contact,
-//     };
-//     await Staff.create(staff);
-
-//     await Teacher.create(createdTeacher)
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-//   });
+// ********************************add teacher *****************************
 
 router.post('/', async (req, res) => {
   try {
@@ -126,68 +76,7 @@ router.post('/', async (req, res) => {
 
 
 
-// router.post('/create', async (req, res) => {
-//   try {
-//     // Extract teacher data from the request body
-//     const {
-//       teacherId,
-//       firstname,
-//       lastname,
-//       fullname,
-//       address,
-//       nic,
-//       dob,
-//       email,
-//       qualifications,
-//       gender,
-//       contactNumber, // Assuming you also want to add a contact number for the teacher
-//     } = req.body;
 
-//     console.log('Received request to create teacher:', req.body);
-
-//     // Create a new Teacher record in the database
-//     const newTeacher = await Teacher.create({
-//       teacherId,
-//       firstname,
-//       lastname,
-//       fullname,
-//       address,
-//       nic,
-//       dob,
-//       email,
-//       qualifications,
-//       gender,
-//     });
-
-//     console.log('Teacher record created:', newTeacher.toJSON());
-
-//     // Create a TeacherContact record associated with the new teacher
-//     await TeacherContact.create({
-//       teacherId: newTeacher.teacherId,
-//       contactNumber,
-//     });
-
-//     console.log('TeacherContact record created');
-
-//     // Respond with the newly created teacher
-//     res.status(201).json({ success: true, teacher: newTeacher });
-//   } catch (error) {
-//     console.error('Error adding teacher:', error);
-//     console.error('Error stack trace:', error.stack);
-  
-//     if (error.name === 'SequelizeValidationError') {
-//       console.error('Validation errors:', error.errors);
-//       return res.status(400).json({ success: false, message: 'Invalid data provided. Please check the input fields.' });
-//     }
-  
-//     if (error.response) {
-//       console.error('Axios response status:', error.response.status);
-//       console.error('Axios response headers:', error.response.headers);
-//     }
-  
-//     res.status(500).json({ success: false, message: 'Failed to add teacher. Please try again later.' });
-//   }
-// });
 
 
 
@@ -268,14 +157,7 @@ router.put('/:id', async (req, res) => {
     );
 
 
-    // Fetch updated teacher with contacts
-    const updatedTeacher = await Teacher.findByPk(id, {
-      include: {
-        model: TeacherContact,
-        as: 'contacts',
-        attributes: ['contactNumber'],
-      },
-    });
+   
 
     res.json(updatedTeacher);
   } catch (error) {

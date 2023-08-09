@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 
-
-
 module.exports = (sequelize,DataTypes) => {
     const Student = sequelize.define ("Student", {
         stuId:  {
@@ -73,7 +71,22 @@ module.exports = (sequelize,DataTypes) => {
             foreignKey: "courseId",
             as: "course",
           }); 
-             
+          Student.belongsToMany(models.ScheduleExam, {
+            through: "StudentScheduleExams",
+            foreignKey: " stuId",
+            otherKey: " scheduleId",
+            as: "scheduleExams",
+          });
+          Student.belongsTo(models.PlacementTestAvailability , {
+            foreignKey: "availabilityId",
+            as: "placementTest",
+          }); 
+          Student.belongsTo(models.User, {
+            foreignKey: 'userId',
+            as: 'user',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          });
         }
     return Student
 }

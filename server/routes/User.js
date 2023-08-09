@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, Receptionist, Teacher, Admin,ReceptionistContact, TeacherContact, AdminContact  } = require('../models');
+const { User, Receptionist, Teacher, Admin, Student } = require('../models');
 
 // **************************Update user's username and password******************************
 router.put('/:id/credentials', async (req, res) => {
@@ -16,6 +16,8 @@ router.put('/:id/credentials', async (req, res) => {
       user = await Receptionist.findByPk(id);
     } else if (id.startsWith('A')) {
       user = await Admin.findByPk(id);
+    }else if  (id.startsWith('S')){
+      user = await Student.findByPk(id);
     }
 
     if (!user) {

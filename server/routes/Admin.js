@@ -1,6 +1,7 @@
+
 const express = require ('express')
 const router = express.Router()
-const {Admin, AdminContact,User,Staff,StaffContact} = require("../models");
+const {Admin,User,Staff} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -12,137 +13,145 @@ function generateRandomNumbers(length) {
     }
     return result;
   }
+// ********************************add teacher *****************************
 
-  // *********************Add new Admin**************************
+router.post('/', async (req, res) => {
+  try {
+    const { firstname, lastname, fullname, address, nic, dob, email, qualifications, contact, gender } = req.body;
+    console.log(req.body);
 
-router.post('/', async (req, res) =>{
-    try {
-        const {  firstname, lastname,fullname, address, email, contact, nic,dob,gender,qualifications } = req.body;
-    
-        // Create admin
-        const adminId = 'A'+ generateRandomNumbers(4);
-        const admin = {
-          adminId,firstname, lastname,fullname,email,nic,dob,gender,qualifications,address, contact
-        };
-        const createdAdmin = await Admin.create(admin);
+    // Create teacher
+    const  adminId = 'A' + generateRandomNumbers(4);
+    const  admin = {
+      adminId,
+      firstname,
+      lastname,
+      fullname,
+      address,
+      nic,
+      dob,
+      email,
+      qualifications,
+      gender,
+      contact,
+    };
+    const createdAdmin = await Admin.create( admin);
+    console.log('createdReceptionist ', createdAdmin);
 
-
-           // Create associated user entry
+    // Create associated user entry
     const user = {
-      userId: createdAdmin.adminId,
-      password: createdAdmin.adminId,
-      username: createdAdmin.adminId,
-      userType: 'Admin',
+      userId: createdAdmin. adminId,
+      password: createdAdmin. adminId,
+      username: createdAdmin. adminId,
+      userType: ' Admin',
     };
     await User.create(user);
 
-      //Create associated Staff entry
-      const staff = {
-        userId: createdAdmin. adminId,
-        firstname : createdAdmin.firstname,
-        lastname: createdAdmin.lastname,
-        fullname: createdAdmin.fullname,
-        address: createdAdmin.address,
-        nic:  createdAdmin.nic,
-        dob: createdAdmin.dob,
-        email: createdAdmin.email,
-        qualifications:createdAdmin.qualifications,
-        gender :createdAdmin.gender,
-        password: user.password,
-        username: user.username,
-        userType: user.userType,
-      };
-      await Staff.create(staff);
-
-   
-  
-  
-      res.json(createdAdmin);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
-    }
-    
-}); 
+    // Create associated Staff entry
+    const staff = {
+      userId: createdAdmin.adminId,
+      firstname: createdAdmin.firstname,
+      lastname: createdAdmin.lastname,
+      fullname: createdAdmin.fullname,
+      address: createdAdmin.address,
+      nic: createdAdmin.nic,
+      dob: createdAdmin.dob,
+      email: createdAdmin.email,
+      qualifications: createdAdmin.qualifications,
+      gender: createdAdmin.gender,
+      password: user.password,
+      username: user.username,
+      userType: user.userType,
+      contact: createdAdmin.contact,
+    };
+    await Staff.create(staff);
+    // Respond with success message or appropriate data
+    res.status(200).json({ message: ' Admin created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 
 
-// *****************Retrieve Admin*******************
-router.get('/', async (req, res) => {
+
+
+
+
+
+
+
+//***************************Retrieve Teacher**********************************
+router.get("/", async(req,res) => {
     try {
-      const listOfAdmin = await Admin.findAll({
-        include: {
-          model: AdminContact,
-          as: 'contacts',
-          attributes: ['contactNumber'],
-        },
-      });
-      res.json(listOfAdmin);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
-    }
-  });
+        const listOfAdmin= await Admin.findAll({
+          
+          
+        });
+        res.json(listOfAdmin);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+      }
+ });
 
-  //Delete admin
+
+
+// *******************************Edit teacher details and contacts*************************
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { firstname,lastname,fullname, address, nic, dob, email,  qualifications, contact,gender } = req.body;
+
+    // Update teacher details
+    await Admin.update(
+      { firstname,lastname,fullname, address, nic, dob, email, qualifications,gender,contact },
+      { where: { adminId: id } }
+    );
+  res.json(updatedAdmin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+//Delete teacher
 router.delete('/:id', async (req, res) => {
     try {
       const { id } = req.params;
       await Admin.destroy({ where: { adminId: id } });
       await User.destroy({ where: { userId: id}});
-      await AdminContact.destroy({ where: { adminId: id } });
+      
       await Staff.destroy({ where: { userId: id } });
-      await StaffContact.destroy({ where: { userId: id } });
+     
       res.json({ message: 'Admin deleted successfully' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Server error' });
     }
 });
+// *******************retrieve a specific teacher info*********************
+router.get("/:adminId", async (req, res) => {
+  try {
+    const { adminId } = req.params;
+    const adminDetails = await Admin.findOne({
+      where: { adminId },
+      
+    });
 
-// **************Edit Admin details and contacts************************
-router.put('/:id', async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { name,email, contacts , nic,dob,gender,qualification} = req.body;
-  
-      // Update admin details
-      await Admin.update(
-        { name, email,nic,dob,gender,qualification },
-        { where: { adminId: id } }
-      );
-  
-      // Update admin contacts
-      const admin = await Admin.findByPk(id);
-      if (!admin) {
-        return res.status(404).json({ error: 'Admin not found' });
-      }
-  
-      // Delete existing contacts
-      await AdminContact.destroy({ where: { adminId: id } });
-  
-      // Create new contacts
-      const contactNumbers = contacts.map((contact) => ({
-        adminId: id,
-        contactNumber: contact,
-      }));
-      await AdminContact.bulkCreate(contactNumbers);
-  
-      // Fetch updated admin with contacts
-      const updatedAdmin = await Admin.findByPk(id, {
-        include: {
-          model: AdminContact,
-          as: 'contacts',
-          attributes: ['contactNumber'],
-        },
-      });
-  
-      res.json(updatedAdmin);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
+    if (!adminDetails) {
+      return res.status(404).json({ error: "Admin not found" });
     }
-  });
 
-  module.exports = router
+    res.json(adminDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+module.exports = router
   

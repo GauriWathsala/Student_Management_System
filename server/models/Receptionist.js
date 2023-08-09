@@ -52,7 +52,7 @@ module.exports = (Sequelize,DataTypes) => {
           type : DataTypes.STRING,
           allowNull :false, 
         },
-        qualification :{
+        qualifications :{
           type : DataTypes.TEXT,
           allowNull :true,
         },

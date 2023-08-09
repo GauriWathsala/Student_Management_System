@@ -31,11 +31,11 @@ function generateRandomNumbers(length) {
           });
           await course.addModules(modules);
         }
-        await Fees.create({
-          feeId: courseId,
-          feeType: courseId,
-          amount: courseFee,
-        });
+        // await Fees.create({
+        //   feeId: courseId,
+        //   feeType: courseId,
+        //   amount: courseFee,
+        // });
 
         res.json(course);
       } catch (error) {

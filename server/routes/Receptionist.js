@@ -1,6 +1,7 @@
+
 const express = require ('express')
 const router = express.Router()
-const {Receptionist, ReceptionistContact,User,Staff,StaffContact} = require("../models");
+const {Receptionist,User,Staff,} = require("../models");
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -12,138 +13,149 @@ function generateRandomNumbers(length) {
     }
     return result;
   }
+// ********************************add teacher *****************************
 
- //*********************************Add new Receptionist*************************************************
+router.post('/', async (req, res) => {
+  try {
+    const { firstname, lastname, fullname, address, nic, dob, email, qualifications, contact, gender } = req.body;
+    console.log(req.body);
 
-router.post('/', async (req, res) =>{
-    try {
-        const { firstname, lastname,fullname, address, nic, dob, email,contact ,gender,qualifications} = req.body;
-    
-        // Create receptionist
-        const receptionistId = 'R' + generateRandomNumbers(4);
-        const receptionist = {
-          receptionistId,firstname, lastname,fullname,address, nic, dob,email, gender,qualifications,contact
-        };
-        const createdReceptionist = await Receptionist.create(receptionist);
+    // Create teacher
+    const receptionistId = 'R' + generateRandomNumbers(4);
+    const receptionist = {
+      receptionistId,
+      firstname,
+      lastname,
+      fullname,
+      address,
+      nic,
+      dob,
+      email,
+      qualifications,
+      gender,
+      contact,
+    };
+    const createdReceptionist = await Receptionist.create(receptionist);
+    console.log('createdReceptionist ', createdReceptionist);
 
-        // Create associated user entry
+    // Create associated user entry
     const user = {
-      userId:  createdReceptionist.receptionistId,
+      userId: createdReceptionist.receptionistId,
+      password: createdReceptionist.receptionistId,
       username: createdReceptionist.receptionistId,
-      password:  createdReceptionist.receptionistId,
       userType: 'Receptionist',
     };
     await User.create(user);
 
-       //Create associated Staff entry
+    // Create associated Staff entry
     const staff = {
       userId: createdReceptionist.receptionistId,
-      firstname : createdReceptionist.firstname,
+      firstname: createdReceptionist.firstname,
       lastname: createdReceptionist.lastname,
       fullname: createdReceptionist.fullname,
       address: createdReceptionist.address,
-      nic:  createdReceptionist.nic,
+      nic: createdReceptionist.nic,
       dob: createdReceptionist.dob,
       email: createdReceptionist.email,
-      qualifications:createdReceptionist. qualifications,
-      gender :createdReceptionist.gender,
+      qualifications: createdReceptionist.qualifications,
+      gender: createdReceptionist.gender,
       password: user.password,
       username: user.username,
       userType: user.userType,
+      contact: createdReceptionist.contact,
     };
     await Staff.create(staff);
 
-    
+    // Respond with success message or appropriate data
+    res.status(200).json({ message: 'Receptionist created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
-    
-    res.json(createdReceptionist);
 
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
-    }
-    
-}); 
 
-// *****************************Edit receptionist details and contacts**************************************
-router.put('/:id', async (req, res) => {
+
+
+
+
+
+
+
+//***************************Retrieve Teacher**********************************
+router.get("/", async(req,res) => {
     try {
-      const { id } = req.params;
-      const { name, address, nic, dob, email,  contacts, qualification,gender} = req.body;
-  
-      // Update receptionist details
-      await Receptionist.update(
-        { name, address, nic, dob, email, qualification,gender },
-        { where: { receptionistId: id } }
-      );
-  
-      // Update receptionist contacts
-      const receptionist = await Receptionist.findByPk(id);
-      if (!receptionist) {
-        return res.status(404).json({ error: 'Receptionist not found' });
+        const listOfTeachers = await Receptionist.findAll({
+          
+          
+        });
+        res.json(listOfTeachers);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
       }
-  
-      // Delete existing contacts
-      await ReceptionistContact.destroy({ where: { receptionistId: id } });
-  
-      // Create new contacts
-      const contactNumbers = contacts.map((contact) => ({
-        receptionistId: id,
-        contactNumber: contact,
-      }));
-      await ReceptionistContact.bulkCreate(contactNumbers);
-  
-      // Fetch updated receptionist with contacts
-      const updatedReceptionist = await Receptionist.findByPk(id, {
-        include: {
-          model: ReceptionistContact,
-          as: 'contacts',
-          attributes: ['contactNumber'],
-        },
-      });
-  
-      res.json(updatedReceptionist);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
-    }
-  });
-  
+ });
 
-//***************************************Delete Receptionist*********************************************
+
+
+// *******************************Edit teacher details and contacts*************************
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { firstname,lastname,fullname, address, nic, dob, email,  qualifications, contact,gender } = req.body;
+
+    // Update teacher details
+    await Receptionist.update(
+      { firstname,lastname,fullname, address, nic, dob, email, qualifications,gender,contact },
+      { where: { receptionistId: id } }
+    );
+
+
+   
+
+    res.json(updatedReceptionist);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+//Delete teacher
 router.delete('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      await Receptionist.destroy({ where: { receptionistId: id } });
-      await User.destroy({ where: { userId: id } });
-      await ReceptionistContact.destroy({ where: { receptionistId: id } });
+      await Receptionist.destroy({ where: { teacherId: id } });
+      await User.destroy({ where: { userId: id}});
+      
       await Staff.destroy({ where: { userId: id } });
-      await StaffContact.destroy({ where: { userId: id } });
+     
       res.json({ message: 'Receptionist deleted successfully' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Server error' });
     }
 });
+// *******************retrieve a specific teacher info*********************
+router.get("/:receptionistId", async (req, res) => {
+  try {
+    const { receptionistId } = req.params;
+    const receptionistDetails = await Teacher.findOne({
+      where: { receptionistId },
+      
+    });
 
-// Retrieve Receptionist
-router.get('/', async (req, res) => {
-    try {
-      const listOfReceptionists = await Receptionist.findAll({
-        include: 
-          {
-            model: ReceptionistContact,
-            as: 'contacts',
-            attributes: ['contactNumber'],
-          },
-        
-        
-      });
-      res.json(listOfReceptionists);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
+    if (!receptionistDetails) {
+      return res.status(404).json({ error: "Teacher not found" });
     }
-  });
+
+    res.json(receptionistDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router
