@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { Student,User } = require("../models");
+const bcrypt = require("bcrypt") ; 
 
 function generateRandomNumbers(length) {
     let result = '';
@@ -61,7 +62,7 @@ router.post('/', async (req, res) =>{
         // Create associated user entry
       const user = {
       userId: createdStudent.stuId ,
-      password: createdStudent.stuId ,
+      password : await bcrypt.hash(createdStudent.stuId, 10),
       username: createdStudent.stuId ,
       userType: ' Student',
     };

@@ -13,6 +13,7 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const Sidebar = () => {
     return (
@@ -35,6 +36,7 @@ const Sidebar = () => {
                 <li><Link to = '/course' className='dash-to-page'> <LibraryBooksIcon className='dicon' /> <span>Courses & Modules</span></Link> </li>
                 <li> <MenuBookIcon className='dicon' /> <span>Books</span> </li>
                 <li> <EditNoteIcon className='dicon'/> <span>Exams</span> </li>
+                <li> <Link to = '/fees' className='dash-to-page'><MonetizationOnIcon className='dicon'/> <span>Fees & Payments</span></Link> </li>
                 <li> <NotificationsIcon className='dicon' /> <span>Notifications</span> </li>
                 <li><FingerprintIcon className='dicon' /> <span>Attendance</span></li>
 

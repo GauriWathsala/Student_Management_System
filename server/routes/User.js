@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { User, Receptionist, Teacher, Admin, Student } = require('../models');
+const bcrypt = require("bcrypt") ;
+ const {sign} = require ("jsonwebtoken");
 
 // **************************Update user's username and password******************************
 router.put('/:id/credentials', async (req, res) => {
@@ -62,6 +64,35 @@ router.get("/", async(req,res) => {
   const userCredentials = await User.findAll();
   res.json(userCredentials);
 });
+
+
+
+//************************Login****************************** */
+
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ where: { username: username } });
+
+    if (!user) {
+      return res.json({ error: "User Doesn't Exist" });
+    }
+
+    bcrypt.compare(password, user.password).then((match) => {
+      if (!match) {
+        return res.json({ error: "Wrong Username & password combination" });
+      }
+
+      const accessToken = sign ({username : user.username, id:user.id}, "importantsecret");
+      res.json(accessToken);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 
 

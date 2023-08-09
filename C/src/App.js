@@ -27,6 +27,7 @@ import OnlinePay from './Components/Registration/OnlinePay'
 // import BankPayment from './Components/Registration/BankPayment';
 import Fee from './Pages/Fees/Fee';
 import UnavailableDates from './Pages/PlacementTest/UnavailableDates';
+import Forgotpw from './Components/Login/Forgotpw';
 
 
 
@@ -49,6 +50,7 @@ function App() {
         <Route path='/registration' element={<Registration />} />
         <Route path='/paymentmethod' element={<PaymentMethod />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/forgotpw' element={<Forgotpw />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/student' element={<Student />}></Route>
         <Route path='/teacher' element={<Teacher />}></Route>

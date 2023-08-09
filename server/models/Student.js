@@ -73,19 +73,22 @@ module.exports = (sequelize,DataTypes) => {
           }); 
           Student.belongsToMany(models.ScheduleExam, {
             through: "StudentScheduleExams",
-            foreignKey: " stuId",
-            otherKey: " scheduleId",
+            foreignKey: "stuId",
+            otherKey: "scheduleId",
             as: "scheduleExams",
           });
-          Student.belongsTo(models.PlacementTestAvailability , {
-            foreignKey: "availabilityId",
-            as: "placementTest",
-          }); 
-          Student.belongsTo(models.User, {
+        Student.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user',
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
+          });
+       
+          Student.belongsToMany(models.PlacementTestAvailability, {
+            through: "SchedulePlacementTest",
+            foreignKey: "stuId",
+            otherKey: "availabilityId",
+            as: "schedulePlacementTest",
           });
         }
     return Student

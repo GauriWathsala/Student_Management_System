@@ -2,10 +2,11 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (Sequelize,DataTypes) => {
     const ScheduleExam = Sequelize.define ("ScheduleExam", {
-      schedule:{
-            type :DataTypes.STRING,
+      scheduleExamId:{
+            type :DataTypes.INTEGER,
             allowNull :false,
             primaryKey: true,
+            autoIncrement: true,
         },
         date:{
             type:DataTypes.DATEONLY,

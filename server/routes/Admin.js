@@ -2,6 +2,7 @@
 const express = require ('express')
 const router = express.Router()
 const {Admin,User,Staff} = require("../models");
+const bcrypt = require("bcrypt") ; 
 
 // Function to generate random numbers
 function generateRandomNumbers(length) {
@@ -13,14 +14,14 @@ function generateRandomNumbers(length) {
     }
     return result;
   }
-// ********************************add teacher *****************************
+// ********************************add Admin *****************************
 
 router.post('/', async (req, res) => {
   try {
     const { firstname, lastname, fullname, address, nic, dob, email, qualifications, contact, gender } = req.body;
     console.log(req.body);
 
-    // Create teacher
+    // Create admin
     const  adminId = 'A' + generateRandomNumbers(4);
     const  admin = {
       adminId,
@@ -41,7 +42,8 @@ router.post('/', async (req, res) => {
     // Create associated user entry
     const user = {
       userId: createdAdmin. adminId,
-      password: createdAdmin. adminId,
+      password : await bcrypt.hash(createdAdmin.adminId, 10),
+      // password: createdAdmin. adminId,
       username: createdAdmin. adminId,
       userType: ' Admin',
     };
