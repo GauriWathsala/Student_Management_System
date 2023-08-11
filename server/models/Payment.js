@@ -11,29 +11,26 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    // paymentDate: {
-    //   type: DataTypes.DATEONLY,
-    //   allowNull: false,
-    // },
     paymentType :{
-        type : DataTypes.ENUM ('Installment','Full'),
+        type : DataTypes.ENUM ('Installment','Full payment'),
         allowNull: false,
     },
     paymentMethod :{
-        type : DataTypes.ENUM ('Bank','Online', 'Cash'),
+        type : DataTypes.ENUM ('Bank Payment','Online Payment', 'Cash Payment'),
         allowNull: false,
-    }
+    },
+    details :{
+      type : DataTypes.ENUM ('Registration Fee','Exam Fee', 'Course Fee'),
+      allowNull: false,
+  }
   });
 
   Payment.associate = (models) => {
     Payment.belongsTo(models.Student, {
-      foreignKey: "studentId",
+      foreignKey: "stuId",
       as: "student",
     });
-    Payment.belongsTo(models.Fees, {
-      foreignKey: "feeId",
-      as: "fee",
-    });
+  
   };
 
   return Payment;

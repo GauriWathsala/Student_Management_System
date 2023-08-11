@@ -130,6 +130,7 @@ import SchedulePT from './Pages/PlacementTest/SchedulePT';
 import { AuthContext } from './helpers/AuthContext';
 import {useState, useEffect} from 'react';
 import axios from 'axios'
+import Payment from './Pages/PlacementTest/Payment';
 
 
 function App() {
@@ -186,6 +187,7 @@ useEffect(() => {
         <Route path = '/unavailableDates' element={<UnavailableDates />} ></Route>
         <Route path = '/scheduledplacementTests' element={<ScheduledPlacementTest />} ></Route>
         <Route path="/schedule/:availabilityId" element = {<SchedulePT />} />
+        <Route path="/placementTest-payment" element = {<Payment />} />
         
 
       </Routes>

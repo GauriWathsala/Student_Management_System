@@ -19,13 +19,7 @@ module.exports = (sequelize) => {
     
   });
 
-  Fees.associate = (models) => {
-    Fees.hasMany(models.Payment, {
-      foreignKey: "feeId",
-      as: "payments",
-    });
-  
-  };
+ 
 
   return Fees;
 };
