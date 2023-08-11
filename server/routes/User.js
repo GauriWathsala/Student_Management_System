@@ -3,6 +3,7 @@ const router = express.Router();
 const { User, Receptionist, Teacher, Admin, Student } = require('../models');
 const bcrypt = require("bcrypt") ;
  const {sign} = require ("jsonwebtoken");
+const {validateToken} = require ('../middlewares/AuthMiddleware')
 
 // **************************Update user's username and password******************************
 router.put('/:id/credentials', async (req, res) => {
@@ -84,14 +85,20 @@ router.post("/login", async (req, res) => {
         return res.json({ error: "Wrong Username & password combination" });
       }
 
-      const accessToken = sign ({username : user.username, id:user.id}, "importantsecret");
-      res.json(accessToken);
+      const accessToken = sign ({username : user.username, id : user.id}, "importantsecret");
+      res.json({token: accessToken, username: username, id:user.id});
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 });
+
+
+
+router.get ('/auth',validateToken ,(req,res) => {
+  res.json (req.user);
+})
 
 
 

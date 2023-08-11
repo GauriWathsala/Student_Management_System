@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,  { useState, useContext } from 'react'
 import './dbheader.scss'
 import SearchIcon from '@mui/icons-material/Search';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
@@ -6,8 +6,12 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ListIcon from '@mui/icons-material/List';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { AuthContext } from '../../helpers/AuthContext';
 
 export const DbHeader = () => {
+
+  const {authState} = useContext(AuthContext)
+
   return (
     <div className='dbheader'>
         <div className='wrapper'>
@@ -33,6 +37,9 @@ export const DbHeader = () => {
           </div>
           <div className='ditem'>
             <AccountCircleOutlinedIcon className='icond'/>
+          </div>
+          <div className='ditem'>
+            <lable>{authState.username}</lable>
           </div>
         </div> 
         
