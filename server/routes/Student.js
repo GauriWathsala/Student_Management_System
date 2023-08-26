@@ -3,6 +3,11 @@ const express = require('express');
 const router = express.Router();
 const { Student,User } = require("../models");
 const bcrypt = require("bcrypt") ; 
+const { sendEmail } = require('./sendEmail')
+
+
+
+
 
 function generateRandomNumbers(length) {
     let result = '';
@@ -68,6 +73,15 @@ router.post('/', async (req, res) =>{
     };
     await User.create(user);
 
+
+    const emailSubject = 'Welcome to Gifted Education - Registration Confirmation';
+const emailBody = `Hello ${createdStudent.firstname},\n\n
+We are thrilled to welcome you to Gifted Education! Your registration process is now complete, and we're excited to have you as part of our academic community.This email serves as confirmation of your successful registration. \n\n Here are some important details to help you get started: \n\n Student ID: ${createdStudent.stuId} \n Course: To enroll for course you need to face for a placement test. Please reserve a date for the placement test after you log in to the portal.
+\n\nAccessing Your Student Portal: To access your course schedule, grades, and other important information, please log in to our student portal using the following credentials:\n\n Username: ${createdStudent.stuId}\n  Password: ${createdStudent.stuId} (You can change this any time as your wish.)`;
+sendEmail(emailSubject, createdStudent.email, emailBody);
+
+
+ 
     res.json(createdStudent);
     } 
     catch (error) {
@@ -130,7 +144,7 @@ router.post('/:id/courses', async (req, res) => {
       return res.status(404).json({ error: 'Student not found' });
     }
 
-    await student.addCourses(courseId);
+    await student.update({ courseId });
 
     res.json({ message: 'Course assigned successfully' });
   } catch (error) {

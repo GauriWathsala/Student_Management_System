@@ -24,6 +24,7 @@ Module.associate = (models) => {
       foreignKey: 'teacherId',
       as: 'teacher',
     });
+
   };
 
 return Module

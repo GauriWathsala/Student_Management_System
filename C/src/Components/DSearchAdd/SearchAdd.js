@@ -16,6 +16,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import ScheduleExamForm from '../../Pages/Exams/ScheduleExamForm';
 
 
 const SearchAdd = ({currentPage ,showIcon}) => {
@@ -24,6 +25,7 @@ const SearchAdd = ({currentPage ,showIcon}) => {
   let showEastIcon = currentPage === 'course';
   //const [selectedRole, setSelectedRole] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
   const dropdownRef = useRef(null);
   
   // Styles for the Cancel and Add button
@@ -51,6 +53,10 @@ const SearchAdd = ({currentPage ,showIcon}) => {
   } else if (currentPage === 'module') {
     buttonText = 'BACK';
     showIcon = true;
+  }
+  else if (currentPage === 'exams') {
+    buttonText = 'Schedule Exams';
+    showIcon = false;
   }
     
 
@@ -91,6 +97,18 @@ const SearchAdd = ({currentPage ,showIcon}) => {
   //   setDialogOpen(false);
   // };
 
+
+  // Button click handler for opening the dialog
+  const handleOpenDialog = () => {
+    if (currentPage === 'exams') {
+      setDialogOpen(true);
+    } else {
+      // Handle other cases
+      // ...
+    }
+  };
+
+
   return (
     <div className='searchadd'>
         <div className='swrapper'>
@@ -99,7 +117,7 @@ const SearchAdd = ({currentPage ,showIcon}) => {
                 <input type='text' placeholder='Search' />
             </div>
             <div className='addbutton'>
-            <button className={`add ${currentPage === 'module' ? 'back1' : ''} ${currentPage === 'course' ? 'module1' : ''}`} onClick={handleOpenDropdown}>
+            <button className={`add ${currentPage === 'module' ? 'back1' : ''} ${currentPage === 'course' ? 'module1' : ''}`} onClick={currentPage === 'staff' ? handleOpenDropdown : handleOpenDialog}>
                     <div className='sicon'> {showIcon && (currentPage === 'module' ? <ArrowBackIcon /> : <AddCircleIcon />)}</div>
                     <div className='btext'>
                     {buttonText}
@@ -136,6 +154,16 @@ const SearchAdd = ({currentPage ,showIcon}) => {
           </ul>
         </div>
       )}
+
+       {/* Dialog for scheduling exams */}
+       <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)} className='dialogBox'>
+          <DialogTitle>
+            {currentPage === 'exams' ? <h2 style={{ color: '#1eb2a6' }}>Schedule Exam</h2> : 'Tama Hadala Naa'}
+          </DialogTitle>
+          <DialogContent>
+            {currentPage === 'exams' ? <ScheduleExamForm /> : 'hellow'}
+          </DialogContent>
+          </Dialog>
     </div>
   )
 }

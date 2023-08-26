@@ -174,16 +174,22 @@
 
 
 
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState,useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import OnlinePay from "../../Components/Registration/OnlinePay";
 import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button';
+import { AuthContext } from '../../helpers/AuthContext';
+import axios from 'axios';
 
 const Payment = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const { authState } = useContext(AuthContext);
+  const navigate = useNavigate(); 
 
-  const [paymentOption, setPaymentOption] = useState('full');
+
+  const [paymentOption, setPaymentOption] = useState('Full payment');
 
   const handlePaymentChange = (event) => {
     setPaymentOption(event.target.value);
@@ -195,7 +201,26 @@ const Payment = () => {
   const durationType = queryParams.get('durationType');
   const courseFee = parseFloat(queryParams.get('courseFee'));
 
-  const amount = paymentOption === 'full' ? courseFee : courseFee * 0.25;
+  const amount = paymentOption === 'Full payment' ? courseFee : courseFee * 0.25;
+
+  //Course Enroll
+  const enrollCourse = async () => {
+    try {
+      // Get the student ID from authState
+      const studentId = authState.username;
+
+      // Make the POST request to enroll the course
+      const response = await axios.post(`http://localhost:3001/student/${studentId}/courses`, {
+        courseId: courseId
+      });
+      console.log(response.data);
+      alert ("Course Enroll successfully.!") 
+      navigate('/studentportal');
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div>
@@ -218,8 +243,8 @@ const Payment = () => {
         <label>
           <input
             type="radio"
-            value="full"
-            checked={paymentOption === 'full'}
+            value="Full payment"
+            checked={paymentOption === 'Full payment'}
             onChange={handlePaymentChange}
           />
           Full Payment
@@ -227,8 +252,8 @@ const Payment = () => {
         <label>
           <input
             type="radio"
-            value="installments"
-            checked={paymentOption === 'installments'}
+            value="Installment"
+            checked={paymentOption === 'Installment'}
             onChange={handlePaymentChange}
           />
           Pay by Installments
@@ -245,7 +270,8 @@ const Payment = () => {
         size="small"
         value={amount}
       />
-      <OnlinePay />
+      <OnlinePay paymentOption={paymentOption} amount={amount}/>
+      <Button onClick={enrollCourse}> Enroll </Button>
     </div>
   );
 }

@@ -131,6 +131,12 @@ import { AuthContext } from './helpers/AuthContext';
 import {useState, useEffect} from 'react';
 import axios from 'axios'
 import Payment from './Pages/PlacementTest/Payment';
+import Installmentpayment from './Pages/PlacementTest/Installmentpayment';
+import Exam from './Pages/Exams/Exam';
+import StudentExam from './Pages/Exams/StudentExam';
+import StudentExamDetails from './Pages/Exams/StudentExamDetails';
+// import EditExcelAndSave from './Pages/Exams/EditExcelAndSave';
+
 
 
 function App() {
@@ -184,11 +190,15 @@ useEffect(() => {
         <Route path = '/manualreg' element={<ManualReg />} ></Route>
         <Route path = '/onlinepayment' element={<OnlinePay />} ></Route>
         <Route path = '/fees' element={<Fee />} ></Route>
-        <Route path = '/unavailableDates' element={<UnavailableDates />} ></Route>
+        <Route path = '/studentportal' element={<UnavailableDates />} ></Route>
         <Route path = '/scheduledplacementTests' element={<ScheduledPlacementTest />} ></Route>
         <Route path="/schedule/:availabilityId" element = {<SchedulePT />} />
         <Route path="/placementTest-payment" element = {<Payment />} />
-        
+        <Route path="/installmentpayment" element = {<Installmentpayment />} />
+        <Route path="/exams" element = {<Exam />} />
+        <Route path="/student-exam/:scheduleExamId" element = {<StudentExam />} />
+        <Route path="/student-exam-details/:stuId" element = {<StudentExamDetails />} />
+        {/* <Route path="/editresult" element = {<EditExcelAndSave />} /> */}
 
       </Routes>
       </BrowserRouter>

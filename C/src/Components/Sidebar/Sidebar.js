@@ -56,7 +56,7 @@ const Sidebar = () => {
                 <p className='stitle'>Institute Management</p> 
                 <li><Link to = '/course' className='dash-to-page'> <LibraryBooksIcon className='dicon' /> <span>Courses & Modules</span></Link> </li>
                 <li> <MenuBookIcon className='dicon' /> <span>Books</span> </li>
-                <li> <Link to = '/unavailableDates' className='dash-to-page'><EditNoteIcon className='dicon'/> <span>Exams</span> </Link> </li>
+                <li> <Link to = '/exams' className='dash-to-page'><EditNoteIcon className='dicon'/> <span>Exams</span> </Link> </li>
                 <li> <Link to = '/fees' className='dash-to-page'><MonetizationOnIcon className='dicon'/> <span>Fees & Payments</span></Link> </li>
                 <li> <NotificationsIcon className='dicon' /> <span>Notifications</span> </li>
                 <li><FingerprintIcon className='dicon' /> <span>Attendance</span></li>

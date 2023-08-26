@@ -18,6 +18,8 @@ const Course = () => {
     courseFee: '',
     courseDuration: '',
     durationType: 'Hours',
+    riqMinMarks: '',
+    riqMaxMarks : '',
   });
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -56,6 +58,8 @@ useEffect(() => {
           courseFee: '',
           courseDuration: '',
           durationType: 'Hours',
+          riqMinMarks: '',
+          riqMaxMarks : '',
         });
         setValidationErrors({});
       };
@@ -126,8 +130,12 @@ useEffect(() => {
           <div className='title-button'>
           <div className='title-button-div'>
             <h1 id='course-title'> Courses</h1>
+            <div>
             <Button id='add-course-button' onClick={handleOpenDialog}> ADD COURSE</Button>
+          
             </div>
+            </div>
+           
             </div>
             <div className='coursedetails'> 
             <div className='grids'>
@@ -157,7 +165,6 @@ useEffect(() => {
       name='courseFee'
       value={newCourse.courseFee}
       onChange={handleInputChange}
-      
       required
       error={!!validationErrors.courseFee}
       helperText={validationErrors.courseFee}
@@ -167,18 +174,17 @@ useEffect(() => {
       name='courseDuration'
       value={newCourse.courseDuration}
       onChange={handleInputChange}
-      
       required
       error={!!validationErrors.courseDuration}
       helperText={validationErrors.courseDuration}
     />
-    <FormControl fullWidth required>
+    <FormControl required>
       
       <Select className='text-fields'
         name='durationType'
         value={newCourse.durationType}
         onChange={handleInputChange}
-        native  // Set this to use native input instead of Material-UI components for the dropdown
+        native  
       >
         <option value='Years'>Years</option>
         <option value='Months'>Months</option>
@@ -186,6 +192,21 @@ useEffect(() => {
         <option value='Hours'>Hours</option>
       </Select>
     </FormControl>
+    <TextField className='text-fields'
+      label='Maximum Marks'
+      name='riqMaxMarks'
+      value={newCourse.riqMaxMarks}
+      onChange={handleInputChange}
+      required
+     />
+     <TextField className='text-fields'
+      label='Minimum Marks'
+      name='riqMinMarks'
+      value={newCourse.riqMinMarks}
+      onChange={handleInputChange}
+      required
+     />
+     
   </DialogContent>
   <DialogActions>
     <Button onClick={handleCloseDialog}>Cancel</Button>

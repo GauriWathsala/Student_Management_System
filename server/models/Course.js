@@ -23,6 +23,14 @@ module.exports = (Sequelize,DataTypes) => {
             type : DataTypes.ENUM('Days','Months','years', 'Hours'),
             allowNull :false,
         },
+        riqMinMarks: {
+            type : DataTypes.DECIMAL(5,2),
+            allowNull :true,
+        },
+        riqMaxMarks: {
+            type : DataTypes.DECIMAL(5,2),
+            allowNull :true,
+        },
         
 
     });
@@ -44,12 +52,11 @@ module.exports = (Sequelize,DataTypes) => {
             foreignKey: 'courseId',
             as: 'students',
           });
+          Course.hasMany(models.ScheduleExam, {
+            foreignKey: 'courseId',
+            as: 'scheduleExams',
+          }); 
 
-        //   Course.hasOne(models.Fees, {
-        //     foreignKey: "feeType",
-        //     sourceKey: "courseId",
-        //     as: "fee",
-        // });
       };
 
     return Course

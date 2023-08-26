@@ -71,13 +71,7 @@ module.exports = (sequelize,DataTypes) => {
             foreignKey: "courseId",
             as: "course",
           }); 
-          Student.belongsToMany(models.ScheduleExam, {
-            through: "StudentScheduleExams",
-            foreignKey: "stuId",
-            otherKey: "scheduleId",
-            as: "scheduleExams",
-          });
-        Student.belongsTo(models.User, {
+       Student.belongsTo(models.User, {
             foreignKey: 'userId',
             as: 'user',
             onDelete: 'CASCADE',
@@ -90,6 +84,10 @@ module.exports = (sequelize,DataTypes) => {
             otherKey: "availabilityId",
             as: "schedulePlacementTest",
           });
+          Student.hasMany(models.StudentScheduleExams, {
+            foreignKey: 'stuId',
+            as: 'studentExams',
+        });
         }
     return Student
 }

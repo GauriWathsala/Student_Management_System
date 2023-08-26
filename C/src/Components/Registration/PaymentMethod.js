@@ -264,10 +264,30 @@ const PaymentMethod = () => {
       .then((response) => {
         // Handle success
         console.log("Registration successful:", response.data);
+       
+
+         // Create payment data
+        const paymentData = {
+        stuId: response.data.stuId,
+        amountPaid: registrationFee, // Use the registration fee obtained from state
+        paymentType: "Full payment", 
+        details: "Registration Fee",
+      };
+      axios
+      .post("http://localhost:3001/payment/onlinepay", paymentData)
+      .then((paymentResponse) => {
+        // Handle payment creation success
+        console.log("Payment successful:", paymentResponse.data);
+        window.alert("Registration and Payment Successful!");
       })
-      .catch((error) => {
+      .catch((paymentError) => {
+        // Handle payment creation error
+        console.error("Payment failed:", paymentError);
+      });
+      })
+      .catch((studentError) => {
         // Handle error
-        console.error("Registration failed:", error);
+        console.error("Registration failed:",studentError);
       });
   };
 

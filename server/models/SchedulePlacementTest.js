@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     marks: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL(3,2),
       allowNull: true,
       
     },

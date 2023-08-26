@@ -12,6 +12,10 @@ module.exports = (Sequelize,DataTypes) => {
             type:DataTypes.DATEONLY,
             allowNull :false,
         },
+        duration:{
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
         startTime:{
             type: DataTypes.TIME,
             allowNull: false,
@@ -19,28 +23,23 @@ module.exports = (Sequelize,DataTypes) => {
         status:{
             type: DataTypes.ENUM(
                 "Scheduled",
-                "Faced",
-                "Not Sat",
                 "Canceled",
-                "Marks Released",
+                "Completed",
               ),
             allowNull: false,
         },
-       
-        
-    });
+     });
 
     ScheduleExam.associate = (models) => {
-        ScheduleExam.belongsTo(models.ExamDetails, {
-          foreignKey: "examId",
-          as: "exam",
-        });
-        ScheduleExam.belongsToMany(models.Student, {
-          through: "StudentScheduleExams",
-          foreignKey: " scheduleId",
-          otherKey: " stuId",
-          as: "students",
-        });
+      ScheduleExam.belongsTo(models.Course, {
+          foreignKey: "courseId",
+          as: "course",
+        }); 
+        ScheduleExam.hasMany(models.StudentScheduleExams, {
+          foreignKey: 'scheduleExamId',
+          as: 'studentExams',
+      });
+
       };
 
     return ScheduleExam

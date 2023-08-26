@@ -1,0 +1,59 @@
+.exams{
+    width: 100%;
+    height: 100vh;
+
+    .main-header{
+        height: auto;
+     }
+  .bottom-header{
+    display: flex;
+    height: 100%;
+  
+    
+    .side-bar{
+        display: flex;
+        width:15%;
+        background-color: black;
+        height: auto;
+    }
+    .search-bar{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+
+        .seach-button-component{
+            //background-color: blueviolet;
+            width: 100%;
+            height: 10%;
+            align-items: center;
+      
+            .search-add{
+              background-color: aliceblue;
+              width: 75%;
+              align-items: center;
+              margin-left: 15%;
+              margin-top: 15px;
+           }
+          }
+          .title-button{
+            height: 15%;
+            ;
+        
+            .title-button-div{
+                display: flex;
+                justify-content:space-between;
+                width: 80%;
+                margin-left: 5%;
+                margin-top: 20px;
+                font-size: 30px;
+               
+        
+                #exam-title{
+                  font-size: 50px;
+                  color: rgb(112, 109, 109);
+                }
+            }
+        }
+    }
+}
+}

@@ -18,9 +18,9 @@ function generateRandomNumbers(length) {
 
   router.post("/",async (req,res)=>{
     try {
-        const { courseName,courseFee, courseDuration,moduleIds,durationType } = req.body;
+        const { courseName,courseFee, courseDuration,moduleIds,durationType,riqMinMarks, riqMaxMarks } = req.body;
         const courseId = courseName.substr(0, 1) + generateRandomNumbers(4);
-        const course = await Course.create({ courseId, courseName,courseFee, courseDuration, durationType});
+        const course = await Course.create({ courseId, courseName,courseFee, courseDuration, durationType,riqMinMarks, riqMaxMarks});
         
         //Associate the selected modules with the course
         if (moduleIds && moduleIds.length > 0) {
@@ -31,12 +31,7 @@ function generateRandomNumbers(length) {
           });
           await course.addModules(modules);
         }
-        // await Fees.create({
-        //   feeId: courseId,
-        //   feeType: courseId,
-        //   amount: courseFee,
-        // });
-
+    
         res.json(course);
       } catch (error) {
         console.error(error);
@@ -219,28 +214,7 @@ router.delete('/:courseId/books/:bookId', async (req, res) => {
   }
 });
 
-// // Unassign a module from a course
-// router.put('/:courseId/unassign', async (req, res) => {
-//   try {
-//     const { courseId } = req.params;
 
-//     // Find the module with the given ID
-//     const module = await Module.findOne({ where: { moduleId } });
-
-//     if (!module) {
-//       return res.status(404).json({ error: 'Module not found' });
-//     }
-
-//     // Unassign the teacher from the module (set teacherId to null)
-//     module.teacherId = null;
-//     await module.save();
-
-//     res.json({ message: 'Teacher unassigned from module successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });
 
 
 

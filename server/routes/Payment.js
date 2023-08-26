@@ -54,12 +54,12 @@ router.get("/:stuId", async (req, res) => {
       // Retrieve the payment details for the student
       const payments = await Payment.findAll({
         where: { stuId },
-        include: [
-          {
-            model: Student,
-            as: "student",
-          },
-          ],
+        // include: [
+        //   {
+        //     model: Student,
+        //     as: "student",
+        //   },
+        //   ],
       });
   
       return res.status(200).json(payments);
@@ -68,5 +68,9 @@ router.get("/:stuId", async (req, res) => {
       return res.status(500).json({ message: "Error retrieving payments." });
     }
   });
+
+
+
+
   
 module.exports = router;
