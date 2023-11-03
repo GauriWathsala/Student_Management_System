@@ -74,40 +74,41 @@ const AddTeacherForm = ({ userType }) => {
   
 
   return (
+    <div className="form-container"> 
     <form onSubmit={handleSubmit}>
       <label>
         First Name:
-        <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} />
+        <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         Last Name:
-        <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
+        <input type="text" name="lastname" value={formData.lastname} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         Full Name:
-        <input type="text" name="fullname" value={formData.fullname} onChange={handleChange} />
+        <input type="text" name="fullname" value={formData.fullname} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         Address:
-        <input type="text" name="address" value={formData.address} onChange={handleChange} />
+        <input type="text" name="address" value={formData.address} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         NIC:
-        <input type="text" name="nic" value={formData.nic} onChange={handleChange} />
+        <input type="text" name="nic" value={formData.nic} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         Date of Birth:
-        <input type="text" name="dob" value={formData.dob} onChange={handleChange} />
+        <input type="text" name="dob" value={formData.dob} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
         Email:
-        <input type="text" name="email" value={formData.email} onChange={handleChange} />
+        <input type="text" name="email" value={formData.email} onChange={handleChange} className='add-staff-input'/>
       </label>
       <br />
       <label>
@@ -117,12 +118,13 @@ const AddTeacherForm = ({ userType }) => {
           name="contact"
           value={formData.contact}
           onChange={handleChange}
+          className='add-staff-input'
         />
       </label>
       <br />
       <label>
         Gender:
-        <select name="gender" value={formData.gender} onChange={handleChange}>
+        <select name="gender" value={formData.gender} onChange={handleChange} className='add-staff-input'>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
@@ -135,13 +137,15 @@ const AddTeacherForm = ({ userType }) => {
           name="qualifications"
           value={formData.qualifications}
           onChange={handleChange}
+          className='add-staff-input'
         />
       </label>
       <br />
       
-     <button type="submit">{submitButtonText}</button>
+     <button type="submit" id='staff-add-btn'>{submitButtonText}</button>
      
     </form>
+    </div>
   );
 };
 

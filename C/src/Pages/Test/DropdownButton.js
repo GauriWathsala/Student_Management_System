@@ -1,14 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useState,useContext  } from 'react';
 import { Button, Menu, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import AddstaffForm from '../../Components/Forms/AddstaffForm';
-
+import './dropdownbutton.scss'
+import { AuthContext } from "../../helpers/AuthContext";
 
 const DropdownButton = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('Add Staff Member');
+  const { authState } = useContext(AuthContext);
+  const userRole = authState.role;
+
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -42,7 +46,7 @@ const DropdownButton = () => {
 
   return (
     <div className='staff'>
-      <Button onClick={handleMenuOpen}>Add</Button>
+       {userRole === ' Admin' && <Button onClick={handleMenuOpen} id='drop-down-btn'>Add</Button>}
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
         <MenuItem onClick={() => handleOptionSelect('Teacher')}>Teacher</MenuItem>
         <MenuItem onClick={() => handleOptionSelect('Receptionist')}>Receptionist</MenuItem>

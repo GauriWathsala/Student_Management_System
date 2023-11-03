@@ -136,6 +136,8 @@ import Exam from './Pages/Exams/Exam';
 import StudentExam from './Pages/Exams/StudentExam';
 import StudentExamDetails from './Pages/Exams/StudentExamDetails';
 // import EditExcelAndSave from './Pages/Exams/EditExcelAndSave';
+import Report from './HomeDashboard/MainDashboard/Report';
+import AllCourses from './Pages/Student/AllCourses';
 
 
 
@@ -157,6 +159,7 @@ useEffect(() => {
       setAuthState({
         username :response.data.username,
         id :response.data.id,
+        role:response.data.role,
         status : true,
       });
     }
@@ -197,9 +200,10 @@ useEffect(() => {
         <Route path="/installmentpayment" element = {<Installmentpayment />} />
         <Route path="/exams" element = {<Exam />} />
         <Route path="/student-exam/:scheduleExamId" element = {<StudentExam />} />
-        <Route path="/student-exam-details/:stuId" element = {<StudentExamDetails />} />
+        <Route path="/student-exam-details/:scheduleExamId/:stuId" element = {<StudentExamDetails />} />
         {/* <Route path="/editresult" element = {<EditExcelAndSave />} /> */}
-
+        <Route path="/reports" element = {<Report />} />
+        <Route path="/student/:stuId" element = {<AllCourses />} />
       </Routes>
       </BrowserRouter>
 

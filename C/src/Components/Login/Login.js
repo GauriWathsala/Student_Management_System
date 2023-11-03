@@ -25,9 +25,25 @@ export const Login = () => {
                 alert(response.data.error);
             } else {
                 localStorage.setItem("accessToken", response.data.token);
-                setAuthState({username: response.data.username, id: response.data.id, status: true})
+                setAuthState({username: response.data.username, id: response.data.id, role: response.data.role, status: true})
                 // setAuthState (true)
-                navigate('/dashboard');
+                switch (response.data.role) {
+                    case " Student":
+                        navigate('/studentportal');
+                        break;
+                    case "Teacher":
+                        navigate('/course');
+                        break;
+                    case "Receptionist":
+                        navigate('/student');
+                        break;
+                    case " Admin":
+                        navigate('/course');
+                        break;
+                    default:
+                        // Handle any other roles or scenarios here
+                        break;
+                }
                
             }
         });
@@ -65,6 +81,10 @@ export const Login = () => {
         </>
     );
 };
+
+           
+       
+   
 
            
        

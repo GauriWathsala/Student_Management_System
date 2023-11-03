@@ -96,7 +96,7 @@ const PaymentFormWrapper = styled('div')({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '16px',
-  height: '100vh',
+  height: '60vh',
 });
 
 const PaymentFormPaper = styled(Paper)(({ theme }) => ({

@@ -125,6 +125,7 @@ const CourseGrid = ({ course, onDelete }) => {
       <Dialog open={isViewDialogOpen} onClose={handleCloseViewDialog}>
         <DialogTitle>Course Details</DialogTitle>
         <DialogContent>
+        <p>ID: {course.courseId}</p>
           <p>Name: {course.courseName}</p>
           <p>Duration: {course.courseDuration} {course.durationType}</p>
           <p>Fee: {course.courseFee}</p>

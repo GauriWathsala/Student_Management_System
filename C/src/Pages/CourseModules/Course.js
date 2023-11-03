@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react'
+import React,{ useEffect, useState , useContext } from 'react'
 import './Course.scss';
 import { DbHeader } from '../../Components/DbHeader/DbHeader';
 import Sidebar from '../../Components/Sidebar/Sidebar';
@@ -6,6 +6,9 @@ import SearchAdd from '../../Components/DSearchAdd/SearchAdd';
 import { Button,Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import CourseGrid from '../../Components/Grid/CourseGrid';
 import axios from 'axios';
+import {useNavigate}  from 'react-router-dom';
+import EastIcon from '@mui/icons-material/East';
+import { AuthContext } from "../../helpers/AuthContext";
 
 
 const Course = () => {
@@ -22,7 +25,9 @@ const Course = () => {
     riqMaxMarks : '',
   });
   const [validationErrors, setValidationErrors] = useState({});
-
+  const navigate = useNavigate ();
+  const { authState } = useContext(AuthContext);
+  const userRole = authState.role;
 
 useEffect(() => {
         const fetchCourses = async () => {
@@ -111,7 +116,9 @@ useEffect(() => {
         }
       };
     
-    
+    const handlenavigate = () =>{
+      navigate('/module')
+    }
   return (
     <div className='course'>
         <div className='.main-top-header'>
@@ -122,17 +129,14 @@ useEffect(() => {
         <Sidebar />
         </div>
         <div className='search-bar'>
-        <div className='seach-button-component'>
-        <div className='search-add'> 
-        <SearchAdd currentPage='course' />
-        </div>
-           </div>
+        
           <div className='title-button'>
           <div className='title-button-div'>
             <h1 id='course-title'> Courses</h1>
-            <div>
-            <Button id='add-course-button' onClick={handleOpenDialog}> ADD COURSE</Button>
-          
+            <div className='add-course-nav-module'>
+            {(userRole === ' Admin' || userRole === 'Teacher') && <Button id='add-course-button' onClick={handleOpenDialog}> ADD COURSE</Button>}
+            <button onClick={handlenavigate} id='navigate-courseTo-module'>Modules</button>
+            {/* <EastIcon /> */}
             </div>
             </div>
            

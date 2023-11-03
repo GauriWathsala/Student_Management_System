@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{ useContext} from 'react'
 import './searchadd.scss'
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import ScheduleExamForm from '../../Pages/Exams/ScheduleExamForm';
+import { AuthContext } from "../../helpers/AuthContext";
 
 
 const SearchAdd = ({currentPage ,showIcon}) => {
@@ -26,7 +27,9 @@ const SearchAdd = ({currentPage ,showIcon}) => {
   //const [selectedRole, setSelectedRole] = useState('');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(null);const { authState } = useContext(AuthContext);
+  const userRole = authState.role;
+
   
   // Styles for the Cancel and Add button
   const cancelButtonStyles = {
@@ -66,11 +69,7 @@ const SearchAdd = ({currentPage ,showIcon}) => {
       console.log('Show the dropdown list');
     } else {
       // Handle other cases, navigate to other pages, etc.
-      if (currentPage === 'course') {
-        navigate('/module');
-      } else if (currentPage === 'module') {
-        navigate('/course');
-      } else if (currentPage === 'student') {
+      if (currentPage === 'student') {
         navigate('/manualreg');
       }
     }
@@ -112,10 +111,7 @@ const SearchAdd = ({currentPage ,showIcon}) => {
   return (
     <div className='searchadd'>
         <div className='swrapper'>
-            <div className='searchbar'>
-                <SearchIcon />
-                <input type='text' placeholder='Search' />
-            </div>
+            
             <div className='addbutton'>
             <button className={`add ${currentPage === 'module' ? 'back1' : ''} ${currentPage === 'course' ? 'module1' : ''}`} onClick={currentPage === 'staff' ? handleOpenDropdown : handleOpenDialog}>
                     <div className='sicon'> {showIcon && (currentPage === 'module' ? <ArrowBackIcon /> : <AddCircleIcon />)}</div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext } from 'react';
 import './Staff.scss';
 import { DbHeader } from '../../Components/DbHeader/DbHeader';
 import Sidebar from '../../Components/Sidebar/Sidebar';
@@ -12,16 +12,18 @@ import { Button  ,Select, MenuItem, InputLabel, FormControl} from '@mui/material
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import DropdownButton from '../Test/DropdownButton';
-
+import { AuthContext } from "../../helpers/AuthContext";
 
 const Staff = () => {
 
    
   const [rows, setRows] = useState([]);
+ 
 
    const navigate = useNavigate();
    const [selectedRole, setSelectedRole] = useState('');
-  
+   const { authState } = useContext(AuthContext);
+   const userRole = authState.role;
 
    
 
@@ -75,9 +77,9 @@ const Staff = () => {
       return (
         <div className='e-d-icons'>
           {/* Clicking BorderColorIcon will trigger handleEdit */}
-          <BorderColorIcon onClick={handleEdit} className ='edicon' />
+          {userRole === ' Admin' && <BorderColorIcon onClick={handleEdit} className ='edicon' />}
           {/* Clicking DeleteForeverIcon will trigger handleDelete */}
-          <DeleteForeverIcon onClick={handleDelete} className ='edicon' />
+          {userRole === ' Admin' && <DeleteForeverIcon onClick={handleDelete} className ='edicon' />}
         </div>
       );
     }
@@ -103,18 +105,13 @@ const Staff = () => {
         </div>
         <div className='two-two'>
           <div className='shead'>
-          <div className='searchbar'>
-            <SearchIcon />
-            <input type='text' placeholder='Search' />
+          <DropdownButton id='drop-down-component' />
             </div>
-            <DropdownButton id='drop-down-component' />
-            </div>
-           
-          <div className='sbottom'>
+            <div className='sbottom'>
             <div className='ssbottom'>
               <div className='fbutton'>
                   <h1> Staff Members</h1>
-                  <Button className='filter' > Filter by user type</Button>
+                 
               </div>
             </div>
           <div className='datatable'>

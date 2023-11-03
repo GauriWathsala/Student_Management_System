@@ -69,7 +69,16 @@ router.get("/:stuId", async (req, res) => {
     }
   });
 
-
+  //Get all payment details
+  router.get("/", async (req, res) => {
+    try {
+      const payments = await Payment.findAll({});
+      return res.status(200).json(payments);
+    } catch (error) {
+      console.error("Error retrieving payments:", error);
+      return res.status(500).json({ message: "Error retrieving payments." });
+    }
+  });
 
 
   

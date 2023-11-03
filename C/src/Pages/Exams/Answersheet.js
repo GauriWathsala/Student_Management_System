@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
-
+import './answersheet.scss'
 
 
 const Answersheet = ({ courseId }) => {
@@ -54,21 +54,41 @@ const downloadExcel = () => {
   };
   return (
     <div>
-      <p>Answersheet</p>
-      <p>Course ID: {courseId}</p>
+      
+      <h2>Course ID: {courseId}</h2>
+      <div className='module-student'>
       <p>Modules:</p>
-      <ul>
-        {courseModules.map(module => (
-          <li key={module.moduleId}>{module.moduleId}</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Module ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courseModules.map(module => (
+            <tr key={module.moduleId}>
+              <td>{module.moduleId}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       <p>Students following this course:</p>
-      <ul>
-        {courseStudents.map(student => (
-          <li key={student.stuId}>{student.stuId}</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Student ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courseStudents.map(student => (
+            <tr key={student.stuId}>
+              <td>{student.stuId}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      </div>
       <button onClick={downloadExcel}>Download Marks Allocation Document</button>
       {/* <button >Upload Marks Document</button> */}
       

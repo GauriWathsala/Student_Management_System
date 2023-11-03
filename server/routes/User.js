@@ -75,6 +75,7 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     const user = await User.findOne({ where: { username: username } });
+    console.log(user)
 
     if (!user) {
       return res.json({ error: "User Doesn't Exist" });
@@ -85,8 +86,8 @@ router.post("/login", async (req, res) => {
         return res.json({ error: "Wrong Username & password combination" });
       }
 
-      const accessToken = sign ({username : user.username, id : user.id}, "importantsecret");
-      res.json({token: accessToken, username: username, id:user.id});
+      const accessToken = sign ({username : user.username, id : user.userId, role : user.userType}, "importantsecret");
+      res.json({token: accessToken, username: username, id:user.userId, role:user.userType});
     });
   } catch (error) {
     console.error(error);

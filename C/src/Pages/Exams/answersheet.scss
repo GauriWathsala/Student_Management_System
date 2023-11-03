@@ -1,0 +1,44 @@
+.module-student {
+    display: flex;
+    flex-direction: row; // Set the direction to row for horizontal alignment
+    align-items: center; // Align items vertically in the center
+    gap: 20px; // Add some spacing between elements
+  }
+  
+  /* Style for tables */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px; /* Adjust the max-width as needed */
+    margin-right: 20px; /* Add some margin between the two tables */
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for buttons */
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

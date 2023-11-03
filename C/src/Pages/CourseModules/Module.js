@@ -1,4 +1,4 @@
-import React, {useEffect, useState }from 'react'
+import React, {useEffect, useState , useContext }from 'react'
 import './module.scss'
 import { DbHeader } from '../../Components/DbHeader/DbHeader';
 import Sidebar from '../../Components/Sidebar/Sidebar';
@@ -9,7 +9,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid } from '@mui/x-data-grid';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { TextField } from '@mui/material';
-
+import {useNavigate}  from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { AuthContext } from "../../helpers/AuthContext";
 
 const Module =() => {
   const [rows, setRows] = useState([]);
@@ -20,6 +22,9 @@ const Module =() => {
   const [teachers, setTeachers] = useState([]);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [newModuleName, setNewModuleName] = useState('');
+  const navigate = useNavigate ();
+  const { authState } = useContext(AuthContext);
+  const userRole = authState.role;
 
 //*************************Get module details to table****************** */
   useEffect(() => {
@@ -189,7 +194,9 @@ const handleAddModule = async () => {
      console.error('Error adding module:', error);
    }
  };
-
+ const handlenavigate = () =>{
+  navigate('/course')
+}
 
   return (
     <div className='module'>
@@ -201,16 +208,14 @@ const handleAddModule = async () => {
        <Sidebar />
     </div>
     <div className='search-bar'>
-      <div className='seach-button-component'> 
-      <div className='search-add'>
-      <SearchAdd currentPage='module'/>
-      </div>
       
-      </div>
       <div className='title-button'>
         <div className='title-button-div'>
         <h1 id='module-title'> Modules </h1>
-        <Button id ='add' onClick={() => setOpenAddDialog(true)}>ADD MODULES</Button>
+        <div>
+        {(userRole === ' Admin' || userRole === 'Teacher') && <Button id ='add' onClick={() => setOpenAddDialog(true)}>ADD MODULES</Button>}
+        <Button onClick={handlenavigate} id='module-back-button'> <ArrowBackIcon />BACK</Button>
+        </div>
         </div>
         </div>
        <div className='main-content'>
@@ -284,10 +289,12 @@ const handleAddModule = async () => {
           />
         </DialogContent>
         <DialogActions>
+         
           <Button onClick={() => setOpenAddDialog(false)}>Cancel</Button>
           <Button onClick={handleAddModule} color='primary'>
             Add
           </Button>
+         
         </DialogActions>
       </Dialog>
    

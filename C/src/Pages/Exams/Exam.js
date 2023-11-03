@@ -35,7 +35,9 @@ const Exam = () => {
       })
       .catch(error => console.error('Error updating status:', error));
   };
-  
+  const handlenavigate = () =>{
+    navigate('/scheduledplacementTests')
+  }
 
   return (
  <div className='exams'>
@@ -52,7 +54,10 @@ const Exam = () => {
         <SearchAdd currentPage='exams' />
         </div>
         <div className='scheduled-exam-details'>
+          <div className='exam-placement-test'>
         <h1 id='exam-title'> Exams</h1>
+        <Button id='pacement-test-nav' onClick={handlenavigate}>Placement Tests</Button>
+        </div>
         <TableContainer component={Paper}>
                 <Table>
                   <TableHead>

@@ -1,107 +1,9 @@
-// import React , { useState, useEffect, useContext }from 'react'
-// import axios from 'axios';
-// import { AuthContext } from '../../helpers/AuthContext';
-
-// const PaidPayments = ({ courseFee }) => {
-//     const [payments, setPayments] = useState([]);
-//     const { authState } = useContext(AuthContext);
-  
-
-//  useEffect(() => {
-//     const stuId = authState.username; 
-//     axios.get(`http://localhost:3001/payment/${stuId}`)
-//       .then(response => {
-//         setPayments(response.data);
-//       })
-//       .catch(error => {
-//         console.error('Error fetching payment details:', error);
-//       });
-//   }, [authState.username]);
-
-
-
-//   return (
-//     <div>
-//       <h2>Payment History</h2>
-//       <ul>
-//         {payments.map(payment => (
-//           <li key={payment.paymentId}>
-           
-//             Paid Amount: {payment.amountPaid}<br />
-//             Payment Type: {payment.paymentType}<br />
-//             Payment Method: {payment.paymentMethod}<br />
-//             Date: {payment.createdAt}<br />
-            
-//           </li>
-//         ))}
-//       </ul>
-      
-//     </div>
-//   )
-// }
-
-// export default PaidPayments
-
-
-
-
-// import React, { useState, useEffect, useContext } from 'react';
-// import axios from 'axios';
-// import { AuthContext } from '../../helpers/AuthContext';
-
-// const PaidPayments = ({ courseFee }) => {
-//   const [payments, setPayments] = useState([]);
-//   const { authState } = useContext(AuthContext);
-  
-//   useEffect(() => {
-//     const stuId = authState.username; 
-//     axios.get(`http://localhost:3001/payment/${stuId}`)
-//       .then(response => {
-//         setPayments(response.data);
-//       })
-//       .catch(error => {
-//         console.error('Error fetching payment details:', error);
-//       });
-//   }, [authState.username]);
-
-  
- 
-
-//   return (
-//     <div>
-//       <h2>Payment History</h2>
-//       <ul>
-//         {payments.map(payment => (
-            
-//           <li key={payment.paymentId}>
-//             Paid Amount: {payment.amountPaid}<br />
-//             Payment Type: {payment.paymentType}<br />
-//             Payment Method: {payment.paymentMethod}<br />
-//             Date: {payment.createdAt}<br />
-//             {payment.amountPaid < courseFee ? (
-//               <div>
-//                 <p>Amount to be paid: {courseFee - payment.amountPaid}</p>
-//                 <button>Make Next Installment</button>
-//               </div>
-//             ) : payment.amountPaid === courseFee ? (
-//               <p>Payment is completed</p>
-//             ) : null}
-
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   )
-// }
-
-// export default PaidPayments;
-
-
 
 // import React, { useState, useEffect, useContext } from 'react';
 // import axios from 'axios';
 // import { AuthContext } from '../../helpers/AuthContext';
 // import { useNavigate } from 'react-router-dom';
+// import './PaidPayment.scss'
 
 // const PaidPayments = ({ courseFee }) => {
 //   const [payments, setPayments] = useState([]);
@@ -132,58 +34,72 @@
 //     groupedPayments[installmentOrder].push(payment);
 //   });
 
+//   const coursePayments = payments.filter(payment => payment.details === 'Course Fee');
+
+ 
+//   const totalPaid = coursePayments.reduce((sum, payment) => sum + parseFloat(payment.amountPaid), 0);
+//   const remainingAmount = courseFee - totalPaid;
 
 //   return (
-//     <div>
-//       <h2>Payment History</h2>
+//     <div className='payment-history'>
+//       <h2 id='payment-his'>Payment History</h2>
       
 //       <ul>
 //         {payments.map(payment => {
 //           const remainingAmount = courseFee - payment.amountPaid;
+//           const createdAtDate = new Date(payment.createdAt);
+//           const formattedDate = createdAtDate.toISOString().substr(0, 10);
 
 //           return (
-//             <li key={payment.paymentId}>
-//               Paid Amount: {payment.amountPaid}<br />
+//             <li key={payment.paymentId} className='payment-history-details'>
+//               Date: {formattedDate} <br/>
+//               Reason: {payment.details}<br />
+//               Paid Amount:Rs {payment.amountPaid}<br />
 //               Payment Type: {payment.paymentType}<br />
 //               Payment Method: {payment.paymentMethod}<br />
-//               Date: {payment.createdAt}<br />
-//               {payment.amountPaid << courseFee ? (
+//              <br /> <br />
+//               {payment.amountPaid < courseFee ? (
 //                 <div>
-//                   <p>Amount to be paid: {remainingAmount}</p>
-//                   {remainingAmount > 0 && <button onClick={handleMakeInstallmentClick}>Make Next Installment</button>}
-                 
+//                   <p className='payment-calculation'>Amount to be paid: Rs {remainingAmount}</p>
 //                 </div>
 //               ) : payment.amountPaid === courseFee ? (
-//                 <p>Payment is completed</p>
+//                 <p id='payment-complete'>Payment is completed</p>
 //               ) : null}
 //             </li>
 //           );
 //         })}
 //       </ul>
+//       <p  className='payment-calculation'>Total Paid: Rs {totalPaid.toFixed(2)}</p>
+//       <p  className='payment-calculation'>Amount to be Paid:Rs {remainingAmount.toFixed(2)}</p>
+
+//       {remainingAmount > 0 && (
+//         <button onClick={handleMakeInstallmentClick} id='make-next-installment-button'>Make Next Installment</button>
+//       )}
 //     </div>
 //   );
 // }
 
 // export default PaidPayments;
 
-
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './PaidPayment.scss';
 
 const PaidPayments = ({ courseFee }) => {
   const [payments, setPayments] = useState([]);
   const { authState } = useContext(AuthContext);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const stuId = authState.username;
-    axios.get(`http://localhost:3001/payment/${stuId}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:3001/payment/${stuId}`)
+      .then((response) => {
         setPayments(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching payment details:', error);
       });
   }, [authState.username]);
@@ -193,7 +109,7 @@ const PaidPayments = ({ courseFee }) => {
   };
 
   const groupedPayments = {};
-  payments.forEach(payment => {
+  payments.forEach((payment) => {
     const installmentOrder = payment.installmentOrder;
     if (!groupedPayments[installmentOrder]) {
       groupedPayments[installmentOrder] = [];
@@ -201,47 +117,70 @@ const PaidPayments = ({ courseFee }) => {
     groupedPayments[installmentOrder].push(payment);
   });
 
- 
-  const totalPaid = payments.reduce((sum, payment) => sum + parseFloat(payment.amountPaid), 0);
+  const coursePayments = payments.filter(
+    (payment) => payment.details === 'Course Fee'
+  );
+
+  const totalPaid = coursePayments.reduce(
+    (sum, payment) => sum + parseFloat(payment.amountPaid),
+    0
+  );
   const remainingAmount = courseFee - totalPaid;
 
   return (
-    <div>
-      <h2>Payment History</h2>
-      
-      <ul>
-        {payments.map(payment => {
-          const remainingAmount = courseFee - payment.amountPaid;
+    <div className='payment-history'>
+      <h2 id='payment-his'>Payment History</h2>
 
-          return (
-            <li key={payment.paymentId}>
-              Paid Amount: {payment.amountPaid}<br />
-              Payment Type: {payment.paymentType}<br />
-              Payment Method: {payment.paymentMethod}<br />
-              Date: {payment.createdAt}<br /> <br />
-              {payment.amountPaid < courseFee ? (
-                <div>
-                  <p>Amount to be paid: {remainingAmount}</p>
-                </div>
-              ) : payment.amountPaid === courseFee ? (
-                <p>Payment is completed</p>
-              ) : null}
-            </li>
-          );
-        })}
-      </ul>
-      <p>Total Paid: {totalPaid.toFixed(2)}</p>
-      <p>Amount to be Paid: {remainingAmount.toFixed(2)}</p>
+      <table className='payment-history-table'>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Reason</th>
+            <th>Paid Amount</th>
+            <th>Payment Type</th>
+            <th>Payment Method</th>
+            <th>Payment Status</th>
+            {/* <th>Remaining Amount</th> */}
+          </tr>
+        </thead>
+        <tbody>
+          {payments.map((payment) => {
+            const createdAtDate = new Date(payment.createdAt);
+            const formattedDate = createdAtDate.toISOString().substr(0, 10);
+            const remainingAmount = courseFee - payment.amountPaid;
+
+            return (
+              <tr key={payment.paymentId} className='payment-history-details'>
+                <td>{formattedDate}</td>
+                <td>{payment.details}</td>
+                <td>Rs {payment.amountPaid}</td>
+                <td>{payment.paymentType}</td>
+                <td>{payment.paymentMethod}</td>
+                <td>
+                  {payment.amountPaid < courseFee ? (
+                    `Rs ${remainingAmount}`
+                  ) : payment.amountPaid === courseFee ? (
+                    <span id='payment-calculation'>Payment is completed</span>
+                  ) : null}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <p className='payment-calculation'>Total Paid: Rs {totalPaid.toFixed(2)}</p>
+      <p className='payment-calculation'>Amount to be Paid: Rs {remainingAmount.toFixed(2)}</p>
 
       {remainingAmount > 0 && (
-        <button onClick={handleMakeInstallmentClick}>Make Next Installment</button>
+        <button onClick={handleMakeInstallmentClick} id='make-next-installment-button'>
+          Make Next Installment
+        </button>
       )}
     </div>
   );
-}
+};
 
 export default PaidPayments;
-
 
 
 

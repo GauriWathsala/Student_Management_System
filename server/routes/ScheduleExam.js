@@ -60,6 +60,31 @@ router.get('/student-schedule-exams', async (req, res) => {
 //         res.status(500).send('Internal Server Error');
 //     }
 // });
+router.post('/student-schedule-exams', async (req, res) => {
+    try {
+        const examDataArray = req.body; // Array of exam data objects
+
+        const newStudentScheduleExams = await Promise.all(examDataArray.map(async (examData) => {
+            const { status, marks, moduleId, scheduleId, stuId } = examData;
+
+            const newStudentScheduleExam = await StudentScheduleExams.create({
+                status,
+                marks,
+                moduleId,
+                scheduleId,
+                stuId,
+            });
+
+            return newStudentScheduleExam;
+        }));
+
+        res.status(201).json(newStudentScheduleExams);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 
 

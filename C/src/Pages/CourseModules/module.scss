@@ -80,9 +80,24 @@
                     height: 50px;
                     border: 0.5px solid #1eb2a6;
                     font-weight: bold;
+                    margin-left: 200px;
                     &:hover{
                         background-color: white;
                         color: #1eb2a6;
+                        border: 0.5px solid #1eb2a6;
+                      }
+                }
+                #module-back-button{
+                    background-color: white;
+                    border: 1px solid  #1eb2a6 ;
+                    color: #1eb2a6;
+                    font-weight: bold;
+                    height: 50px;
+                    width: 100px;
+                    margin-left: 20px;
+                    &:hover{
+                        background-color: #1eb2a6;
+                        color: white;
                         border: 0.5px solid #1eb2a6;
                       }
                 }
@@ -108,3 +123,4 @@
     
     
 }
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import { Button } from "@mui/material";
@@ -6,6 +6,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material
 import EditFee from "./EditFee";
 import './rgfee.scss';
 import AddFee from "./AddFee";
+import { AuthContext } from "../../helpers/AuthContext";
 
 
 
@@ -14,6 +15,8 @@ const FeeList = () => {
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [selectedFeeId, setSelectedFeeId] = useState(null);
     const [addDialogOpen, setAddDialogOpen] = useState(false);
+    const { authState } = useContext(AuthContext);
+    const userRole = authState.role;
   
     useEffect(() => {
     
@@ -48,7 +51,7 @@ const FeeList = () => {
       <div className="rgfee">
         <div className="fee-heading">
         <h2 id="fee-title">Fee List</h2>
-        <Button id="add-fee" onClick={handleAdd}> ADD </Button>
+        {userRole === ' Admin' && <Button id="add-fee" onClick={handleAdd}> ADD </Button>}
         </div>
         <div className="fee-table">
         <TableContainer component={Paper}>
@@ -68,7 +71,7 @@ const FeeList = () => {
                   <TableCell>{fee.feeType}</TableCell>
                   <TableCell>{fee.amount}</TableCell>
                   <TableCell>
-                  <Button variant="contained" color="primary" onClick={() => handleEdit(fee.feeId)}>Edit</Button>
+                  {userRole === ' Admin' && <Button variant="contained" color="primary" onClick={() => handleEdit(fee.feeId)}>Edit</Button>}
                 </TableCell>
                 </TableRow>
               ))}

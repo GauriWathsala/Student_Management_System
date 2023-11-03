@@ -28,7 +28,7 @@ h2{
     border: 1px solid palevioletred;
     padding: 10px;
     width: 40%;
-   height: 625px;
+   height: 675px;
 }
 .points{
     font-size: medium;
@@ -54,6 +54,8 @@ h2{
     font-size: large;
     font-weight: bold;
     margin-left: 75%;
+    background-color: rgb(95, 95, 238);
+    color: aliceblue;
 
     &:hover{
         background-color: blue;
@@ -62,3 +64,6 @@ h2{
 .FormData{
     margin-top: 5px;
 }
+
+
+

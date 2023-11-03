@@ -23,23 +23,23 @@ export const DbHeader = () => {
                 </div>
             </div> 
             <div className='head-right'>
-            <div className='ditem'>
+            {/* <div className='ditem'>
             <FullscreenIcon className='icond' />
-          </div>
-          <div className='ditem'>
+          </div> */}
+          {/* <div className='ditem'>
             <DarkModeIcon className='icond' />
-          </div>
-          <div className='ditem'>
+          </div> */}
+          {/* <div className='ditem'>
             <ListIcon className='icond' />
-          </div>
-          <div className='ditem'>
+          </div> */}
+          {/* <div className='ditem'>
             <NotificationsIcon className='icond' />
           </div>
           <div className='ditem'>
             <AccountCircleOutlinedIcon className='icond'/>
-          </div>
+          </div> */}
           <div className='ditem'>
-            <lable>{authState.username}</lable>
+            <lable> Username: {authState.username}</lable>
           </div>
         </div> 
         

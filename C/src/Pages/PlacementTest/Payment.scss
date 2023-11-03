@@ -1,0 +1,73 @@
+#enrollment-main-head{
+    color: rgb(105, 104, 104);
+    font-weight: bold;
+   margin-top: 10px;
+   margin-left: 40%;
+   font-size: 50px;
+}
+.course-details{
+   color: palevioletred;
+   font-weight: bold;
+   margin-left: 10%;
+}
+#term-condition{
+    color: blue;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+#term-details{
+    margin-top: 10px;
+    margin-left: 10%;
+}
+li{
+    padding: 10px;
+    
+}
+.bullet-icon{
+    color: red;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+#payment-option{
+    color: blue;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+.radio-but{
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-bottom: 20px;
+}
+#full-payment{
+    margin-right: 30px;
+}
+#feeAmountTitle{
+    margin-right: 20px;
+   
+}
+#enrollmentFee{
+    align-items: center;
+}
+.payment-tab{
+    // margin-top: 10px;
+    margin-left: 20%;
+}
+.enroll-cancel-button{
+    margin-left: 50%;
+margin-bottom: 40px;
+}
+
+#cancel-button{
+    border: 1px solid rgb(238, 95, 95);
+    color: white;
+    background-color:rgb(238, 95, 95) ;
+    width: 200px;
+}
+#enroll-button{
+    border: 1px solid rgb(71, 71, 207);
+    color: white;
+    background-color:rgb(71, 71, 207) ;
+    width: 200px;
+    margin-left: 20px;
+}

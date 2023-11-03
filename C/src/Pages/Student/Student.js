@@ -6,14 +6,21 @@ import SearchAdd from '../../Components/DSearchAdd/SearchAdd'
 import { Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import {useNavigate}  from 'react-router-dom'
 //import DeleteIcon from '@mui/icons-material/Delete';
 //import Navbar from '../../Components/Navbar/Navbar'
 
 
 const Student = () => {
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate ();
 
-  const blockicon  = {
+  const handleviewbtn = (stuId) =>{
+    navigate(`/student/${stuId}`)
+  }
+
+  const blockicon = {
     field: 'block',
     headerName: '',
     width: 150,
@@ -21,9 +28,9 @@ const Student = () => {
     renderCell: (params) => {
       return (
         <div className='delete-module'>
-          <Button id="del-module"   color="error">
-                    BLOCK
-          </Button>
+          {/* <Button id="del-module" color="error" onClick={() => handleviewbtn(params.row.id)}> 
+            VIEW
+          </Button> */}
         </div>
       );
     }
@@ -34,27 +41,9 @@ const Student = () => {
     { field: 'name', headerName: 'Name', width: 175, headerClassName: 'module-header' },
     { field: 'contact', headerName: 'Contact No', width: 150, headerClassName: 'module-header' },
     { field: 'email', headerName: 'Email', width: 250, headerClassName: 'module-header' },
-    { field: 'course', headerName: 'Course', width: 100, headerClassName: 'module-header' ,
-    renderCell: (params) => {
-      if (params.row.course === 'allocateButton'){
-        return (
-          <Button id="allocateButton"  color="primary" 
-          // onClick={() => handleAllocateCourse(params.row)}
-          >
-            Allocate
-          </Button>
-        );
-      } else{
-        return (
-          <div className='allocated-course'>
-            <span>{params.row.student}</span>
-          </div>
-        );
-      }
-     
-    }},
-    { field: 'status', headerName: 'Status', width: 125, headerClassName: 'module-header' },
-    blockicon,
+    { field: 'nic', headerName: 'NIC', width: 250, headerClassName: 'module-header' },
+    { field: 'profession', headerName: 'Profession', width: 250, headerClassName: 'module-header' },
+   
   
    ];
 
@@ -69,6 +58,8 @@ const Student = () => {
           contact: student.contactNo ,
           email : student.email,
           course : student.courseId ? student.courseId : 'allocateButton',
+          nic :  student.nic,
+          profession : student.profession
         }));
         setRows(formattedRows);
       }catch (error){
@@ -77,30 +68,10 @@ const Student = () => {
     }
     fetchData();
    },[]);
-
-
-// //***********************************Assign Teacher****************** */
-// const handleAssignCourseConfirmation = async () => {
-//   try {
-//     await axios.put(
-//       `http://localhost:3001/module/${moduleToDelete.id}/teacher/${selectedTeacherId}`
-//     );
-//     setShowAssignTeacherDialog(false);
-//     setSelectedTeacherId(null);
-
-//   // Refresh the module data after assigning the teacher
-//   const response = await axios.get('http://localhost:3001/module');
-//   const modules = response.data;
-//   const formattedRows = modules.map((module) => ({
-//     id: module.moduleId,
-//     name: module.moduleName,
-//     teacher: module.teacherId ? module.teacherId : 'assignButton',
-//   }));
-//   setRows(formattedRows);
-// } catch (error) {
-//   console.error('Error assigning teacher:', error);
-// }
-// };   
+  
+const handlenavigate = () =>{
+  navigate('/manualreg');
+}
 
 
   return (
@@ -113,15 +84,11 @@ const Student = () => {
       <Sidebar />
       </div>
       <div className='search-bar'>
-      <div className='seach-button-component'>
-      <div className='search-add'>
-      <SearchAdd currentPage='student'/>
-      </div>
-      </div>
+      
       <div className='title-button'>
         <div className='title-button-div'>
         <h1 id='module-title'> Students </h1>
-        <Button id ='add' >Filter by ID</Button>
+        <Button id ='add' onClick={handlenavigate}> <AddCircleIcon />ADD STUDENT</Button>
         </div>
         </div>
         <div className='main-content'>
