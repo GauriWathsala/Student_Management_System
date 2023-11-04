@@ -1,5 +1,4 @@
 
-
 const nodemailer = require('nodemailer');
 
 const sendEmail = (subject, toEmail, emailBody) => {
@@ -7,10 +6,10 @@ try {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com', // Corrected host value
     port: 465,
-    secure: true, // Use true for secure connections
+    secure: true, // for secure connections
     auth: {
-      user: 'gifted.education.ielts@gmail.com', // Your Gmail email address
-      pass: 'ujwxdrkvsztpxaoe', // Your Gmail app-specific password
+      user: 'gifted.education.ielts@gmail.com', // Gmail email address
+      pass: 'ujwxdrkvsztpxaoe', // Gmail app-specific password
     },
   });
 
